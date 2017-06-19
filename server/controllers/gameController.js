@@ -14,6 +14,10 @@ exports.newGame = (req, res) => {
         console.log(createdGame.getTreasure());
         console.log(createdGame.getTreasure());
         console.log(createdGame.treasures);
+        console.log(createdGame.getDungeon());
+        console.log(createdGame.getDungeon());
+        console.log(createdGame.getDungeon());
+        console.log(createdGame.dungeons);
         res.status(200).json({
             msg: {
                 id: createdGame.id
