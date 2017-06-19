@@ -9,7 +9,11 @@ exports.newGame = (req, res) => {
     if (!validator.isValidGame(body.name, body.password)) {
         res.status(400).json({msg: 'Invalid new game parameters'});
     } else {
-        var createdGame = new Game(body.name.trim());
+        var createdGame = new Game(body.name.trim(), body.password.trim());
+        console.log(createdGame.getTreasure());
+        console.log(createdGame.getTreasure());
+        console.log(createdGame.getTreasure());
+        console.log(createdGame.treasures);
         res.status(200).json({
             msg: {
                 id: createdGame.id
