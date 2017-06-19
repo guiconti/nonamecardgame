@@ -1,14 +1,17 @@
+let racesList = require('./racesList');
+let rolesList = require('./typesList');
+
 let name;
 let id;
 let race;
-let type;
+let role;
 let board = [];
-let hand = {treasures: [], dungeons: []};
+let hand = [];
 
 function Player(name, race, type){
     this.name = name;
-    this.race = race;
-    this.type = type;
+    this.race = racesList.HUMAN;
+    this.role = rolesList.NONE;
     this.id = 'eowakoskmzkx';
 }
 
