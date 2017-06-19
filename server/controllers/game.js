@@ -20,7 +20,6 @@ function Game(name, password){
     this.dungeons = dungeonsList;
 }
 
-Game.prototype.id = this.id;
 Game.prototype.getTreasure = getTreasure;
 Game.prototype.getDungeon = getDungeon;
 
