@@ -1,0 +1,31 @@
+{
+  "name": "nonamecardgame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tools/test/core/testController.js",
+    "dev": "npm-run-all --parallel env_setup server_development",
+    "server_development": "nodemon tools/serverDevelopment.js",
+    "env_setup": "node tools/env_setup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guiconti/nonamecardgame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guiconti/nonamecardgame/issues"
+  },
+  "homepage": "https://github.com/guiconti/nonamecardgame#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "chai": "^4.0.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0",
+    "underscore": "^1.8.3"
+  }
+}
