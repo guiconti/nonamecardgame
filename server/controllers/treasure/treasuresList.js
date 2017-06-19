@@ -1,18 +1,30 @@
+var cardsType = require('../cardsType');
+
 //  All treasures (This will go to a database)
 module.exports = [
     {
-        name: 'Treasure 1'
+        id: 1,
+        name: 'Treasure 1',
+        cardType: cardsType.TREASURE
     },
     {
-        name: 'Treasure 2'
+        id: 2,
+        name: 'Treasure 2',
+        cardType: cardsType.TREASURE
     },
     {
-        name: 'Treasure 3'
+        id: 3,
+        name: 'Treasure 3',
+        cardType: cardsType.TREASURE
     },
     {
-        name: 'Treasure 4'
+        id: 4,
+        name: 'Treasure 4',
+        cardType: cardsType.TREASURE
     },
     {
-        name: 'Treasure 5'
+        id: 5,
+        name: 'Treasure 5',
+        cardType: cardsType.TREASURE
     }
 ];
