@@ -22,13 +22,13 @@
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script>
             $(function () {
-                var socket = io();
+                var socket = io('/' + '{{namespace}}');
                 $('form').submit(function(){
-                    socket.emit('chat message', $('#m').val());
+                    socket.emit('chatMessage', $('#m').val());
                     $('#m').val('');
                     return false;
                 });
-                socket.on('chat message', function(msg){
+                socket.on('chatMessage', function(msg){
                     $('#messages').append($('<li>').text(msg));
                 });
             });

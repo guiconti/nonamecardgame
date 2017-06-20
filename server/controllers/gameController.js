@@ -4,6 +4,8 @@ const Game = require('./game/game');
 const Player = require('./player/player');
 const validator = require('./utils/validator');
 const _ = require('underscore');
+const eventListener = require('./eventListener');
+const eventEmitter = require('./eventEmitter');
 
 const MAX_PLAYERS = 6;
 
@@ -14,7 +16,7 @@ exports.newGame = (req, res) => {
     if(!validator.isValidGame(body)) {
         res.status(400).json({msg: 'Invalid new game parameters'});
     } else {
-        let gameBody = new Game(body.name.trim(), body.password.trim());
+        let gameBody = new Game(body.name.trim());
         let newGameModel = new GameModel(gameBody);
         newGameModel.save((err, createdGame) => {
             if (err) return res.status(400).json({msg: err});
@@ -34,8 +36,9 @@ exports.enterGame = (req, res) => {
 
     GameModel.findById(body.gameId.trim(), (err, gameTable) => {
         if (err) return res.status(404).json({msg: 'Game table not found.'});
-        io.emit(body.gameId.trim(), 'New player connected');
-        return res.status(200).sendFile(process.cwd() + '/server/views/index.html');
+        eventListener.createGameChat(body.gameId.trim());
+        eventEmitter.sendChatMessage(body.gameId.trim(), 'New player connected');
+        return res.status(200).render('gameRoom', {namespace: body.gameId.trim()});
     });
 };
 
