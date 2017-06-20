@@ -45,17 +45,20 @@ exports.enterGame = (req, res) => {
 exports.addPlayer = (req, res) => {
 
     //  TODO: Get ID from the player
-    var body = _.pick(req.body, 'gameId', 'name');
+    var body = _.pick(req.body, 'name');
+    var params = _.pick(req.params, 'gameId');
+    console.log(req.body);
     if(!validator.isValidPlayer(body)) return res.status(400).json({msg: 'Invalid player info.'});
-    if(!validator.isValidGameId(body.gameId)) return res.status(400).json({msg: 'Invalid game id.'});
+    if(!validator.isValidGameId(params.gameId)) return res.status(400).json({msg: 'Invalid game id.'});
 
-    GameModel.findById(body.gameId.trim(), (err, gameTable) => {
+    GameModel.findById(params.gameId.trim(), (err, gameTable) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
         let newPlayer = new Player(body.name.trim());
         gameTable.players.push(newPlayer);
         gameTable.save((err) => {
             if(err) return res.status(500).json({msg: 'We could not add you to the table. Try again later'});
+            eventEmitter.sendChatMessage(params.gameId.trim(), body.name.trim() + ' entered the game.')
             return res.status(200).json({msg: 'Welcome to the table'});
         });
     });

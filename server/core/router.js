@@ -9,6 +9,6 @@ router.use(bodyParser);
 router.get('/', (req, res) => {res.status(200).sendFile(process.cwd() + '/server/views/index.html')});
 router.post('/game/create', gameController.newGame);
 router.get('/game/:gameId', gameController.enterGame);
-router.post('/game/player/insert', gameController.addPlayer);
+router.post('/game/:gameId/player/insert', gameController.addPlayer);
 
 module.exports = router;
