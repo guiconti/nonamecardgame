@@ -6,7 +6,6 @@ const insertPlayer = require('./insertPlayer');
 
 let name;
 let password;
-let id;
 let treasures = [];
 let discardTreasures = [];
 let dungeons = [];
@@ -16,7 +15,6 @@ let players = [];
 function Game(name, password){
     this.name = name;
     this.password = password;
-    this.id = 'jsdkjasdu12jkdsjakdl';
     this.treasures = treasuresList;
     this.dungeons = dungeonsList;
     this.players = [];

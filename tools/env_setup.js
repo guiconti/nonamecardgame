@@ -16,7 +16,8 @@ const filename = '.env',
 const envVars = {
     NODE_ENV: 'development',
     PORT: 3100,
-    HOST: 'http://localhost:3100'
+    HOST: 'http://localhost:3100',
+    DB_HOST: 'mongodb://localhost:27017/NoNameCardGame'
 };
 
 console.log('checking file ' + filename);

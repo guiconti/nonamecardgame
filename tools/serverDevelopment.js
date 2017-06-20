@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 require('dotenv').config();
+require('../server/core/mongoose');
 const express = require('express');
 
 const PORT = process.env.PORT;
