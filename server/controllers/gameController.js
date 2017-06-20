@@ -34,9 +34,8 @@ exports.enterGame = (req, res) => {
 
     GameModel.findById(body.gameId.trim(), (err, gameTable) => {
         if (err) return res.status(404).json({msg: 'Game table not found.'});
-        return res.status(200).json({
-            msg: gameTable
-        });
+        io.emit(body.gameId.trim(), 'New player connected');
+        return res.status(200).sendFile(process.cwd() + '/server/views/index.html');
     });
 };
 

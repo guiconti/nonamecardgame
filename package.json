@@ -26,6 +26,7 @@
     "express": "^4.15.3",
     "mocha": "^3.4.2",
     "mongoose": "^4.10.7",
+    "socket.io": "^2.0.3",
     "supertest": "^3.0.0",
     "underscore": "^1.8.3"
   }
