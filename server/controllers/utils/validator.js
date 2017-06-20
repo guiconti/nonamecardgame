@@ -27,12 +27,22 @@ exports.isValidUser = (userInfo) => {
     } catch(e){
         return false;
     }
-}
+};
 
 exports.isValidCookie = (cookie) => {
     try{
         return _.isString(cookie.session);
     } catch(e){
         return false;
+    }
+};
+
+exports.isPlayerInGame = (gameTable, player) => {
+    try{
+        return gameTable.players.find((actualPlayer) => {
+            return actualPlayer.id == player.id;
+        })
+    } catch(e){
+        return true;
     }
 }

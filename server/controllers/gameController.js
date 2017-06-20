@@ -56,6 +56,11 @@ exports.addPlayer = (req, res) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
         let newPlayer = new Player(req.userInfo.name.trim(), req.cookies.session);
+
+        if (validator.isPlayerInGame(gameTable, newPlayer)){
+            return res.status(400).json({msg: 'Player already in game'});
+        }
+
         gameTable.players.push(newPlayer);
         gameTable.save((err) => {
             if(err) return res.status(500).json({msg: 'We could not add you to the table. Try again later'});

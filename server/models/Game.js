@@ -6,6 +6,7 @@ let GameSchema = new Schema({
     password: String,
     players: [{
         name: String,
+        id: String,
         race: Number,
         role: Number,
         board: [{

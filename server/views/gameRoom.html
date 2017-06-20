@@ -39,7 +39,9 @@
         </style>
     </head>
     <body>
+        {{#if showEnterGame}}
         <button type="button" class="button button1" id="join">Entrar na partida</button>
+        {{/if}}
         <ul id="messages"></ul>
         <form action="">
             <input id="m" autocomplete="off" /><button>Send</button>
