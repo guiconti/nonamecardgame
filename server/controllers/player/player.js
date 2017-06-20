@@ -1,5 +1,6 @@
-let racesList = require('./racesList');
-let rolesList = require('./typesList');
+const racesList = require('./racesList');
+const rolesList = require('./typesList');
+const addCard = require('./addCard'); 
 
 let name;
 let id;
@@ -14,4 +15,6 @@ function Player(name, race, type){
     this.role = rolesList.NONE;
     this.id = 'eowakoskmzkx';
 }
+
+Player.prototype.addCard = addCard;
 
