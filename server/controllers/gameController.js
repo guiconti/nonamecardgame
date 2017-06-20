@@ -20,6 +20,7 @@ exports.newGame = (req, res) => {
         console.log(createdGame.getDungeon());
         console.log(createdGame.dungeons);
         createdGame.insertPlayer(new Player('Gib'));
+        console.log(createdGame.players);
         res.status(200).json({
             msg: {
                 id: createdGame.id

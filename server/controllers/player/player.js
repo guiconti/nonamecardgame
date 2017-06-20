@@ -18,3 +18,4 @@ function Player(name){
 
 Player.prototype.addCard = addCard;
 
+module.exports = Player;

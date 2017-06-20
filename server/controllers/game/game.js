@@ -19,6 +19,7 @@ function Game(name, password){
     this.id = 'jsdkjasdu12jkdsjakdl';
     this.treasures = treasuresList;
     this.dungeons = dungeonsList;
+    this.players = [];
 }
 
 Game.prototype.getTreasure = getTreasure;
