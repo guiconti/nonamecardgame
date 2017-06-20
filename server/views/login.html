@@ -6,11 +6,46 @@
     <body>
         {{#if user}}
         <h1>Welcome {{name}}</h1>
+        <form action="">
+            <input id="roomName" autocomplete="off" /><button>Create Game</button>
+        </form>
+        <br>
+        <h2 id="roomId"></h2>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('form').submit(function(){
+                    /* stop form from submitting normally */
+                    event.preventDefault();
+
+                    var roomInfo = {
+                        name: $('#roomName').val()
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: 'game/create',
+                        data: JSON.stringify(roomInfo),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        beforeSend: function(){
+                            $('form').hide();
+                        },
+                        success: function(data) {
+                            $('#roomId').append("Room created, the room id is: " + data.msg.id);
+                            //alert('Oi');
+                        },
+                        error: function(data) {
+                            //alert(data);
+                        }
+                    });
+                });
+            });
+        </script>
         {{else}}
         <form action="">
-            <input id="name" autocomplete="off" /><button>Cadastrar</button>
+            <input id="playerName" autocomplete="off" /><button>Cadastrar</button>
         </form>
-        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script>
             $(document).ready(function(){
                 $('form').submit(function(){
@@ -18,7 +53,7 @@
                     event.preventDefault();
 
                     var userInfo = {
-                        name: $('#name').val()
+                        name: $('#playerName').val()
                     };
                     $.ajax({
                         type: "POST",

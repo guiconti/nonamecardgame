@@ -4,4 +4,4 @@ module.exports = {
     WARRIOR: 2,
     THIEF: 3,
     WIZARD: 4
-}
+};

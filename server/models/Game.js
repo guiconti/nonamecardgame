@@ -8,6 +8,7 @@ let GameSchema = new Schema({
     players: [{
         name: String,
         id: String,
+        communicationId: String,
         race: Number,
         role: Number,
         board: [{
