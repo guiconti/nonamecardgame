@@ -13,26 +13,32 @@ exports.newGame = (req, res) => {
         res.status(400).json({msg: 'Invalid new game parameters'});
     } else {
         let gameBody = new Game(body.name.trim(), body.password.trim());
-        console.log(gameBody.getTreasure());
-        console.log(gameBody.getTreasure());
-        console.log(gameBody.getTreasure());
-        console.log(gameBody.treasures);
-        console.log(gameBody.getDungeon());
-        console.log(gameBody.getDungeon());
-        console.log(gameBody.getDungeon());
-        console.log(gameBody.dungeons);
-        gameBody.insertPlayer(new Player('Gib'));
-        console.log(gameBody.players);
-        gameBody.players[0].addCard(gameBody.getTreasure());
-
         let newGameModel = new GameModel(gameBody);
         newGameModel.save((err, createdGame) => {
-            if (err) res.status(400).json({msg: err});
-            res.status(200).json({
+            if (err) return res.status(400).json({msg: err});
+            return res.status(200).json({
                 msg: {
-                    createdGame
+                    id: createdGame._id
                 }
             });
         })
     }
+};
+
+exports.enterGame = (req, res) => {
+
+    var body = _.pick(req.params, 'gameId');
+
+    if (!validator.isValidGameId(body.gameId)){
+        return res.status(400).json({
+            msg: 'Invalid game id.'
+        });
+    }
+
+    GameModel.findById(body.gameId.trim(), (err, gameTable) => {
+        if (err) return res.status(404).json({msg: 'Game id not found.'});
+        return res.status(200).json({
+            msg: gameTable
+        });
+    });
 };

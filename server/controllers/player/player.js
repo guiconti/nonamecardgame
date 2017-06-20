@@ -11,7 +11,6 @@ let hand = [];
 
 function Player(name){
     this.name = name;
-    this.id = 'eowakoskmzkx';
     this.race = racesList.HUMAN;
     this.role = rolesList.NONE;
     this.board = [];

@@ -8,5 +8,6 @@ router.use(bodyParser);
 
 router.get('/', (req, res) => {res.status(200).json({msg: 'oi'})});
 router.post('/game/create', gameController.newGame);
+router.get('/game/:gameId', gameController.enterGame);
 
 module.exports = router;
