@@ -14,7 +14,7 @@ router.post('/login', login.newUser);
 router.post('/game/create', middleware.validateToken, gameController.newGame);
 router.get('/game/:gameId', middleware.validateToken, gameController.enterGame);
 router.post('/game/:gameId/player/insert', middleware.validateToken, gameController.addPlayer);
-
+router.get('/game/:gameId/start', middleware.validateToken, gameController.startGame);
 router.get('/game/:gameId/card/pick', middleware.validateToken, gameController.getCard);
 
 module.exports = router;

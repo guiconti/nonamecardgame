@@ -1,8 +1,7 @@
-const treasuresList = require('../treasure/treasuresList');
-const dungeonsList = require('../dungeon/dungeonsList');
 const getTreasure = require('../treasure/getTreasure');
 const getDungeon = require('../dungeon/getDungeon');
 const insertPlayer = require('./insertPlayer');
+const setupGame = require('./setupGame');
 
 let name;
 let password;
@@ -12,7 +11,7 @@ let dungeons = [];
 let discardDungeons = [];
 let players = [];
 
-function Game(name, password){
+function newGame(name, password){
     this.name = name;
     this.password = password;
     this.treasures = treasuresList;
@@ -20,8 +19,9 @@ function Game(name, password){
     this.players = [];
 }
 
-Game.prototype.getTreasure = getTreasure;
-Game.prototype.getDungeon = getDungeon;
-Game.prototype.insertPlayer = insertPlayer;
-
-module.exports = Game;
+module.exports = {
+    newGame: newGame,
+    setupGame: setupGame,
+    getTreasure: getTreasure,
+    getDungeon: getDungeon
+};

@@ -16,6 +16,16 @@ let GameSchema = new Schema({
         hand: [{
             cardId: String
         }]
+    }],
+    treasures: [{
+        id: String,
+        name: String,
+        cardType: {type: Number, default: 0}
+    }],
+    dungeons: [{
+        id: String,
+        name: String,
+        cardType: {type: Number, default: 1}
     }]
 });
 
