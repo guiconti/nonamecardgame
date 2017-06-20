@@ -4,6 +4,7 @@ const Schema   = mongoose.Schema;
 let GameSchema = new Schema({
     name: String,
     password: String,
+    active: {type: Boolean, default: false},
     players: [{
         name: String,
         id: String,

@@ -4,6 +4,8 @@ const EVENT_TYPES = {
     CHAT_MESSAGE: 'chatMessage'
 };
 
+const cookie = require('cookie');
+
 let createdGameChats = [];
 
 exports.createGameChat = (namespace) => {
@@ -12,6 +14,10 @@ exports.createGameChat = (namespace) => {
     if (createdGameChats.indexOf(namespace) == -1){
         createdGameChats.push(namespace);
         ioNamespace.on('connection', function(socket){
+
+            let userCookies = cookie.parse(socket.request.headers.cookie);
+            socket.join(userCookies.session);
+            
             socket.on(EVENT_TYPES.CHAT_MESSAGE, function(msg){
                 ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, msg);
             });

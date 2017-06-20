@@ -17,6 +17,13 @@ const tokenSecretKey = 'N0N@m3C4?r1dS1asCGame';
  */
 const dataSecretKey = 'HDP21JHDPSUCIX91@#@!hsdjdnjcxi921ek!';
 
+/**
+ * User's ID generator
+ * @readonly
+ * @const {string}
+ */
+const idSaltyKey = 'gHJahjklghJbhlgYO1GY751tobYOt6zoylhYOT!Ô1HUYo!RôlH!UotOLBU!YOt';
+
 const crypto = require('crypto-js');
 const jwt = require('jsonwebtoken');
 
@@ -36,6 +43,9 @@ exports.generateToken = function(userData){
         try {
 
             if(typeof(userData) == 'null') return reject('Not a valid user data');
+
+            //  Generate a unique ID, maybe change this to users DB ID later
+            userData.id = crypto.AES.encrypt(JSON.stringify(userData), idSaltyKey).toString();
 
             var encryptedUserData = crypto.AES.encrypt(JSON.stringify(userData), dataSecretKey).toString();
             // Get our token encrypted data 

@@ -40,9 +40,10 @@ exports.enterGame = (req, res) => {
         if (err) return res.status(404).json({msg: 'Game table not found.'});
 
         let gameRoomInfo = {
-            namespace: body.gameId.trim()
+            namespace: body.gameId.trim(),
+            playerRoomId: req.cookies.session
         }
-        if (!validator.isPlayerInGame(gameTable, req.userInfo.id)){
+        if (!validator.isPlayerInGame(gameTable, req.userInfo)){
             gameRoomInfo.showEnterGame = true;
         }
 
@@ -63,7 +64,7 @@ exports.addPlayer = (req, res) => {
     GameModel.findById(params.gameId.trim(), (err, gameTable) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
-        let newPlayer = new Player(req.userInfo.name.trim(), req.cookies.session);
+        let newPlayer = new Player(req.userInfo.name.trim(), req.userInfo.id);
 
         if (validator.isPlayerInGame(gameTable, newPlayer)){
             return res.status(400).json({msg: 'Player already in game'});
@@ -76,4 +77,22 @@ exports.addPlayer = (req, res) => {
             return res.status(200).json({msg: 'Welcome to the table'});
         });
     });
+};
+
+exports.getCard = (req, res) => {
+
+    let params = _.pick(req.params, 'gameId');
+
+    eventEmitter.sendPrivateChatMessage(params.gameId.trim(), req.cookies.session, 'Privadao');
+
+    return res.status(200).json({msg: 'Toma'});
+
+};
+
+function getPlayerIndex(gameTable, player) {
+    let counter = -1;
+    return gameTable.players.some((actualPlayer) => {
+        counter++;
+        return actualPlayer.id == player.id;
+    })?counter:-1;
 };
