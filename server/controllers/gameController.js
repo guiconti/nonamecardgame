@@ -1,4 +1,5 @@
-const Game = require('./game');
+const Game = require('./game/game');
+const Player = require('./player/player');
 const validator = require('./utils/validator');
 const _ = require('underscore');
 
@@ -18,6 +19,7 @@ exports.newGame = (req, res) => {
         console.log(createdGame.getDungeon());
         console.log(createdGame.getDungeon());
         console.log(createdGame.dungeons);
+        createdGame.insertPlayer(new Player('Gib'));
         res.status(200).json({
             msg: {
                 id: createdGame.id

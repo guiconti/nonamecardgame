@@ -1,4 +1,4 @@
-var cardsType = require('../cardsType');
+var cardsType = require('../game/cardsType');
 
 //  All dungeons (This will go to a database)
 module.exports = [

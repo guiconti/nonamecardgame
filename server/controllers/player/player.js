@@ -1,5 +1,5 @@
 const racesList = require('./racesList');
-const rolesList = require('./typesList');
+const rolesList = require('./rolesList');
 const addCard = require('./addCard'); 
 
 let name;
@@ -9,7 +9,7 @@ let role;
 let board = [];
 let hand = [];
 
-function Player(name, race, type){
+function Player(name){
     this.name = name;
     this.race = racesList.HUMAN;
     this.role = rolesList.NONE;

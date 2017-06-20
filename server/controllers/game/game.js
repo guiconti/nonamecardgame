@@ -1,7 +1,8 @@
-const treasuresList = require('./treasure/treasuresList');
-const dungeonsList = require('./dungeon/dungeonsList');
-const getTreasure = require('./treasure/getTreasure');
-const getDungeon = require('./dungeon/getDungeon');
+const treasuresList = require('../treasure/treasuresList');
+const dungeonsList = require('../dungeon/dungeonsList');
+const getTreasure = require('../treasure/getTreasure');
+const getDungeon = require('../dungeon/getDungeon');
+const insertPlayer = require('./insertPlayer');
 
 let name;
 let password;
@@ -22,5 +23,6 @@ function Game(name, password){
 
 Game.prototype.getTreasure = getTreasure;
 Game.prototype.getDungeon = getDungeon;
+Game.prototype.insertPlayer = insertPlayer;
 
 module.exports = Game;
