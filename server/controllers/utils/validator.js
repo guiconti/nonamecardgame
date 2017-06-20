@@ -1,10 +1,22 @@
 const _ = require('underscore');
 
-exports.isValidGame = (name, password) => {
-    return (_.isString(name) && name.trim().length > 0) && 
-    (_.isUndefined(password) || (_.isString(password) && password.trim().length > 0));
+exports.isValidGame = (gameInfo) => {
+    try{
+        return (_.isString(gameInfo.name) && gameInfo.name.trim().length > 0) && 
+            (_.isUndefined(gameInfo.password) || (_.isString(gameInfo.assword) && gameInfo.password.trim().length > 0));
+    } catch (e){
+        return false;
+    }
 };
 
 exports.isValidGameId = (gameId) => {
     return _.isString(gameId) && gameId.trim().length > 0;
+};
+
+exports.isValidPlayer = (playerInfo) => {
+    try {
+        return _.isString(playerInfo.name) && playerInfo.name.trim().length > 0;
+    } catch (e){
+        return false;
+    }
 };
