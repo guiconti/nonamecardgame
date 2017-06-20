@@ -38,10 +38,18 @@ exports.enterGame = (req, res) => {
 
     GameModel.findById(body.gameId.trim(), (err, gameTable) => {
         if (err) return res.status(404).json({msg: 'Game table not found.'});
+
+        let gameRoomInfo = {
+            namespace: body.gameId.trim()
+        }
+        if (!validator.isPlayerInGame(gameTable, req.userInfo.id)){
+            gameRoomInfo.showEnterGame = true;
+        }
+
         eventListener.createGameChat(body.gameId.trim());
         eventEmitter.sendChatMessage(body.gameId.trim(), 'New player connected');
 
-        return res.status(200).render('gameRoom', {namespace: body.gameId.trim()});
+        return res.status(200).render('gameRoom', gameRoomInfo);
     });
 };
 
