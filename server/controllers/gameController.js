@@ -7,6 +7,8 @@ const _ = require('underscore');
 const eventListener = require('./eventListener');
 const eventEmitter = require('./eventEmitter');
 
+const tokenManager = require('./tokenManager');
+
 const MAX_PLAYERS = 6;
 
 exports.newGame = (req, res) => {
@@ -38,7 +40,22 @@ exports.enterGame = (req, res) => {
         if (err) return res.status(404).json({msg: 'Game table not found.'});
         eventListener.createGameChat(body.gameId.trim());
         eventEmitter.sendChatMessage(body.gameId.trim(), 'New player connected');
-        return res.status(200).render('gameRoom', {namespace: body.gameId.trim()});
+
+        if (!validator.isValidCookie(req.cookies)) {
+            let userData = {
+                address: req.connection.remoteAddress
+            };
+            tokenManager.generateToken(userData).then((token) => {
+                // Set the cookie
+                res.cookie('session', token, {maxAge: 0});
+                return res.status(200).render('gameRoom', {namespace: body.gameId.trim()});
+            }, (err) => {
+                console.log(err);
+                return res.status(500).json({msg: 'Error generating cookie'});
+            });
+        } else {
+            return res.status(200).render('gameRoom', {namespace: body.gameId.trim()});
+        }
     });
 };
 
@@ -54,7 +71,7 @@ exports.addPlayer = (req, res) => {
     GameModel.findById(params.gameId.trim(), (err, gameTable) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
-        let newPlayer = new Player(body.name.trim());
+        let newPlayer = new Player(body.name.trim(), req.cookies.session);
         gameTable.players.push(newPlayer);
         gameTable.save((err) => {
             if(err) return res.status(500).json({msg: 'We could not add you to the table. Try again later'});

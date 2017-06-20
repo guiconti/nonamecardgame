@@ -7,6 +7,7 @@ require('../server/core/mongoose');
 const express = require('express');
 const PORT = process.env.PORT;
 const app = express();
+const cookieParser = require('cookie-parser');
 const server = require('http').createServer(app);  
 //  Global IO is really necessary?
 global.io = require('socket.io')(server);
@@ -25,6 +26,7 @@ app.engine('.html', hbs({extname: '.html', layoutsDir:layoutsPath}));
 app.set('view engine', '.html');
 app.set('views', viewsPath);
 
+app.use(cookieParser());
 app.use(router);
 
 server.listen(PORT, (error) => {

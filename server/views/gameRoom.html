@@ -55,7 +55,7 @@
                     return false;
                 });
                 $('#join').click(function(){
-                        $.ajax({
+                    $.ajax({
                         type: "POST",
                         url: $(location).attr("href") + '/player/insert',
                         data: JSON.stringify({name: 'Teste'}),

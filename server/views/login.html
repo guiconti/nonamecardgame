@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <title>No Name Card Game</title>
+    </head>
+    <body>
+        {{#if user}}
+            <h1>Welcome {{name}}</h1>
+        {{else}}
+        <form action="">
+            <input id="name" autocomplete="off" /><button>Cadastrar</button>
+        </form>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('form').submit(function(){
+                    /* stop form from submitting normally */
+                    event.preventDefault();
+
+                    var userInfo = {
+                        name: $('#name').val()
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: 'login',
+                        data: JSON.stringify(userInfo),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        beforeSend: function(){
+                            $('form').hide();
+                        },
+                        success: function(data) {
+                            window.location = data.redirectUrl;
+                            //alert('Oi');
+                        },
+                        error: function(data) {
+                            //alert(data);
+                        }
+                    });
+                });
+            });
+        </script>
+        {{/if}}
+    </body>
+</html>

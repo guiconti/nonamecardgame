@@ -14,9 +14,25 @@ exports.isValidGameId = (gameId) => {
 };
 
 exports.isValidPlayer = (playerInfo) => {
-    try {
+    try{
         return _.isString(playerInfo.name) && playerInfo.name.trim().length > 0;
     } catch (e){
         return false;
     }
 };
+
+exports.isValidUser = (userInfo) => {
+    try{
+        return _.isString(userInfo.name) && userInfo.name.trim().length > 0;
+    } catch(e){
+        return false;
+    }
+}
+
+exports.isValidCookie = (cookie) => {
+    try{
+        return _.isString(cookie.session);
+    } catch(e){
+        return false;
+    }
+}
