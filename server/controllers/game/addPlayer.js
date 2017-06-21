@@ -33,7 +33,7 @@ module.exports = (req, res) => {
 
             //  Build player info for other players to add
             let playerInfo = {
-                num: gameTable.players.length,
+                id: newPlayer.id,
                 name: newPlayer.name,
                 level: newPlayer.level,
                 combatPower: newPlayer.combatPower,

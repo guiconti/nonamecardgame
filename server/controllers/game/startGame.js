@@ -33,8 +33,8 @@ module.exports = (req, res) => {
 
 function sendGameToPlayers(gameTable) {
     gameTable.players.forEach((player) => {
-        let playerInfo = _.omit(player, 'communicationId');
-        eventEmitter.sendPrivateChatMessage(gameTable._id, player.communicationId, JSON.stringify(playerInfo))
+        let playerInfo = _.omit(player, 'name', '_id', 'communicationId');
+        eventEmitter.sendPrivatePlayerInfo(gameTable._id, player.communicationId, JSON.stringify(playerInfo))
     })
     let gameInfoCensored = gameTable.players.map((player) => {
         return _.omit(player, 'communicationId', 'hand', '_id');
@@ -44,8 +44,8 @@ function sendGameToPlayers(gameTable) {
 
 function setupGame(gameTable){
     gameTable.active = true;
-    gameTable.treasures = treasuresList;
-    gameTable.dungeons = dungeonsList;
+    gameTable.treasures = treasuresList();
+    gameTable.dungeons = dungeonsList();
     gameTable.players.forEach((player) => {
         player.hand.push(getTreasure(gameTable));
         player.hand.push(getTreasure(gameTable));

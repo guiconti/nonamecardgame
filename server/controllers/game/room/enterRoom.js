@@ -28,6 +28,7 @@ module.exports = (req, res) => {
             gameRoomInfo.notInGame = false;
             gameRoomInfo.boardDisplay = '';
             playerInfo = {
+                id: gameTable.players[playerIndex].id,
                 name: gameTable.players[playerIndex].name,
                 level: gameTable.players[playerIndex].level,
                 combatPower: gameTable.players[playerIndex].combatPower,
@@ -41,6 +42,7 @@ module.exports = (req, res) => {
         for(let i = 0; i < gameTable.players.length; i++){
             if(i != playerIndex){
                 playerInfo = {
+                    id: gameTable.players[i].id,
                     name: gameTable.players[i].name,
                     level: gameTable.players[i].level,
                     combatPower: gameTable.players[i].combatPower,
