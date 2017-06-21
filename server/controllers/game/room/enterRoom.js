@@ -52,7 +52,7 @@ module.exports = (req, res) => {
         }
 
         eventListener.createGameChat(params.gameId);
-        eventEmitter.sendChatMessage(params.gameId, 'New player connected');
+        eventEmitter.sendChatMessage(params.gameId, req.userInfo.name + ' connected');
 
         return res.status(200).render('gameRoom', gameRoomInfo);
     });

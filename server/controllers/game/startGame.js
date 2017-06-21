@@ -48,5 +48,7 @@ function setupGame(gameTable){
         player.hand.push(getDungeon(gameTable));
         player.hand.push(getDungeon(gameTable));
     });
+    //  Change this with some dice result
+    gameTable.turnPlayer = 0;
     return;
 }

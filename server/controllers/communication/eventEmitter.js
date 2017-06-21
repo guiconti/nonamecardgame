@@ -16,5 +16,5 @@ exports.sendNewPlayer = (namespace, playerInfo) => {
 
 exports.sendPrivateChatMessage = (namespace, room, message) => {
     let ioNamespace = io.of('/' + namespace);
-    ioNamespace.to(room).emit(EVENT_TYPES.CHAT_MESSAGE, message);
+    ioNamespace.to(room).emit(EVENT_TYPES.CHAT_MESSAGE, '[PRIVATE MESSAGE] ' + message);
 };

@@ -6,6 +6,7 @@ const EVENT_TYPES = {
     NEW_PLAYER: 'newPlayer'
 };
 
+const tokenManager = require('../utils/tokenManager');
 const cookie = require('cookie');
 
 let createdGameChats = [];
@@ -21,16 +22,24 @@ exports.createGameChat = (namespace) => {
             socket.join(userCookies.session);
             
             socket.on(EVENT_TYPES.CHAT_MESSAGE, function(msg){
-                ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, msg);
+                tokenManager.decryptToken(userCookies.session).then((userInfo) => {
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, userInfo.name + ": " + msg);
+                }, (err) => {
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, "Unknown: " + msg);
+                });
             });
             socket.on(EVENT_TYPES.GAME_INFO, function(msg){
                 ioNamespace.emit(EVENT_TYPES.GAME_INFO, msg);
-            })
+            });
             socket.on(EVENT_TYPES.NEW_PLAYER, function(msg){
                 ioNamespace.emit(EVENT_TYPES.NEW_PLAYER, msg);
             })
             socket.on(EVENT_TYPES.DISCONNECT, function(){
-                ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, 'User disconnected');
+                tokenManager.decryptToken(userCookies.session).then((userInfo) => {
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, userInfo.name + " " + disconnected);
+                }, (err) => {
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, "Unknown " + disconnected);
+                });
             })
         });
     }
