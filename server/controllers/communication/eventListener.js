@@ -36,9 +36,9 @@ exports.createGameChat = (namespace) => {
             })
             socket.on(EVENT_TYPES.DISCONNECT, function(){
                 tokenManager.decryptToken(userCookies.session).then((userInfo) => {
-                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, userInfo.name + " " + disconnected);
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, userInfo.name + " disconnected");
                 }, (err) => {
-                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, "Unknown " + disconnected);
+                    ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, "Unknown disconnected");
                 });
             })
         });

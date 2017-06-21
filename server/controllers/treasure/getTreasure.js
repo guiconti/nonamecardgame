@@ -1,3 +1,5 @@
+const Treasure = require('./treasure');
+
 module.exports = function(gameTable){
     var givenTreasureIndex = Math.floor((Math.random() * gameTable.treasures.length));
     var givenTreasure = gameTable.treasures[givenTreasureIndex];

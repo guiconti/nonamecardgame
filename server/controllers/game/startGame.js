@@ -25,7 +25,7 @@ module.exports = (req, res) => {
         setupGame(gameTable);
         gameTable.save((err) => {
             if (err) return res.status(500).json({msg: 'Error with the DB.'});
-            sendGameToPlayers(gameTable);
+            sendGameToPlayers(gameTable.toObject());
             return res.status(200).json({msg: 'Game started'});
         })
     });
@@ -33,9 +33,13 @@ module.exports = (req, res) => {
 
 function sendGameToPlayers(gameTable) {
     gameTable.players.forEach((player) => {
-        eventEmitter.sendChatMessage(gameTable.id, JSON.stringify(gameTable))
-        eventEmitter.sendPrivateChatMessage(gameTable.id, player.communicationId, JSON.stringify(player))
+        let playerInfo = _.omit(player, 'communicationId');
+        eventEmitter.sendPrivateChatMessage(gameTable._id, player.communicationId, JSON.stringify(playerInfo))
     })
+    let gameInfoCensored = gameTable.players.map((player) => {
+        return _.omit(player, 'communicationId', 'hand', '_id');
+    });
+    eventEmitter.sendChatMessage(gameTable._id, JSON.stringify(gameInfoCensored));
 }
 
 function setupGame(gameTable){

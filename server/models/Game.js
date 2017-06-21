@@ -15,21 +15,15 @@ let GameSchema = new Schema({
         race: Number,
         role: Number,
         board: [{
-            cardId: String
+            id: String,
+            name: String,
+            cardType: Number
         }],
         hand: [{
-            cardId: String
+            id: String,
+            name: String,
+            cardType: Number
         }]
-    }],
-    treasures: [{
-        id: String,
-        name: String,
-        cardType: {type: Number, default: 0}
-    }],
-    dungeons: [{
-        id: String,
-        name: String,
-        cardType: {type: Number, default: 1}
     }]
 });
 
