@@ -9,6 +9,8 @@ const getDungeon = require('../dungeon/getDungeon');
 const treasuresList = require('../treasure/treasuresList');
 const dungeonsList = require('../dungeon/dungeonsList');
 
+const MIN_PLAYERS_TO_MATCH = 2;
+
 module.exports = (req, res) => {
 
     let params = _.pick(req.params, 'gameId');
@@ -18,6 +20,7 @@ module.exports = (req, res) => {
     GameModel.findById(params.gameId, (err, gameTable) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.active) return res.status(400).json({msg: 'Game already begun.'});
+        if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({msg: 'There`s not enough players to start the game.'});
 
         setupGame(gameTable);
         gameTable.save((err) => {
