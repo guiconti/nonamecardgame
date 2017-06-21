@@ -72,7 +72,7 @@
                     });
                 });
                 socket.on('chatMessage', function(msg){
-                    $('#messages').append($('<li>').text(msg));
+                    $('#messages').prepend($('<li>').text(msg));
                 });
                 socket.on('playerStats', function(msg){
                     $('#playerStats').text(msg.name + ' Level:' + msg.level + 'Combat Power:' + msg.combatPower
