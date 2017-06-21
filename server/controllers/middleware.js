@@ -3,7 +3,7 @@
  * @module controllers/middleware
  */
 
-const tokenManager = require('./tokenManager');
+const tokenManager = require('./utils/tokenManager');
 const validator = require('./utils/validator');
 
 /**

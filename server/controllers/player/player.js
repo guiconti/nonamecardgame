@@ -5,6 +5,7 @@ let name;
 let id;
 let communicationId;
 let level;
+let combatPower;
 let race;
 let role;
 let board = [];
@@ -14,7 +15,8 @@ function Player(name, id, communicationId){
     this.name = name;
     this.id = id;
     this.communicationId = communicationId;
-    this.level = 0;
+    this.level = 1;
+    this.combatPower = 1;
     this.race = racesList.HUMAN;
     this.role = rolesList.NONE;
     this.board = [];

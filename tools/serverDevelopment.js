@@ -26,6 +26,7 @@ app.engine('.html', hbs({extname: '.html', layoutsDir:layoutsPath}));
 app.set('view engine', '.html');
 app.set('views', viewsPath);
 
+app.use('/assets', express.static('./assets'));
 app.use(cookieParser());
 app.use(router);
 

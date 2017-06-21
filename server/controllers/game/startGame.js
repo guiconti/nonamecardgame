@@ -2,7 +2,12 @@ const _ = require('underscore');
 const validator = require('../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
-const game = require('./game');
+const eventEmitter = require('../communication/eventEmitter');
+
+const getTreasure = require('../treasure/getTreasure');
+const getDungeon = require('../dungeon/getDungeon');
+const treasuresList = require('../treasure/treasuresList');
+const dungeonsList = require('../dungeon/dungeonsList');
 
 module.exports = (req, res) => {
 
@@ -14,7 +19,7 @@ module.exports = (req, res) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.active) return res.status(400).json({msg: 'Game already begun.'});
 
-        game.setupGame(gameTable);
+        setupGame(gameTable);
         gameTable.save((err) => {
             if (err) return res.status(500).json({msg: 'Error with the DB.'});
             sendGameToPlayers(gameTable);
@@ -28,4 +33,17 @@ function sendGameToPlayers(gameTable) {
         eventEmitter.sendChatMessage(gameTable.id, JSON.stringify(gameTable))
         eventEmitter.sendPrivateChatMessage(gameTable.id, player.communicationId, JSON.stringify(player))
     })
+}
+
+function setupGame(gameTable){
+    gameTable.active = true;
+    gameTable.treasures = treasuresList;
+    gameTable.dungeons = dungeonsList;
+    gameTable.players.forEach((player) => {
+        player.hand.push(getTreasure(gameTable));
+        player.hand.push(getTreasure(gameTable));
+        player.hand.push(getDungeon(gameTable));
+        player.hand.push(getDungeon(gameTable));
+    });
+    return;
 }

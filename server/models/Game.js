@@ -5,10 +5,13 @@ let GameSchema = new Schema({
     name: String,
     password: String,
     active: {type: Boolean, default: false},
+    turnPlayer:  {type: Number, default: 0},
     players: [{
         name: String,
         id: String,
         communicationId: String,
+        level: Number,
+        combatPower: Number,
         race: Number,
         role: Number,
         board: [{

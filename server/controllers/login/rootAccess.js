@@ -1,5 +1,5 @@
 const validator = require('../utils/validator');
-const tokenManager = require('../tokenManager');
+const tokenManager = require('../utils/tokenManager');
 
 module.exports = (req, res) => {
     if (!validator.isValidCookie(req.cookies)) {

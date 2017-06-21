@@ -1,4 +1,4 @@
-const game = require('../game');
+const Game = require('../game');
 const _ = require('underscore');
 const validator = require('../../utils/validator');
 const mongoose = require('mongoose');
@@ -10,7 +10,7 @@ module.exports = (req, res) => {
     if(!validator.isValidGame(body)) {
         res.status(400).json({msg: 'Invalid new game parameters'});
     } else {
-        let gameBody = game.newGame(body.name.trim());
+        let gameBody = new Game(body.name.trim());
         let newGameModel = new GameModel(gameBody);
         newGameModel.save((err, createdGame) => {
             if (err) return res.status(400).json({msg: err});

@@ -1,6 +1,6 @@
 const validator = require('../utils/validator');
 const _ = require('underscore');
-const tokenManager = require('../tokenManager');
+const tokenManager = require('../utils/tokenManager');
 
 module.exports = (req, res) => {
     let body = _.pick(req.body, 'name');

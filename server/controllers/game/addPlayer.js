@@ -1,5 +1,6 @@
 const _ = require('underscore');
 const validator = require('../utils/validator');
+const getPlayerIndex = require('../utils/getPlayerIndex');
 const Player = require('../player/player');
 const eventEmitter = require('../communication/eventEmitter');
 const mongoose = require('mongoose');
@@ -18,8 +19,10 @@ module.exports = (req, res) => {
         if (err || !gameTable) return res.status(404).json({msg: 'Game table not found.'});
         if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
         if (gameTable.active) return res.status(400).json({msg: 'Game already started.'});
+        
         let newPlayer = new Player(req.userInfo.name.trim(), req.userInfo.id, req.cookies.session);
-        if (validator.isPlayerInGame(gameTable, newPlayer)){
+        let playerIndex = getPlayerIndex(gameTable, newPlayer);
+        if (playerIndex != -1){
             return res.status(400).json({msg: 'Player already in game'});
         }
 

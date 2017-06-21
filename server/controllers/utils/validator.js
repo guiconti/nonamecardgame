@@ -36,13 +36,3 @@ exports.isValidCookie = (cookie) => {
         return false;
     }
 };
-
-exports.isPlayerInGame = (gameTable, player) => {
-    try{
-        return gameTable.players.find((actualPlayer) => {
-            return actualPlayer.id == player.id;
-        })
-    } catch(e){
-        return true;
-    }
-}
