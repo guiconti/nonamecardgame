@@ -6,40 +6,48 @@
         <link href="/assets/css/components.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     </head>
-        <body>
-            <div class="container {{boardDisplay}}" id="gameInfo">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="portlet box green-meadow">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i id="playerStats" class="fa fa-comments">{{playerName}} Level:{{playerLevel}}<br>Race:{{playerRace}} Class:{{playerRole}}</i> </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="table-scrollable">
-                                    <table class="table table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th> Card Name </th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+    <body>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="container {{boardDisplay}}" id="gameInfo">
+                    <div class="row" id="playerBoards">
+                        {{#each players}}
+                        <div class="col-md-3">
+                            <div class="portlet box green-meadow">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i id="playerStats" class="fa fa-comments">{{name}} Level:{{level}} Combat Power:{{combatPower}}<br>Race:{{race}} Class:{{role}}</i> </div>
                                 </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th> Card Name </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                {{#if isMain}}
+                                <button type="button" class="btn purple-plum" id="pickCard">Sacar carta</button>
+                                {{/if}}
                             </div>
-                            <button type="button" class="btn purple-plum" id="pickCard">Sacar carta</button>
                         </div>
-                    </div>    
-                </div>
-            </div>
-            {{#if notInGame}}
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <button type="button" class="btn green" id="joinRoom">Entrar na partida</button>
+                        {{/each}}    
                     </div>
                 </div>
+                {{#if notInGame}}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn green" id="joinRoom">Entrar na partida</button>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
             </div>
-            {{/if}}
+        </div>
         <ul id="messages"></ul>
         <form action="">
             <input id="m" autocomplete="off" /><button>Send</button>
@@ -55,7 +63,6 @@
                     return false;
                 });
                 $('#joinRoom').click(function(){
-                    console.log('a');
                     $.ajax({
                         type: "POST",
                         url: $(location).attr("href") + '/player/insert',
@@ -65,6 +72,7 @@
                         success: function(jsonData) {
                             $('#joinRoom').hide();
                             $('#gameInfo').removeClass('hidden');
+                            window.location = $(location).attr('href');
                         },
                         error: function(data) {
                             alert(data);
@@ -77,6 +85,9 @@
                 socket.on('playerStats', function(msg){
                     $('#playerStats').text(msg.name + ' Level:' + msg.level + 'Combat Power:' + msg.combatPower
                         + '\nRace:' + msg.race + ' Class:' + msg.class);
+                });
+                socket.on('newPlayer', function(playerInfo){
+                    $('#playerBoards').append("<div class=\"col-md-3\"><div class=\"portlet box green-meadow\"><div class=\"portlet-title\"><div class=\"caption\"><i id=\"player" + playerInfo.num + "Stats\" class=\"fa\">"+ playerInfo.name +" Level:"+ playerInfo.level +" Combat Power:"+ playerInfo.combatPower +"<br>Race:"+ playerInfo.race +" Class:"+ playerInfo.role +"</i> </div></div><div class=\"portlet-body\"><div class=\"table-scrollable\"><table class=\"table table-striped table-hover\"><thead><tr><th> Card Name </th></tr></thead></table></div></div></div></div>")
                 })
             });
         </script>

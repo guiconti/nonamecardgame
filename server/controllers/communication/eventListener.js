@@ -2,7 +2,8 @@
 const EVENT_TYPES = {
     DISCONNECT: 'disconnect',
     CHAT_MESSAGE: 'chatMessage',
-    GAME_INFO: 'gameInfo'
+    GAME_INFO: 'gameInfo',
+    NEW_PLAYER: 'newPlayer'
 };
 
 const cookie = require('cookie');
@@ -24,6 +25,9 @@ exports.createGameChat = (namespace) => {
             });
             socket.on(EVENT_TYPES.GAME_INFO, function(msg){
                 ioNamespace.emit(EVENT_TYPES.GAME_INFO, msg);
+            })
+            socket.on(EVENT_TYPES.NEW_PLAYER, function(msg){
+                ioNamespace.emit(EVENT_TYPES.NEW_PLAYER, msg);
             })
             socket.on(EVENT_TYPES.DISCONNECT, function(){
                 ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, 'User disconnected');

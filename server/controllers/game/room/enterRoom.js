@@ -17,6 +17,7 @@ module.exports = (req, res) => {
         let gameRoomInfo = {
             namespace: params.gameId,
             playerRoomId: req.cookies.session,
+            players: [],
             notInGame: true,
             boardDisplay: 'hidden'
         }
@@ -26,12 +27,30 @@ module.exports = (req, res) => {
         if (playerIndex != -1){
             gameRoomInfo.notInGame = false;
             gameRoomInfo.boardDisplay = '';
-            gameRoomInfo.playerName = gameTable.players[playerIndex].name;
-            gameRoomInfo.playerLevel = gameTable.players[playerIndex].level;
-            gameRoomInfo.playerCombatPower = gameTable.players[playerIndex].combatPower;
-            gameRoomInfo.playerRace = gameTable.players[playerIndex].race;
-            gameRoomInfo.playerRole = gameTable.players[playerIndex].role;
+            playerInfo = {
+                name: gameTable.players[playerIndex].name,
+                level: gameTable.players[playerIndex].level,
+                combatPower: gameTable.players[playerIndex].combatPower,
+                race: gameTable.players[playerIndex].race,
+                role: gameTable.players[playerIndex].role,
+                isMain: true
+            };
+            gameRoomInfo.players.push(playerInfo);
         }
+
+        for(let i = 0; i < gameTable.players.length; i++){
+            if(i != playerIndex){
+                playerInfo = {
+                    name: gameTable.players[i].name,
+                    level: gameTable.players[i].level,
+                    combatPower: gameTable.players[i].combatPower,
+                    race: gameTable.players[i].race,
+                    role: gameTable.players[i].role
+                };
+                gameRoomInfo.players.push(playerInfo);
+            }
+        }
+
         eventListener.createGameChat(params.gameId);
         eventEmitter.sendChatMessage(params.gameId, 'New player connected');
 

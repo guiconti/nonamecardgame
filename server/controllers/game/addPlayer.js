@@ -29,7 +29,19 @@ module.exports = (req, res) => {
         gameTable.players.push(newPlayer);
         gameTable.save((err) => {
             if(err) return res.status(500).json({msg: 'We could not add you to the table. Try again later'});
-            eventEmitter.sendChatMessage(params.gameId, req.userInfo.name.trim() + ' entered the game.')
+            eventEmitter.sendChatMessage(params.gameId, req.userInfo.name.trim() + ' entered the game.');
+
+            //  Build player info for other players to add
+            let playerInfo = {
+                num: gameTable.players.length,
+                name: newPlayer.name,
+                level: newPlayer.level,
+                combatPower: newPlayer.combatPower,
+                race: newPlayer.race,
+                role: newPlayer.role
+            }
+            eventEmitter.sendNewPlayer(params.gameId, playerInfo);
+
             return res.status(200).json({msg: 'Welcome to the table'});
         });
     });
