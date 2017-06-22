@@ -105,7 +105,9 @@
                 });
                 socket.on('gameInfo', function(gameInfoJSON){
                     var gameInfo = JSON.parse(gameInfoJSON);
-                    console.log(gameInfo);
+                    for (var i = 0; i < gameInfo.players.length; i++){
+                        if (isThisPlayer(gameInfo.players[i].id)) console.log('PLAYER!');
+                    }
                 });
                 socket.on('newPlayer', function(playerInfo){
                     $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">'+ playerInfo.name +' Level:'+ playerInfo.level +' Combat Power:'+ playerInfo.combatPower +'<br>Race:'+ playerInfo.race +' Class:'+ playerInfo.role +'</i> </div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
@@ -118,6 +120,10 @@
                         cards += '<tr id="' + playerInfo.hand[i].id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';
                     }
                     $('#hand_' + playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).html('<tr><th> Hand Cards </th></tr>' + cards);
+                }
+                function isThisPlayer(playerId){
+                    if ($('#hand_' + playerId.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).length) return true;
+                    return false;
                 }
             });
         </script>
