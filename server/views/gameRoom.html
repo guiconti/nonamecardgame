@@ -21,9 +21,21 @@
                                 <div class="portlet-body">
                                     <div class="table-scrollable">
                                         <table class="table table-striped table-hover">
+                                            {{#if isMain}}
+                                            <thead id="hand_{{id}}">
+                                                <tr>
+                                                    <th> Hand Cards </th>
+                                                </tr>
+                                                {{#if isMain}}
+                                                    {{#each hand}}
+                                                <td> {{name}} </td>
+                                                    {{/each}}
+                                                {{/if}}
+                                            </thead>
+                                            {{/if}}
                                             <thead id="board_{{id}}">
                                                 <tr>
-                                                    <th> Card Name </th>
+                                                    <th> Board Cards </th>
                                                 </tr>
                                                 {{#if isMain}}
                                                     {{#each hand}}
@@ -96,7 +108,7 @@
                     console.log(gameInfo);
                 });
                 socket.on('newPlayer', function(playerInfo){
-                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">'+ playerInfo.name +' Level:'+ playerInfo.level +' Combat Power:'+ playerInfo.combatPower +'<br>Race:'+ playerInfo.race +' Class:'+ playerInfo.role +'</i> </div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Card Name </th></tr></thead></table></div></div></div></div>');
+                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">'+ playerInfo.name +' Level:'+ playerInfo.level +' Combat Power:'+ playerInfo.combatPower +'<br>Race:'+ playerInfo.race +' Class:'+ playerInfo.role +'</i> </div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
                 })
                 function updatePlayerInfo(playerInfo){
                     $('#stats_' + playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).text(playerInfo.name + ' Level:' + playerInfo.level + 'Combat Power:' + playerInfo.combatPower
@@ -105,7 +117,7 @@
                     for (var i = 0; i < playerInfo.hand.length; i++){
                         cards += '<tr id="' + playerInfo.hand[i].id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';
                     }
-                    $('#board_' + playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).html('<tr><th> Card Name </th></tr>' + cards);
+                    $('#hand_' + playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).html('<tr><th> Hand Cards </th></tr>' + cards);
                 }
             });
         </script>
