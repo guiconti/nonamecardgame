@@ -2,7 +2,8 @@
 const EVENT_TYPES = {
     CHAT_MESSAGE: 'chatMessage',
     NEW_PLAYER: 'newPlayer',
-    PLAYER_INFO: 'playerInfo'
+    PLAYER_INFO: 'playerInfo',
+    GAME_INFO: 'gameInfo'
 };
 
 exports.sendChatMessage = (namespace, message) => {
@@ -13,6 +14,11 @@ exports.sendChatMessage = (namespace, message) => {
 exports.sendNewPlayer = (namespace, playerInfo) => {
     let ioNamespace = io.of('/' + namespace);
     ioNamespace.emit(EVENT_TYPES.NEW_PLAYER, playerInfo);
+};
+
+exports.sendGameInfo = (namespace, gameInfo) => {
+    let ioNamespace = io.of('/' + namespace);
+    ioNamespace.emit(EVENT_TYPES.GAME_INFO, gameInfo);
 };
 
 exports.sendPrivatePlayerInfo = (namespace, room, playerInfo) => {
