@@ -5,6 +5,7 @@
 
 const tokenManager = require('./utils/tokenManager');
 const validator = require('./utils/validator');
+const logger = require('../../tools/logger');
 
 /**
  * Executa uma ação IoT utilizando as APIs do mesmo.
@@ -32,10 +33,10 @@ exports.validateToken = function (req, res, next){
            req.userInfo = token;
            return next();
         }, (err) => {
-            //  Change for your use case on invalid token
-            return res.status(401).redirect('/');
+            res.status(401).redirect('/');
+            throw err;
         });      
-    } catch (e) {
-        console.log("err: " + e);
-    }   
+    } catch (err) {
+        return logger.logError(err);
+    }
 };

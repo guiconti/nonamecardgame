@@ -1,14 +1,21 @@
 const Treasure = require('./treasure');
+const logger = require('../../../tools/logger');
 
 module.exports = function(gameTable){
-    var givenTreasureIndex = Math.floor((Math.random() * gameTable.treasures.length));
-    var givenTreasure = gameTable.treasures[givenTreasureIndex];
-    gameTable.treasures.splice(givenTreasureIndex, 1);
+    try {
+        var givenTreasureIndex = Math.floor((Math.random() * gameTable.treasures.length));
+        var givenTreasure = gameTable.treasures[givenTreasureIndex];
+        gameTable.treasures.splice(givenTreasureIndex, 1);
 
-    if (gameTable.treasures.length == 0){
-        gameTable.treasures = gameTable.discardTreasures;
-        gameTable.discardTreasures = [];
+        if (gameTable.treasures.length == 0){
+            gameTable.treasures = gameTable.discardTreasures;
+            gameTable.discardTreasures = [];
+        }
+
+        return givenTreasure;
+    } catch(err){
+        logger.logError(err);
+        return undefined;
     }
-
-    return givenTreasure;
+    
 }

@@ -16,6 +16,10 @@ io.on('connection', function(socket){
     io.emit('chatMessage', msg);
   });
 });
+
+var morgan = require('morgan');
+app.use(morgan('tiny'));
+
 const router = require('../server/core/router.js');
 
 const viewsPath = (process.cwd() + '/server/views');

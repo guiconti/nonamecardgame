@@ -55,8 +55,8 @@ exports.generateToken = function(userData){
             
             return resolve(token);
             
-        } catch (e){
-            return reject(e);
+        } catch (err){
+            return reject(err);
         }   
     });
 };
@@ -82,8 +82,8 @@ exports.decryptToken = function(token){
             
             return resolve(tokenData);
             
-        } catch (e) {
-            return reject(e);
+        } catch (err) {
+            return reject(err);
         }    
     });      
 };
