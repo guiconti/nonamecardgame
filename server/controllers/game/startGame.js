@@ -55,11 +55,11 @@ function sendGameToPlayers(gameTable) {
             players: gameTable.players.map((player) => {
                 return _.omit(player, 'communicationId', 'hand', '_id');
             }),
-            turnPlayer: gameTable.turnPlayer
+            turnInfo: gameTable.turnInfo
         };
-        eventEmitter.sendGameInfo(gameTable._id, JSON.stringify(gameInfoCensored));
+        eventEmitter.sendTurnInfo(gameTable._id, JSON.stringify(gameInfoCensored.turnInfo));
         //  Fazer isso no front com o game info?
-        eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameInfoCensored.turnPlayer.name + ' turn.');    
+        eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameInfoCensored.turnInfo.playerName + ' turn.');    
     } catch(err){
         return logger.logError(err);
     }
@@ -79,9 +79,9 @@ function setupGame(gameTable){
             player.hand.push(getDungeon(gameTable));
         });
         //  Change this with some dice result
-        gameTable.turnPlayer = {
-            id: gameTable.players[0].id,
-            name: gameTable.players[0].name
+        gameTable.turnInfo = {
+            playerId: gameTable.players[0].id,
+            playerName: gameTable.players[0].name
         };
         return;    
     } catch(err){

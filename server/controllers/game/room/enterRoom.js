@@ -40,7 +40,10 @@ module.exports = (req, res) => {
                     combatPower: gameTable.players[playerIndex].combatPower,
                     race: gameTable.players[playerIndex].race,
                     role: gameTable.players[playerIndex].role,
-                    isMain: true
+                    hand: gameTable.players[playerIndex].hand,
+                    board: gameTable.players[playerIndex].board,
+                    isMain: true,
+                    isTurnEnable: gameTable.turnInfo.playerId != req.userInfo.id?'disabled':''
                 };
                 gameRoomInfo.players.push(playerInfo);
             }
@@ -53,7 +56,8 @@ module.exports = (req, res) => {
                         level: gameTable.players[i].level,
                         combatPower: gameTable.players[i].combatPower,
                         race: gameTable.players[i].race,
-                        role: gameTable.players[i].role
+                        role: gameTable.players[i].role,
+                        board: gameTable.players[i].board,
                     };
                     gameRoomInfo.players.push(playerInfo);
                 }

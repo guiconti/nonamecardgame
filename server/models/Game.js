@@ -5,9 +5,9 @@ let GameSchema = new Schema({
     name: String,
     password: String,
     active: {type: Boolean, default: false},
-    turnPlayer:  {
-        id: String,
-        name: String
+    turnInfo:  {
+        playerId: String,
+        playerName: String
     },
     players: [{
         name: String,
