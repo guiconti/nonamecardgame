@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 {{#if isMain}}
-                                <button type="button" class="btn purple-plum {{isTurnEnable}}" id="pickCard">Pick a card</button>
+                                <button type="button" class="btn purple-plum {{isTurnEnable}}" id="pickDungeon">Pick a dungeon</button>
                                 {{/if}}
                             </div>
                         </div>
@@ -87,18 +87,39 @@
                     $.ajax({
                         type: "POST",
                         url: $(location).attr("href") + '/player/insert',
-                        data: JSON.stringify({name: 'Teste'}),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
-                        success: function(jsonData) {
+                        beforeSend: function(){
                             $('#joinRoom').hide();
+                        },
+                        success: function(jsonData) {
                             $('#gameInfo').removeClass('hidden');
                             window.location = $(location).attr('href');
                         },
                         error: function(data) {
                             alert(data);
+                            $('#joinRoom').show();
                         }
                     });
+                });
+                $('#pickDungeon').click(function(){
+                    if(!$(this).hasClass('disabled')){
+                        $.ajax({
+                            type: "GET",
+                            url: $(location).attr("href") + '/dungeon/pick',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            beforeSend: function(){
+                                $('#pickDungeon').addClass('disabled');;
+                            },
+                            success: function(jsonData) {
+                            },
+                            error: function(data) {
+                                alert(data);
+                                $('#pickDungeon').removeClass('disabled');;
+                            }
+                        });
+                    }
                 });
                 socket.on('chatMessage', function(msg){
                     $('#messages').prepend($('<li>').text(msg));
@@ -129,9 +150,9 @@
                 }
                 function togglePlayerTurn(isPlayerTurn){
                     if (isPlayerTurn) {
-                        $('#pickCard').removeClass('disabled');
+                        $('#pickDungeon').removeClass('disabled');
                     } else {
-                        $('#pickCard').addClass('disabled');
+                        $('#pickDungeon').addClass('disabled');
                     }
                 }
             });

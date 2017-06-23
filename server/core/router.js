@@ -17,4 +17,6 @@ router.get('/game/:gameId', middleware.validateToken, gameController.enterRoom);
 router.post('/game/:gameId/player/insert', middleware.validateToken, gameController.addPlayer);
 router.get('/game/:gameId/start', middleware.validateToken, gameController.startGame);
 
+router.get('/game/:gameId/dungeon/pick', middleware.validateToken, gameController.pickDungeon);
+
 module.exports = router;

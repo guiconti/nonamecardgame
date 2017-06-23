@@ -5,9 +5,20 @@ let GameSchema = new Schema({
     name: String,
     password: String,
     active: {type: Boolean, default: false},
+    treasures: [{
+        name: String,
+        deck: Number,
+        cardType: Number,
+    }],
+    dungeons: [{
+        name: String,
+        deck: Number,
+        cardType: Number
+    }],
     turnInfo:  {
         playerId: String,
-        playerName: String
+        playerName: String,
+        phase: Number
     },
     players: [{
         name: String,
@@ -18,13 +29,13 @@ let GameSchema = new Schema({
         race: Number,
         role: Number,
         board: [{
-            id: String,
             name: String,
+            deck: Number,
             cardType: Number
         }],
         hand: [{
-            id: String,
             name: String,
+            deck: Number,
             cardType: Number
         }]
     }]

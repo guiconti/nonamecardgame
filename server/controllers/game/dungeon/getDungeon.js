@@ -1,4 +1,4 @@
-const logger = require('../../../tools/logger');
+const logger = require('../../../../tools/logger');
 
 module.exports = function(gameTable){
     try {
@@ -13,6 +13,7 @@ module.exports = function(gameTable){
 
         return givenDungeon;
     } catch(err){
+        console.log(err);
         logger.logError(err);
         return undefined;
     }

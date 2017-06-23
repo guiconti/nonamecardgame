@@ -41,3 +41,21 @@ exports.isValidCookie = (cookie) => {
         return false;
     }
 };
+
+exports.isPlayerTurn = (gameInfo, playerInfo) => {
+    try{
+        return gameInfo.turnInfo.playerId == playerInfo.id;
+    } catch(err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isActualPhase = (gameInfo, requestedPhase) => {
+    try{
+        return gameInfo.turnInfo.phase == requestedPhase;
+    } catch(err){
+        logger.logError(err);
+        return false;
+    }
+};

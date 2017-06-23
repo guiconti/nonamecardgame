@@ -3,12 +3,13 @@ const validator = require('../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../communication/eventEmitter');
-
-const getTreasure = require('../treasure/getTreasure');
-const getDungeon = require('../dungeon/getDungeon');
-const treasuresList = require('../treasure/treasuresList');
-const dungeonsList = require('../dungeon/dungeonsList');
 const logger = require('../../../tools/logger');
+
+const getTreasure = require('./treasure/getTreasure');
+const getDungeon = require('./dungeon/getDungeon');
+const treasuresList = require('./treasure/treasuresList');
+const dungeonsList = require('./dungeon/dungeonsList');
+const turnPhases = require('./turnPhases');
 
 const MIN_PLAYERS_TO_MATCH = 2;
 
@@ -29,6 +30,7 @@ module.exports = (req, res) => {
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({msg: 'There`s not enough players to start the game.'});
 
             setupGame(gameTable);
+            console.log(gameTable);
             gameTable.save((err) => {
                 if (err) {
                     res.status(500).json({msg: 'We could not save the game due to DB issues. Try again.'});
@@ -61,6 +63,7 @@ function sendGameToPlayers(gameTable) {
         //  Fazer isso no front com o game info?
         eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameInfoCensored.turnInfo.playerName + ' turn.');    
     } catch(err){
+        console.log(err);
         return logger.logError(err);
     }
     
@@ -81,10 +84,12 @@ function setupGame(gameTable){
         //  Change this with some dice result
         gameTable.turnInfo = {
             playerId: gameTable.players[0].id,
-            playerName: gameTable.players[0].name
+            playerName: gameTable.players[0].name,
+            phase: turnPhases.PICK_FIRST_DUNGEON
         };
         return;    
     } catch(err){
+        console.log(err);
         return logger.logError(err);
     }
     

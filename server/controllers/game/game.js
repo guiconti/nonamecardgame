@@ -14,8 +14,11 @@ function Game(name, password){
     this.players = [];
     turnInfo = {
         playerId: '',
-        playerName: ''
-    }
+        playerName: '',
+        phase: 0
+    },
+    this.treasures = [];
+    this.dungeons = [];
 }
 
 module.exports = Game;
