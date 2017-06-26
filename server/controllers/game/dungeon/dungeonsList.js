@@ -17,7 +17,7 @@ module.exports = function() {
         {
             name: 'Dungeon 3',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.CURSE
+            cardType: dungeonsType.RACE
         },
         {
             name: 'Dungeon 4',
@@ -42,17 +42,17 @@ module.exports = function() {
         {
             name: 'Dungeon 8',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER
+            cardType: dungeonsType.ROLE
         },
         {
             name: 'Dungeon 9',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.CURSE
+            cardType: dungeonsType.USABLE
         },
         {
             name: 'Dungeon 10',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER
+            cardType: dungeonsType.USABLE
         }
     ]);
 };

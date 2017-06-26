@@ -51,9 +51,9 @@ exports.isPlayerTurn = (gameInfo, playerInfo) => {
     }
 };
 
-exports.isActualPhase = (gameInfo, requestedPhase) => {
+exports.isActualPhase = (gameInfo, validPhases) => {
     try{
-        return gameInfo.turnInfo.phase == requestedPhase;
+        return validPhases.includes(gameInfo.turnInfo.phase);
     } catch(err){
         logger.logError(err);
         return false;

@@ -10,6 +10,7 @@ const getDungeon = require('./dungeon/getDungeon');
 const treasuresList = require('./treasure/treasuresList');
 const dungeonsList = require('./dungeon/dungeonsList');
 const turnPhases = require('./turnPhases');
+const nextPlayer = require('./nextPlayer');
 
 const MIN_PLAYERS_TO_MATCH = 2;
 
@@ -29,14 +30,13 @@ module.exports = (req, res) => {
             if (gameTable.active) return res.status(400).json({msg: 'Game already begun.'});
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({msg: 'There`s not enough players to start the game.'});
 
+            eventEmitter.sendChatMessage(gameTable._id, 'The game started.');
             setupGame(gameTable);
-            console.log(gameTable);
             gameTable.save((err) => {
                 if (err) {
                     res.status(500).json({msg: 'We could not save the game due to DB issues. Try again.'});
                     throw err;
                 }
-                eventEmitter.sendChatMessage(gameTable._id, 'The game started.');
                 sendGameToPlayers(gameTable.toObject());
                 return res.status(200).json({msg: 'Game started'});
             })
@@ -61,7 +61,6 @@ function sendGameToPlayers(gameTable) {
         };
         eventEmitter.sendTurnInfo(gameTable._id, JSON.stringify(gameInfoCensored.turnInfo));
         //  Fazer isso no front com o game info?
-        eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameInfoCensored.turnInfo.playerName + ' turn.');    
     } catch(err){
         console.log(err);
         return logger.logError(err);
@@ -81,12 +80,7 @@ function setupGame(gameTable){
             player.hand.push(getDungeon(gameTable));
             player.hand.push(getDungeon(gameTable));
         });
-        //  Change this with some dice result
-        gameTable.turnInfo = {
-            playerId: gameTable.players[0].id,
-            playerName: gameTable.players[0].name,
-            phase: turnPhases.PICK_FIRST_DUNGEON
-        };
+        nextPlayer(gameTable, -1);
         return;    
     } catch(err){
         console.log(err);
