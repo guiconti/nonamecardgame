@@ -12,7 +12,6 @@ module.exports = (gameTable, playerIndex) => {
         playerName: gameTable.players[playerIndex].name,
         phase: turnPhases.DRAW_FIRST_DUNGEON
     };
-    console.log(gameTable);
     eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameTable.turnInfo.playerName + ' turn.');
     return;
 }
