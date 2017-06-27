@@ -10,9 +10,13 @@ module.exports = function() {
             cardType: dungeonsType.CURSE
         },
         {
-            name: 'Dungeon 2',
+            name: 'Monster 1',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 1,
+                treasureReward: 1
+            }
         },
         {
             name: 'Dungeon 3',
@@ -20,9 +24,13 @@ module.exports = function() {
             cardType: dungeonsType.RACE
         },
         {
-            name: 'Dungeon 4',
+            name: 'Monster 2',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 3,
+                treasureReward: 1
+            }
         },
         {
             name: 'Dungeon 5',
@@ -30,9 +38,13 @@ module.exports = function() {
             cardType: dungeonsType.CURSE
         },
         {
-            name: 'Dungeon 6',
+            name: 'Monster 3',
             deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 4,
+                treasureReward: 2
+            }
         },
         {
             name: 'Dungeon 7',

@@ -13,7 +13,11 @@ let GameSchema = new Schema({
     dungeons: [{
         name: String,
         deck: Number,
-        cardType: Number
+        cardType: Number,
+        stats:{
+            combatPower: Number,
+            treasureReward: Number
+        }
     }],
     turnInfo:  {
         playerId: String,
@@ -25,6 +29,7 @@ let GameSchema = new Schema({
         id: String,
         communicationId: String,
         level: Number,
+        equipmentBonus: Number,
         combatPower: Number,
         race: Number,
         role: Number,

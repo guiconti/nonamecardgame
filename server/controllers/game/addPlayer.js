@@ -45,6 +45,7 @@ module.exports = (req, res) => {
                     id: newPlayer.id,
                     name: newPlayer.name,
                     level: newPlayer.level,
+                    equipmentBonus: newPlayer.equipmentBonus,
                     combatPower: newPlayer.combatPower,
                     race: newPlayer.race,
                     role: newPlayer.role
