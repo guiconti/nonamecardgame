@@ -32,10 +32,12 @@
     "jsonwebtoken": "^7.4.1",
     "mocha": "^3.4.2",
     "mongoose": "^4.10.7",
-    "morgan": "^1.8.2",
-    "rollbar": "^2.0.4",
+    "rollbar": "^2.1.0",
     "socket.io": "^2.0.3",
     "supertest": "^3.0.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "morgan": "^1.8.2"
   }
 }

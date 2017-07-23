@@ -16,7 +16,7 @@
                             <div class="portlet box green-meadow">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i id="stats_{{id}}" class="fa">{{name}} Level:{{level}} Combat Power:{{combatPower}} <br/> Race:{{race}} Class:{{role}}</i> </div>
+                                        <i id="stats_{{id}}" class="fa">{{name}} Level:{{level}} Combat Power:{{combatPower}} <br/> Race:{{race}} Class:{{role}} Cards on Hand:{{cardsOnHand}}</i> </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="table-scrollable">
@@ -133,12 +133,15 @@
                     togglePlayerTurn(isThisPlayer(turnInfo.playerId));
                 });
                 socket.on('newPlayer', function(playerInfo){
-                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">'+ playerInfo.name +' Level:'+ playerInfo.level +' Combat Power:'+ playerInfo.combatPower +'<br>Race:'+ playerInfo.race +' Class:'+ playerInfo.role +'</i> </div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
-                })
+
+                    //$('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">'+ playerInfo.name +' Level:'+ playerInfo.level +' Combat Power:'+ playerInfo.combatPower +'<br>Race:'+ playerInfo.race +' Class:'+ playerInfo.role +'</i> </div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
+                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">' + '</div></div></div></div>');
+                    updatePlayerInfo(playerInfo);
+                });
                 function updatePlayerInfo(playerInfo){
                     var playerInfoClean = playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
                     $('#stats_' + playerInfoClean).html(playerInfo.name + ' Level:' + playerInfo.level + ' Combat Power:' + playerInfo.combatPower
-                        + '<br/>Race:' + playerInfo.race + ' Class:' + playerInfo.role);
+                        + '<br/>Race:' + playerInfo.race + ' Class:' + playerInfo.role + ' Cards on hand: ' + playerInfo.cardsOnHand);
                     var cards = '';
                     for (var i = 0; i < playerInfo.hand.length; i++){
                         cards += '<tr id="' + playerInfo.hand[i].id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';

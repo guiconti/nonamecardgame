@@ -47,7 +47,8 @@ module.exports = (req, res) => {
                     level: newPlayer.level,
                     combatPower: newPlayer.combatPower,
                     race: newPlayer.race,
-                    role: newPlayer.role
+                    role: newPlayer.role,
+                    cardsOnHand: newPlayer.hand.length
                 }
                 eventEmitter.sendNewPlayer(params.gameId, playerInfo);
 

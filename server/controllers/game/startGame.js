@@ -11,6 +11,7 @@ const treasuresList = require('./treasure/treasuresList');
 const dungeonsList = require('./dungeon/dungeonsList');
 const turnPhases = require('./turnPhases');
 const nextPlayer = require('./nextPlayer');
+const addCardToHand = require('../player/addCardToHand');
 
 const MIN_PLAYERS_TO_MATCH = 2;
 
@@ -75,10 +76,10 @@ function setupGame(gameTable){
         gameTable.treasures = treasuresList();
         gameTable.dungeons = dungeonsList();
         gameTable.players.forEach((player) => {
-            player.hand.push(getTreasure(gameTable));
-            player.hand.push(getTreasure(gameTable));
-            player.hand.push(getDungeon(gameTable));
-            player.hand.push(getDungeon(gameTable));
+            addCardToHand(player, getTreasure(gameTable));
+            addCardToHand(player, getTreasure(gameTable));
+            addCardToHand(player, getDungeon(gameTable));
+            addCardToHand(player, getDungeon(gameTable));
         });
         nextPlayer(gameTable, -1);
         return;    
