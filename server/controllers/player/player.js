@@ -11,6 +11,7 @@ let race;
 let role;
 let board = [];
 let hand = [];
+let cardsOnHand;
 
 function Player(name, id, communicationId){
     this.name = name;
@@ -23,6 +24,7 @@ function Player(name, id, communicationId){
     this.role = rolesList.NONE;
     this.board = [];
     this.hand = [];
+    this.cardsOnHand = this.hand.length;
 }
 
 module.exports = Player;

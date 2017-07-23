@@ -42,7 +42,8 @@ let GameSchema = new Schema({
             name: String,
             deck: Number,
             cardType: Number
-        }]
+        }],
+        cardsOnHand: {type: Number, default: 0}
     }]
 });
 

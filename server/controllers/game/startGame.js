@@ -5,12 +5,14 @@ const GameModel = mongoose.model('Game');
 const eventEmitter = require('../communication/eventEmitter');
 const logger = require('../../../tools/logger');
 
+const sendGameToPlayers = require('./sendGameToPlayers');
 const getTreasure = require('./treasure/getTreasure');
 const getDungeon = require('./dungeon/getDungeon');
 const treasuresList = require('./treasure/treasuresList');
 const dungeonsList = require('./dungeon/dungeonsList');
 const turnPhases = require('./turnPhases');
 const nextPlayer = require('./nextPlayer');
+const addCardToHand = require('../player/addCardToHand');
 
 const MIN_PLAYERS_TO_MATCH = 2;
 
@@ -46,28 +48,6 @@ module.exports = (req, res) => {
     }
 };
 
-function sendGameToPlayers(gameTable) {
-
-    try{
-        gameTable.players.forEach((player) => {
-            let playerInfo = _.omit(player, '_id', 'communicationId');
-            eventEmitter.sendPrivatePlayerInfo(gameTable._id, player.communicationId, JSON.stringify(playerInfo))
-        })
-        let gameInfoCensored = {
-            players: gameTable.players.map((player) => {
-                return _.omit(player, 'communicationId', 'hand', '_id');
-            }),
-            turnInfo: gameTable.turnInfo
-        };
-        eventEmitter.sendTurnInfo(gameTable._id, JSON.stringify(gameInfoCensored.turnInfo));
-        //  Fazer isso no front com o game info?
-    } catch(err){
-        console.log(err);
-        return logger.logError(err);
-    }
-    
-}
-
 function setupGame(gameTable){
 
     try {
@@ -75,10 +55,10 @@ function setupGame(gameTable){
         gameTable.treasures = treasuresList();
         gameTable.dungeons = dungeonsList();
         gameTable.players.forEach((player) => {
-            player.hand.push(getTreasure(gameTable));
-            player.hand.push(getTreasure(gameTable));
-            player.hand.push(getDungeon(gameTable));
-            player.hand.push(getDungeon(gameTable));
+            addCardToHand(player, getTreasure(gameTable));
+            addCardToHand(player, getTreasure(gameTable));
+            addCardToHand(player, getDungeon(gameTable));
+            addCardToHand(player, getDungeon(gameTable));
         });
         nextPlayer(gameTable, -1);
         return;    

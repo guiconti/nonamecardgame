@@ -41,6 +41,7 @@ module.exports = (req, res) => {
                     combatPower: gameTable.players[playerIndex].combatPower,
                     race: gameTable.players[playerIndex].race,
                     role: gameTable.players[playerIndex].role,
+                    cardsOnHand: gameTable.players[playerIndex].hand.length,
                     hand: gameTable.players[playerIndex].hand,
                     board: gameTable.players[playerIndex].board,
                     isMain: true,
@@ -59,6 +60,7 @@ module.exports = (req, res) => {
                         combatPower: gameTable.players[i].combatPower,
                         race: gameTable.players[i].race,
                         role: gameTable.players[i].role,
+                        cardsOnHand: gameTable.players[i].hand.length,
                         board: gameTable.players[i].board,
                     };
                     gameRoomInfo.players.push(playerInfo);

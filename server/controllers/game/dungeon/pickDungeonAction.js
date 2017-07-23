@@ -5,6 +5,7 @@ const turnPhases = require('../turnPhases');
 const nextPlayer = require('../nextPlayer');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
+const addCardToHand = require('../../player/addCardToHand');
 
 module.exports = (gameTable, playerIndex, dungeonPicked) => {                                                                                                                                                                                                         
     eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' picked a dungeon.');
@@ -42,7 +43,7 @@ function monsterPick(gameTable, playerIndex, monsterPicked){
 
 function noActionPick(gameTable, playerIndex, dungeonPicked){
     eventEmitter.sendChatMessage(gameTable.id, 'It`s not a monster or a curse so ' + gameTable.players[playerIndex].name + ' added the card to his/her hand.');
-    gameTable.players[playerIndex].hand.push(dungeonPicked);
+    addCardToHand(gameTable.players[playerIndex], dungeonPicked);
     let playerInfo = _.omit(gameTable.toObject().players[playerIndex], '_id', 'communicationId');
     eventEmitter.sendPrivatePlayerInfo(gameTable._id, gameTable.players[playerIndex].communicationId, JSON.stringify(playerInfo));
     if (gameTable.turnInfo.phase == turnPhases.DRAW_FIRST_DUNGEON){
