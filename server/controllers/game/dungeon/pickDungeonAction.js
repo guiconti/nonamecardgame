@@ -7,13 +7,12 @@ const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 
 module.exports = (gameTable, playerIndex, dungeonPicked) => {                                                                                                                                                                                                         
-
     eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' picked a dungeon.');
     //  TODO: fail proof
     //  TODO: Improve this
     switch(dungeonPicked.cardType){
         case dungeonsType.MONSTER:
-            noActionPick(gameTable, playerIndex, dungeonPicked);
+            monsterPick(gameTable, playerIndex, dungeonPicked);
             break;
         case dungeonsType.CURSE:
             noActionPick(gameTable, playerIndex, dungeonPicked);
@@ -31,8 +30,17 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
     return;
 };
 
-function noActionPick(gameTable, playerIndex, dungeonPicked){
+function monsterPick(gameTable, playerIndex, monsterPicked){
+    //  TODO: fail proof
+    eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
+    if (gameTable.players[playerIndex].combatPower <= monsterPicked.stats.combatPower) {
+        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' can not fight it alone. He have to ask for help, use items or run.');
+    } else {
+        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' is able to defeat the monster. Will anyone interfere?');
+    }
+}
 
+function noActionPick(gameTable, playerIndex, dungeonPicked){
     eventEmitter.sendChatMessage(gameTable.id, 'It`s not a monster or a curse so ' + gameTable.players[playerIndex].name + ' added the card to his/her hand.');
     gameTable.players[playerIndex].hand.push(dungeonPicked);
     let playerInfo = _.omit(gameTable.toObject().players[playerIndex], '_id', 'communicationId');
