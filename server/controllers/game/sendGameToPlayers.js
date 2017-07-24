@@ -16,9 +16,6 @@ module.exports = (gameTable) => {
         };
         //  TODO: Send only what changed
         eventEmitter.sendGameInfo(gameTable._id, JSON.stringify(gameInfoCensored));
-        //eventEmitter.sendPlayersInfo(gameTable._id, JSON.stringify(gameInfoCensored.players));
-        //eventEmitter.sendTurnInfo(gameTable._id, JSON.stringify(gameInfoCensored.turnInfo));
-        //  Fazer isso no front com o game info?
     } catch(err){
         console.log(err);
         return logger.logError(err);

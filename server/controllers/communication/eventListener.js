@@ -3,7 +3,6 @@ const EVENT_TYPES = {
     DISCONNECT: 'disconnect',
     CHAT_MESSAGE: 'chatMessage',
     GAME_INFO: 'gameInfo',
-    TURN_INFO: 'turnInfo',
     PLAYER_INFO: 'playerInfo',
     NEW_PLAYER: 'newPlayer'
 };
@@ -32,9 +31,6 @@ exports.createGameChat = (namespace) => {
             });
             socket.on(EVENT_TYPES.GAME_INFO, function(gameInfo){
                 ioNamespace.emit(EVENT_TYPES.GAME_INFO, gameInfo);
-            });
-            socket.on(EVENT_TYPES.TURN_INFO, function(turnInfo){
-                ioNamespace.emit(EVENT_TYPES.TURN_INFO, turnInfo);
             });
             socket.on(EVENT_TYPES.PLAYER_INFO, function(playerInfo){
                 ioNamespace.emit(EVENT_TYPES.PLAYER_INFO, playerInfo);
