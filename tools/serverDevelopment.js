@@ -1,5 +1,5 @@
 "use strict";
-
+/** global io:true */
 /* eslint-disable no-console */
 
 require('dotenv').config();

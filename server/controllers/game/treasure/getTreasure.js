@@ -7,7 +7,7 @@ module.exports = function(gameTable){
         var givenTreasure = gameTable.treasures[givenTreasureIndex];
         gameTable.treasures.splice(givenTreasureIndex, 1);
 
-        if (gameTable.treasures.length == 0){
+        if (gameTable.treasures.length === 0){
             gameTable.treasures = gameTable.discardTreasures;
             gameTable.discardTreasures = [];
         }
@@ -17,6 +17,5 @@ module.exports = function(gameTable){
         console.log(err);
         logger.logError(err);
         return undefined;
-    }
-    
-}
+    }   
+};

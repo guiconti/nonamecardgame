@@ -37,14 +37,14 @@ exports.createGameChat = (namespace) => {
             });
             socket.on(EVENT_TYPES.NEW_PLAYER, function(msg){
                 ioNamespace.emit(EVENT_TYPES.NEW_PLAYER, msg);
-            })
+            });
             socket.on(EVENT_TYPES.DISCONNECT, function(){
                 tokenManager.decryptToken(userCookies.session).then((userInfo) => {
                     ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, userInfo.name + " disconnected");
                 }, (err) => {
                     ioNamespace.emit(EVENT_TYPES.CHAT_MESSAGE, "Unknown disconnected");
                 });
-            })
+            });
         });
     }
-}
+};

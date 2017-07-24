@@ -50,7 +50,7 @@ module.exports = (req, res) => {
                     race: newPlayer.race,
                     role: newPlayer.role,
                     cardsOnHand: newPlayer.hand.length
-                }
+                };
                 eventEmitter.sendNewPlayer(params.gameId, playerInfo);
 
                 return res.status(200).json({msg: 'Welcome to the table'});

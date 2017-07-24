@@ -14,4 +14,4 @@ module.exports = (gameTable, playerIndex) => {
     };
     eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameTable.turnInfo.playerName + ' turn.');
     return;
-}
+};

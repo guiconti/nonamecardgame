@@ -6,7 +6,7 @@ module.exports = function(gameTable){
         var givenDungeon = gameTable.dungeons[givenDungeonIndex];
         gameTable.dungeons.splice(givenDungeonIndex, 1);
 
-        if (gameTable.dungeons.length == 0){
+        if (gameTable.dungeons.length === 0){
             gameTable.dungeons = gameTable.discardDungeons;
             gameTable.discardDungeons = [];
         }
@@ -17,4 +17,4 @@ module.exports = function(gameTable){
         logger.logError(err);
         return undefined;
     }
-}
+};
