@@ -35,6 +35,8 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
 function monsterPick(gameTable, playerIndex, monsterPicked){
     //  TODO: fail proof
     eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
+    //  TODO: Change this to front message
+    eventEmitter.sendChatMessage(gameTable.id, monsterPicked.name + ' Power: ' + monsteRPicked.stats.combatPower + ' Treasures: ' + monsteRPicked.stats.treasureReward);
     if (gameTable.players[playerIndex].combatPower <= monsterPicked.stats.combatPower) {
         eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' can not fight it alone. He have to ask for help, use items or run.');
     } else {
