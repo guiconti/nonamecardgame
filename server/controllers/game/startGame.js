@@ -41,7 +41,7 @@ module.exports = (req, res) => {
                 }
                 sendGameToPlayers(gameTable.toObject());
                 return res.status(200).json({msg: 'Game started'});
-            })
+            });
         });    
     } catch(err){
         return logger.logError(err);
