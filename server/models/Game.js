@@ -44,7 +44,16 @@ let GameSchema = new Schema({
             cardType: Number
         }],
         cardsOnHand: {type: Number, default: 0}
-    }]
+    }],
+    table: {
+        monster: [{
+            name: String,
+            stats: {
+                combatPower: Number,
+                treasureReward: Number
+            }
+        }]
+    }
 });
 
 mongoose.model('Game', GameSchema);
