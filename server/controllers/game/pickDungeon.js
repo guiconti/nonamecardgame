@@ -8,7 +8,6 @@ const getDungeon = require('./dungeon/getDungeon');
 const pickDungeonAction = require('./dungeon/pickDungeonAction');
 const turnPhases = require('./turnPhases');
 const logger = require('../../../tools/logger');
-const POSSIBLE_PHASES = [turnPhases.DRAW_FIRST_DUNGEON, turnPhases.DRAW_SECOND_DUNGEON];
 
 module.exports = (req, res) => {
 
@@ -25,7 +24,7 @@ module.exports = (req, res) => {
             if (!gameTable) return res.status(404).json({msg: 'Game table not found.'});
             if (!gameTable.active) return res.status(400).json({msg: 'Game has not begun.'});
             if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({msg: 'It`s not your turn.'});
-            if (!validator.isActualPhase(gameTable, POSSIBLE_PHASES)) return res.status(400).json({msg: 'You cant pick up a dungeon now.'});
+            if (!validator.isPickDungeonPhase(gameTable.turnInfo.phase)) return res.status(400).json({msg: 'You cant pick up a dungeon now.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);
             let dungeonPicked = getDungeon(gameTable);

@@ -45,7 +45,7 @@ module.exports = (req, res) => {
                     hand: gameTable.players[playerIndex].hand,
                     board: gameTable.players[playerIndex].board,
                     isMain: true,
-                    isTurnEnable: gameTable.turnInfo.playerId != req.userInfo.id?'disabled':''
+                    isPickDungeonEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isPickDungeonPhase(gameTable.turnInfo.phase))?'disabled':''
                 };
                 gameRoomInfo.players.push(playerInfo);
             }

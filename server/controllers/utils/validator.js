@@ -1,5 +1,6 @@
 const _ = require('underscore');
 const logger = require('../../../tools/logger');
+const turnPhases = require('../game/turnPhases');
 
 exports.isValidGame = (gameInfo) => {
     try{
@@ -55,6 +56,15 @@ exports.isActualPhase = (gameInfo, validPhases) => {
     try{
         return validPhases.includes(gameInfo.turnInfo.phase);
     } catch(err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isPickDungeonPhase = (turnPhase) => {
+    try {
+        return turnPhase == turnPhases.DRAW_FIRST_DUNGEON || turnPhase == turnPhases.DRAW_SECOND_DUNGEON;
+    } catch (err){
         logger.logError(err);
         return false;
     }
