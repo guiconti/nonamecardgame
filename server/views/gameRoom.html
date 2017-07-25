@@ -52,6 +52,10 @@
                                 </div>
                                 {{#if isMain}}
                                 <button type="button" class="btn purple-plum {{isTurnEnable}}" id="pickDungeon">Pick a dungeon</button>
+                                <br/>
+                                <button type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</button>
+                                <button type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</button>
+                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="monsterAskHelp">Ask for help</button>
                                 {{/if}}
                             </div>
                         </div>
@@ -124,13 +128,18 @@
                 socket.on('chatMessage', function(msg){
                     $('#messages').prepend($('<li>').text(msg));
                 });
+                //  TODO: Send less info on this socket since we are sending most of infos on gameInfo socket
                 socket.on('playerInfo', function(playerInfoJSON){
                     var playerInfo = JSON.parse(playerInfoJSON);
                     updatePlayerInfo(playerInfo, isThisPlayer(playerInfo.id));
                 });
                 socket.on('gameInfo', function(gameInfoJSON){
                     var gameInfo = JSON.parse(gameInfoJSON);
-                    togglePlayerTurn(isThisPlayer(gameInfo.turnInfo.playerId));
+                    var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
+                    togglePickDungeon(isThisMainPlayer);
+                    toggleRun(isThisMainPlayer);
+                    toggleUseItem(isThisMainPlayer);
+                    toggleAskHelp(isThisMainPlayer);
                     gameInfo.players.forEach(function(player) {
                         if (!isThisPlayer(player.id)){
                             updatePlayerInfo(player, false);
@@ -159,11 +168,32 @@
                     if ($('#hand_' + playerId.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).length) return true;
                     return false;
                 }
-                function togglePlayerTurn(isPlayerTurn){
+                function togglePickDungeon(isPlayerTurn){
                     if (isPlayerTurn) {
                         $('#pickDungeon').removeClass('disabled');
                     } else {
                         $('#pickDungeon').addClass('disabled');
+                    }
+                }
+                function toogleRun(isPlayerTurn){
+                    if (isPlayerTurn) {
+                        $('#monsterRun').removeClass('disabled');
+                    } else {
+                        $('#monsterRun').addClass('disabled');
+                    }
+                }
+                function toggleUseItem(isPlayerTurn){
+                    if (isPlayerTurn) {
+                        $('#monsterUseItem').removeClass('disabled');
+                    } else {
+                        $('#monsterUseItem').addClass('disabled');
+                    }
+                }
+                function toggleAskHelp(isPlayerTurn){
+                    if (isPlayerTurn) {
+                        $('#monsterAskHelp').removeClass('disabled');
+                    } else {
+                        $('#monsterAskHelp').addClass('disabled');
                     }
                 }
             });

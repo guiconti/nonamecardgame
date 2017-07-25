@@ -5,7 +5,7 @@ const turnPhases = require('../turnPhases');
 const nextPlayer = require('../nextPlayer');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
-const monsterFight = require('../monsterFight');
+const monsterFight = require('../fight/monsterFight');
 const addCardToHand = require('../../player/addCardToHand');
 const sendGameToPlayers = require('../sendGameToPlayers');
 
