@@ -36,10 +36,7 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
 function monsterPick(gameTable, playerIndex, monsterPicked){
     //  TODO: fail proof
     gameTable.table.monster = monsterPicked;
-    eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
-    //  TODO: Change this to front message
-    eventEmitter.sendChatMessage(gameTable.id, monsterPicked.name + ' Power: ' + monsterPicked.stats.combatPower + ' Treasures: ' + monsterPicked.stats.treasureReward);
-    monsterFight(gameTable, playerIndex);
+    monsterFight.startFight(gameTable, playerIndex);
 }
 
 function noActionPick(gameTable, playerIndex, dungeonPicked){

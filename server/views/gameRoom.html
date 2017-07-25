@@ -80,6 +80,15 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
         <script>
+            const TURN_PHASES = {
+                DRAW_FIRST_DUNGEON: 0,
+                DRAW_SECOND_DUNGEON: 1,
+                FIGHT_MONSTER: 2,
+                FIGHT_MONSTER_LOOSING: 3,
+                FIGHT_MONSTER_WINNING: 4,
+                FIGHT_MONSTER_ASK_HELP: 5,
+                FIGHT_MONSTER_INTERFERE: 6
+            };
             $(document).ready(function(){
                 var socket = io('/' + '{{namespace}}');
                 $('form').submit(function(){
@@ -136,7 +145,7 @@
                 socket.on('gameInfo', function(gameInfoJSON){
                     var gameInfo = JSON.parse(gameInfoJSON);
                     var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
-                    togglePickDungeon(isThisMainPlayer);
+                    togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
                     toggleRun(isThisMainPlayer);
                     toggleUseItem(isThisMainPlayer);
                     toggleAskHelp(isThisMainPlayer);
@@ -168,8 +177,8 @@
                     if ($('#hand_' + playerId.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).length) return true;
                     return false;
                 }
-                function togglePickDungeon(isPlayerTurn){
-                    if (isPlayerTurn) {
+                function togglePickDungeon(isPlayerTurn, turnPhase){
+                    if (isPlayerTurn && (turnPhase == TURN_PHASES.DRAW_FIRST_DUNGEON || turnPhase == TURN_PHASES.DRAW_SECOND_DUNGEON)) {
                         $('#pickDungeon').removeClass('disabled');
                     } else {
                         $('#pickDungeon').addClass('disabled');
