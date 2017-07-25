@@ -5,6 +5,7 @@ const turnPhases = require('../turnPhases');
 const nextPlayer = require('../nextPlayer');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
+const monsterFight = require('../monsterFight');
 const addCardToHand = require('../../player/addCardToHand');
 const sendGameToPlayers = require('../sendGameToPlayers');
 
@@ -34,14 +35,11 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
 
 function monsterPick(gameTable, playerIndex, monsterPicked){
     //  TODO: fail proof
+    gameTable.table.monster = monsterPicked;
     eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
     //  TODO: Change this to front message
-    eventEmitter.sendChatMessage(gameTable.id, monsterPicked.name + ' Power: ' + monsteRPicked.stats.combatPower + ' Treasures: ' + monsteRPicked.stats.treasureReward);
-    if (gameTable.players[playerIndex].combatPower <= monsterPicked.stats.combatPower) {
-        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' can not fight it alone. He have to ask for help, use items or run.');
-    } else {
-        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' is able to defeat the monster. Will anyone interfere?');
-    }
+    eventEmitter.sendChatMessage(gameTable.id, monsterPicked.name + ' Power: ' + monsterPicked.stats.combatPower + ' Treasures: ' + monsterPicked.stats.treasureReward);
+    monsterFight(gameTable, playerIndex);
 }
 
 function noActionPick(gameTable, playerIndex, dungeonPicked){
