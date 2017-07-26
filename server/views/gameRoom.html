@@ -55,7 +55,7 @@
                                 <br/>
                                 <button type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</button>
                                 <button type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</button>
-                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="monsterAskHelp">Ask for help</button>
+                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="monsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</button>
                                 {{/if}}
                             </div>
                         </div>
@@ -73,12 +73,43 @@
                 {{/if}}
             </div>
         </div>
+        <div id="helpModal" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Select who you wanna ask for help</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Player</h4>
+                                    <p>
+                                        <input type="text" class="col-md-12 form-control"> </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Treasures</h4>
+                                    <p>
+                                        <input type="text" class="col-md-12 form-control"> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
+                        <button type="button" class="btn green">Ask for help</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ul id="messages"></ul>
         <form action="">
             <input id="m" autocomplete="off" /><button>Send</button>
         </form>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
         <script>
             const TURN_PHASES = {
                 DRAW_FIRST_DUNGEON: 0,
