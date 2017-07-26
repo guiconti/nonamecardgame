@@ -69,3 +69,30 @@ exports.isPickDungeonPhase = (turnPhase) => {
         return false;
     }
 };
+
+exports.isRunEnable = (turnPhase) => {
+    try {
+        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isUseItemEnable = (turnPhase) => {
+    try {
+        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isHelpEnable = (turnPhase) => {
+    try {
+        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};

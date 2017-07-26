@@ -146,9 +146,9 @@
                     var gameInfo = JSON.parse(gameInfoJSON);
                     var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
                     togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleRun(isThisMainPlayer);
-                    toggleUseItem(isThisMainPlayer);
-                    toggleAskHelp(isThisMainPlayer);
+                    toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
+                    toggleUseItem(isThisMainPlayer, gameInfo.turnInfo.phase);
+                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase);
                     gameInfo.players.forEach(function(player) {
                         if (!isThisPlayer(player.id)){
                             updatePlayerInfo(player, false);
@@ -184,22 +184,22 @@
                         $('#pickDungeon').addClass('disabled');
                     }
                 }
-                function toogleRun(isPlayerTurn){
-                    if (isPlayerTurn) {
+                function toggleRun(isPlayerTurn, turnPhase){
+                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
                         $('#monsterRun').removeClass('disabled');
                     } else {
                         $('#monsterRun').addClass('disabled');
                     }
                 }
-                function toggleUseItem(isPlayerTurn){
-                    if (isPlayerTurn) {
+                function toggleUseItem(isPlayerTurn, turnPhase){
+                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
                         $('#monsterUseItem').removeClass('disabled');
                     } else {
                         $('#monsterUseItem').addClass('disabled');
                     }
                 }
-                function toggleAskHelp(isPlayerTurn){
-                    if (isPlayerTurn) {
+                function toggleAskHelp(isPlayerTurn, turnPhase){
+                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
                         $('#monsterAskHelp').removeClass('disabled');
                     } else {
                         $('#monsterAskHelp').addClass('disabled');
