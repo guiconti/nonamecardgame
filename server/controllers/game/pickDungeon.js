@@ -6,14 +6,13 @@ const GameModel = mongoose.model('Game');
 const getPlayerIndex = require('../utils/getPlayerIndex');
 const getDungeon = require('./dungeon/getDungeon');
 const pickDungeonAction = require('./dungeon/pickDungeonAction');
-const turnPhases = require('./turnPhases');
 const logger = require('../../../tools/logger');
 
 module.exports = (req, res) => {
 
     try {
         let params = _.pick(req.params, 'gameId');
-        if(!validator.isValidGameId) return res.status(400).json({msg: 'Invalid game id'});
+        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({msg: 'Invalid game id'});
         params.gameId = params.gameId.trim();
 
         GameModel.findById(params.gameId, (err, gameTable) => {

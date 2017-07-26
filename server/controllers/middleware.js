@@ -26,6 +26,7 @@ exports.validateToken = function (req, res, next){
         }
         var token = req.cookies.session;
 
+        //  TODO: Validate if token expired
         tokenManager.decryptToken(token).then((token) => {
            if(!token){
                return res.status(401).redirect('/');

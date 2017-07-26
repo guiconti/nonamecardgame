@@ -3,12 +3,14 @@ const enterRoom = require('./game/room/enterRoom');
 const addPlayer = require('./game/addPlayer');
 const startGame = require('./game/startGame');
 const pickDungeon = require('./game/pickDungeon');
+const askHelp = require('./game/fight/askHelp');
 
 module.exports = {
     createRoom: createRoom,
     enterRoom: enterRoom,
     addPlayer: addPlayer,
     startGame: startGame,
-    pickDungeon: pickDungeon
+    pickDungeon: pickDungeon,
+    askHelp: askHelp
 };
 

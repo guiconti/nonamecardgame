@@ -37,6 +37,7 @@ function monsterPick(gameTable, playerIndex, monsterPicked){
     //  TODO: fail proof
     gameTable.table.monster = monsterPicked;
     monsterFight.startFight(gameTable, playerIndex);
+    return;
 }
 
 function noActionPick(gameTable, playerIndex, dungeonPicked){
