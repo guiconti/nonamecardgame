@@ -55,7 +55,7 @@
                                 <br/>
                                 <button type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</button>
                                 <button type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</button>
-                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="monsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</button>
+                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="modalMonsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</button>
                                 {{/if}}
                             </div>
                         </div>
@@ -73,6 +73,7 @@
                 {{/if}}
             </div>
         </div>
+        <!-- Modal to ask for help -->
         <div id="helpModal" class="modal fade bs-modal-sm" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -85,7 +86,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4>Player</h4>
-                                    <select class="form-control" id="helpersName">
+                                    <select class="form-control" id="helperName">
                                         {{#each players}}
                                             {{#unless isMain}}
                                         <option value="{{id}}">{{name}}</option>
@@ -96,14 +97,36 @@
                                 <div class="col-md-6">
                                     <h4>Treasures</h4>
                                     <p>
-                                        <input type="text" class="col-md-12 form-control"> </p>
+                                        <input type="text" id="helperTreasureOffer" class="col-md-12 form-control"> </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
-                        <button type="button" class="btn green">Ask for help</button>
+                        <button type="button" class="btn green" id="monsterAskHelp">Ask for help</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for questions -->
+        <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1"  data-backdrop="static" data-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="questionModalTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p id="questionModalBody"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn dark btn-outline">Refuse</button>
+                        <button type="button" class="btn green" id="monsterAskHelp">Accept</button>
                     </div>
                 </div>
             </div>
@@ -160,16 +183,44 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             beforeSend: function(){
-                                $('#pickDungeon').addClass('disabled');;
+                                $('#pickDungeon').addClass('disabled');
                             },
                             success: function(jsonData) {
                             },
                             error: function(data) {
                                 alert(data);
-                                $('#pickDungeon').removeClass('disabled');;
+                                $('#pickDungeon').removeClass('disabled');
                             }
                         });
                     }
+                });
+                $('#monsterAskHelp').click(function(){
+                    var helperInfo = {
+                        helperId: $('#helperName option:selected').val(),
+                        treasureAmount: $('#helperTreasureOffer').val()
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: $(location).attr("href") + '/fight/ask_help',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(helperInfo),
+                        dataType: "json",
+                        beforeSend: function(){
+                            $('#helpModal').modal('hide');
+                            $('#monsterRun').addClass('disabled');
+                            $('#monsterUseItem').addClass('disabled');
+                            $('#modalMonsterAskHelp').addClass('disabled');
+                        },
+                        success: function(jsonData) {
+                        },
+                        error: function(data) {
+                            alert(data.msg);
+                            console.log(data);
+                            $('#monsterRun').removeClass('disabled');
+                            $('#monsterUseItem').removeClass('disabled');
+                            $('#modalMonsterAskHelp').removeClass('disabled');
+                        }
+                    });
                 });
                 socket.on('chatMessage', function(msg){
                     $('#messages').prepend($('<li>').text(msg));
@@ -194,11 +245,15 @@
                 });
                 socket.on('askInfo', function(askInfoJSON){
                     var askInfo = JSON.parse(askInfoJSON);
+                    //  Check if it is an ask for help
+                    $('#questionModalTitle').html(askInfo.requester + ' is asking for your help');
+                    $('#questionModalBody').html(askInfo.requester + ' is asking for you to fight with him agaisnt **MONSTER NAME** for ' + askInfo.treasureAmount + ' treasure(s).');
+                    $('#questionModal').modal('show');
                     console.log(askInfo);
                 });
                 socket.on('newPlayer', function(playerInfo){
                     $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">' + '</div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
-                    $('#helpersName').append('<option value="' + playerInfo.id + '">' + playerInfo.name + '</option>');
+                    $('#helperName').append('<option value="' + playerInfo.id + '">' + playerInfo.name + '</option>');
                     updatePlayerInfo(playerInfo, false);
                 });
                 function updatePlayerInfo(playerInfo, isMainPlayer){
@@ -240,9 +295,9 @@
                 }
                 function toggleAskHelp(isPlayerTurn, turnPhase){
                     if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
-                        $('#monsterAskHelp').removeClass('disabled');
+                        $('#modalMonsterAskHelp').removeClass('disabled');
                     } else {
-                        $('#monsterAskHelp').addClass('disabled');
+                        $('#modalMonsterAskHelp').addClass('disabled');
                     }
                 }
             });

@@ -12,6 +12,7 @@ module.exports = (req, res) => {
     try {
         let params = _.pick(req.params, 'gameId');
         let body = _.pick(req.body, 'helperId', 'treasureAmount');
+        console.log(body);
         if(!validator.isValidGameId(params.gameId)) return res.status(400).json({msg: 'Invalid game id'});
         if(!validator.isValidPlayerId(body.helperId)) return res.status(400).json({msg: 'Invalid helper id'});
         if(!validator.isValidAmount(body.treasureAmount)) return res.status(400).json({msg: 'Invalid treasure amount'});
@@ -35,7 +36,7 @@ module.exports = (req, res) => {
             let helperIndex = getPlayerIndex(gameTable, helperInfo);
 
             if (helperIndex === -1 || helperIndex == playerIndex) return res.status(400).json({msg: 'Helper does not exist in this game.'});
-            if (gameTable.table.monster.stats.treasureReward < helperInfo.treasureAmount) return res.status(400).json({
+            if (gameTable.table.monster[0].stats.treasureReward < helperInfo.treasureAmount) return res.status(400).json({
                 msg: 'Helper reward bigger than the monster reward'
             });
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_HELP_RESPONSE;
