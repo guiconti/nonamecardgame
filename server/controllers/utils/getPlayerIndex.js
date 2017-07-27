@@ -9,6 +9,6 @@ module.exports = (gameTable, player) => {
         })?counter:-1;
     } catch(err){
         logger.logError(err);
-        return 0;
+        return -1;
     }
 };

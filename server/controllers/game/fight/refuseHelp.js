@@ -34,7 +34,7 @@ module.exports = (req, res) => {
                 id: gameTable.turnInfo.playerId
             };
 
-            let playerIndex = getPlayerIndex(playerInfo);
+            let playerIndex = getPlayerIndex(gameTable, playerInfo);
 
             gameTable.turnInfo.helperId = '';
             gameTable.turnInfo.helperName = '';

@@ -7,7 +7,7 @@
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div class="page-content-wrapper">
+        <div class="page-wrapper">
             <div class="page-content">
                 <div class="container {{boardDisplay}}" id="gameInfo">
                     <div class="row" id="playerBoards">
@@ -65,93 +65,101 @@
                 {{#if notInGame}}
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <button type="button" class="btn green" id="joinRoom">Entrar na partida</button>
                         </div>
                     </div>
                 </div>
                 {{/if}}
-            </div>
-        </div>
-        <ul id="messages"></ul>
-        <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
-        </form>
-        <!-- Modal to ask for help -->
-        <div id="helpModal" class="modal fade bs-modal-sm" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Select who you wanna ask for help</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>Player</h4>
-                                    <select class="form-control" id="helperName">
-                                        {{#each players}}
-                                            {{#unless isMain}}
-                                        <option value="{{id}}">{{name}}</option>
-                                            {{/unless}}
-                                        {{/each}}
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>Treasures</h4>
-                                    <p>
-                                        <input type="text" id="helperTreasureOffer" class="col-md-12 form-control"> </p>
-                                </div>
-                            </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul id="messages"></ul>
+                            <form action="">
+                                <input id="m" autocomplete="off" /><button>Send</button>
+                            </form>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
-                        <button type="button" data-dismiss="modal" class="btn green" id="monsterAskHelp">Ask for help</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Modal for questions -->
-        <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="questionModalTitle"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p id="questionModalBody"></p>
+                <!-- Modal for questions -->
+                <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="questionModalTitle"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p id="questionModalBody"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
+                                <button type="button" data-dismiss="modal" class="btn green" id="questionAccept">Accept</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
-                        <button type="button" data-dismiss="modal" class="btn green" id="questionAccept">Accept</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Modal for informations -->
-        <div id="informativeModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="informativeModalTitle"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p id="informativeModalBody"></p>
+                <!-- Modal for informations -->
+                <div id="informativeModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="informativeModalTitle"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p id="informativeModalBody"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn green">Ok</button>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn green">Ok</button>
+                </div>
+                <!-- Modal to ask for help -->
+                <div id="helpModal" class="modal fade bs-modal-sm" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Select who you wanna ask for help</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Player</h4>
+                                            <select class="form-control" id="helperName">
+                                                {{#each players}}
+                                                    {{#unless isMain}}
+                                                <option value="{{id}}">{{name}}</option>
+                                                    {{/unless}}
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Treasures</h4>
+                                            <p>
+                                                <input type="text" id="helperTreasureOffer" class="col-md-12 form-control"> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
+                                <button type="button" data-dismiss="modal" class="btn green" id="monsterAskHelp">Ask for help</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
