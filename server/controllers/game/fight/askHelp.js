@@ -45,7 +45,9 @@ module.exports = (req, res) => {
 
             let askInfo = {
                 type: 0,
-                requester: gameTable.players[playerIndex].name,
+                title: gameTable.turnInfo.playerName + ' is asking for your help',
+                body: gameTable.turnInfo.playerName + ' is asking for you to fight with him against ' + gameTable.table.monster[0].name + ' for ' + helperInfo.treasureAmount + ' treasure(s).',
+                requester: gameTable.turnInfo.playerName,
                 treasureAmount: helperInfo.treasureAmount,
                 acceptSuffix: '/fight/ask_help/accept',
                 refuseSuffix: '/fight/ask_help/refuse'

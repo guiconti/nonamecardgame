@@ -312,8 +312,8 @@
                 socket.on('askInfo', function(askInfoJSON){
                     var askInfo = JSON.parse(askInfoJSON);
                     //  Check if it is an ask for help
-                    $('#questionModalTitle').html(askInfo.requester + ' is asking for your help');
-                    $('#questionModalBody').html(askInfo.requester + ' is asking for you to fight with him against **MONSTER NAME** for ' + askInfo.treasureAmount + ' treasure(s).');
+                    $('#questionModalTitle').html(askInfo.title);
+                    $('#questionModalBody').html(askInfo.body);
                     $('#questionAccept').attr('name', askInfo.acceptSuffix);
                     $('#questionRefuse').attr('name', askInfo.refuseSuffix);
                     $('#questionModal').modal('show');
