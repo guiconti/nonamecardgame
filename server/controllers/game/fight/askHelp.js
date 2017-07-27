@@ -35,6 +35,9 @@ module.exports = (req, res) => {
             let helperIndex = getPlayerIndex(gameTable, helperInfo);
 
             if (helperIndex === -1 || helperIndex == playerIndex) return res.status(400).json({msg: 'Helper does not exist in this game.'});
+            if (gameTable.table.monster.stats.treasureReward < helperInfo.treasureAmount) return res.status(400).json({
+                msg: 'Helper reward bigger than the monster reward'
+            });
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_HELP_RESPONSE;
             gameTable.turnInfo.helperId = helperInfo.id;
             //  TODO: Add helper name
