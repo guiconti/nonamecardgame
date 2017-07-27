@@ -47,8 +47,8 @@ module.exports = (req, res) => {
                     isMain: true,
                     isPickDungeonEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isPickDungeonPhase(gameTable.turnInfo.phase))?'disabled':'',
                     isRunEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isRunEnable(gameTable.turnInfo.phase))?'disabled':'',
-                    isUseItemEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isUseItemEnable(gameTable.turnInfo.phase))?'disabled':'',
-                    isHelpEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isHelpEnable(gameTable.turnInfo.phase))?'disabled':''
+                    isUseItemEnable: ((gameTable.turnInfo.playerId != req.userInfo.id && gameTable.turnInfo.helperId != req.userInfo.id) || !validator.isUseItemEnable(gameTable.turnInfo.phase))?'disabled':'',
+                    isHelpEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isHelpEnable(gameTable))?'disabled':''
                 };
                 gameRoomInfo.players.push(playerInfo);
             }

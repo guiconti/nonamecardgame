@@ -73,6 +73,10 @@
                 {{/if}}
             </div>
         </div>
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
         <!-- Modal to ask for help -->
         <div id="helpModal" class="modal fade bs-modal-sm" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-sm">
@@ -104,7 +108,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn dark btn-outline">Cancel</button>
-                        <button type="button" class="btn green" id="monsterAskHelp">Ask for help</button>
+                        <button type="button" data-dismiss="modal" class="btn green" id="monsterAskHelp">Ask for help</button>
                     </div>
                 </div>
             </div>
@@ -125,16 +129,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn dark btn-outline">Refuse</button>
-                        <button type="button" class="btn green" id="monsterAskHelp">Accept</button>
+                        <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
+                        <button type="button" data-dismiss="modal" class="btn green" id="questionAccept">Accept</button>
                     </div>
                 </div>
             </div>
         </div>
-        <ul id="messages"></ul>
-        <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
-        </form>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
         <script src="/assets/js/bootstrap.min.js"></script>
@@ -146,7 +146,7 @@
                 FIGHT_MONSTER_LOOSING: 3,
                 FIGHT_MONSTER_WINNING: 4,
                 FIGHT_MONSTER_ASK_HELP: 5,
-                FIGHT_MONSTER_HELP_RESPONSE: 6,
+                FIGHT_MONSTER_HELP_ANSWER: 6,
                 FIGHT_MONSTER_INTERFERE: 7
             };
             $(document).ready(function(){
@@ -206,7 +206,6 @@
                         data: JSON.stringify(helperInfo),
                         dataType: "json",
                         beforeSend: function(){
-                            $('#helpModal').modal('hide');
                             $('#monsterRun').addClass('disabled');
                             $('#monsterUseItem').addClass('disabled');
                             $('#modalMonsterAskHelp').addClass('disabled');
@@ -222,6 +221,43 @@
                         }
                     });
                 });
+                $('#questionAccept').click(function(){
+                    $.ajax({
+                        type: "GET",
+                        url: $(location).attr("href") +  $('#questionAccept').attr('name'),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        beforeSend: function(){
+                            $('#monsterRun').addClass('disabled');
+                            $('#monsterUseItem').addClass('disabled');
+                            $('#modalMonsterAskHelp').addClass('disabled');
+                        },
+                        success: function(jsonData) {
+                        },
+                        error: function(data) {
+                            alert(data.msg);
+                            console.log(data);
+                            $('#questionModal').modal('show');
+                        }
+                    });
+                });
+                $('#questionRefuse').click(function(){
+                    $.ajax({
+                        type: "GET",
+                        url: $(location).attr("href") +  $('#questionRefuse').attr('name'),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        beforeSend: function(){
+                        },
+                        success: function(jsonData) {
+                        },
+                        error: function(data) {
+                            alert(data.msg);
+                            console.log(data);
+                            $('#questionModal').modal('show');
+                        }
+                    });
+                });
                 socket.on('chatMessage', function(msg){
                     $('#messages').prepend($('<li>').text(msg));
                 });
@@ -233,10 +269,11 @@
                 socket.on('gameInfo', function(gameInfoJSON){
                     var gameInfo = JSON.parse(gameInfoJSON);
                     var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
+                    var isThisHelperPlayer = isThisPlayer(gameInfo.turnInfo.helperId);
                     togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
                     toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleUseItem(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase);
+                    toggleUseItem(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
+                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
                     gameInfo.players.forEach(function(player) {
                         if (!isThisPlayer(player.id)){
                             updatePlayerInfo(player, false);
@@ -247,7 +284,9 @@
                     var askInfo = JSON.parse(askInfoJSON);
                     //  Check if it is an ask for help
                     $('#questionModalTitle').html(askInfo.requester + ' is asking for your help');
-                    $('#questionModalBody').html(askInfo.requester + ' is asking for you to fight with him agaisnt **MONSTER NAME** for ' + askInfo.treasureAmount + ' treasure(s).');
+                    $('#questionModalBody').html(askInfo.requester + ' is asking for you to fight with him against **MONSTER NAME** for ' + askInfo.treasureAmount + ' treasure(s).');
+                    $('#questionAccept').attr('name', askInfo.acceptSuffix);
+                    $('#questionRefuse').attr('name', askInfo.refuseSuffix);
                     $('#questionModal').modal('show');
                     console.log(askInfo);
                 });
@@ -286,15 +325,15 @@
                         $('#monsterRun').addClass('disabled');
                     }
                 }
-                function toggleUseItem(isPlayerTurn, turnPhase){
-                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
+                function toggleUseItem(isPlayerTurn, isHelperTurn, turnPhase){
+                    if ((isPlayerTurn || isHelperTurn) && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
                         $('#monsterUseItem').removeClass('disabled');
                     } else {
                         $('#monsterUseItem').addClass('disabled');
                     }
                 }
-                function toggleAskHelp(isPlayerTurn, turnPhase){
-                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
+                function toggleAskHelp(isPlayerTurn, turnPhase, isHelperPresent){
+                    if (isPlayerTurn && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING && !isHelperPresent) {
                         $('#modalMonsterAskHelp').removeClass('disabled');
                     } else {
                         $('#modalMonsterAskHelp').addClass('disabled');
