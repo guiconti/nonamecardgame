@@ -12,7 +12,7 @@ module.exports = (req, res) => {
         if(!validator.isValidGame(body)) {
             res.status(400).json({msg: 'Invalid new game parameters'});
         } else {
-            let gameBody = new Game(body.name.trim());
+            let gameBody = new Game(body.name.trim(), body.password, req.userInfo.id);
             let newGameModel = new GameModel(gameBody);
             newGameModel.save((err, createdGame) => {
                 if (err) {

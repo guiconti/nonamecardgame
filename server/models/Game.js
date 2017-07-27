@@ -5,6 +5,7 @@ let GameSchema = new Schema({
     name: String,
     password: String,
     active: {type: Boolean, default: false},
+    ownerId: String,
     treasures: [{
         name: String,
         deck: Number,
