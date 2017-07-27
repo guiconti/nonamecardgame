@@ -30,6 +30,7 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({msg: 'Game table not found.'});
             if (gameTable.active) return res.status(400).json({msg: 'Game already begun.'});
+            if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({msg: 'Only the owner can start the game.'});
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({msg: 'There`s not enough players to start the game.'});
 
             eventEmitter.sendChatMessage(gameTable._id, 'The game started.');
