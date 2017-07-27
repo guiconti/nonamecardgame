@@ -5,7 +5,8 @@ const EVENT_TYPES = {
     GAME_INFO: 'gameInfo',
     PLAYER_INFO: 'playerInfo',
     NEW_PLAYER: 'newPlayer',
-    ASK_INFO: 'askInfo'
+    ASK_INFO: 'askInfo',
+    NEW_INFO: 'newInfo'
 };
 
 const tokenManager = require('../utils/tokenManager');
@@ -41,6 +42,9 @@ exports.createGameChat = (namespace) => {
             });
             socket.on(EVENT_TYPES.ASK_INFO, function(askInfo){
                 ioNamespace.emit(EVENT_TYPES.ASK_INFO, askInfo);
+            });
+            socket.on(EVENT_TYPES.NEW_INFO, function(newInfo){
+                ioNamespace.emit(EVENT_TYPES.NEW_INFO, newInfo);
             });
             socket.on(EVENT_TYPES.DISCONNECT, function(){
                 tokenManager.decryptToken(userCookies.session).then((userInfo) => {

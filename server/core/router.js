@@ -23,5 +23,6 @@ router.get('/game/:gameId/dungeon/pick', middleware.validateToken, gameControlle
 //  Fight APIs
 router.post('/game/:gameId/fight/ask_help', middleware.validateToken, gameController.askHelp);
 router.get('/game/:gameId/fight/ask_help/accept', middleware.validateToken, gameController.acceptHelp);
+router.get('/game/:gameId/fight/ask_help/refuse', middleware.validateToken, gameController.refuseHelp);
 
 module.exports = router;

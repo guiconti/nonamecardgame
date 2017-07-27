@@ -114,7 +114,7 @@
             </div>
         </div>
         <!-- Modal for questions -->
-        <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1"  data-backdrop="static" data-keyboard="false" aria-hidden="true">
+        <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -131,6 +131,27 @@
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
                         <button type="button" data-dismiss="modal" class="btn green" id="questionAccept">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for informations -->
+        <div id="informativeModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="informativeModalTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p id="informativeModalBody"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn green">Ok</button>
                     </div>
                 </div>
             </div>
@@ -288,7 +309,11 @@
                     $('#questionAccept').attr('name', askInfo.acceptSuffix);
                     $('#questionRefuse').attr('name', askInfo.refuseSuffix);
                     $('#questionModal').modal('show');
-                    console.log(askInfo);
+                });
+                socket.on('newInfo', function(newInfo){
+                    $('#informativeModalTitle').html(newInfo.title);
+                    $('#informativeModalBody').html(newInfo.body);
+                    $('#informativeModal').modal('show');
                 });
                 socket.on('newPlayer', function(playerInfo){
                     $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">' + '</div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
@@ -308,7 +333,9 @@
                     }
                 }
                 function isThisPlayer(playerId){
-                    if ($('#hand_' + playerId.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).length) return true;
+                    if (playerId){
+                        if ($('#hand_' + playerId.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).length) return true;
+                    }
                     return false;
                 }
                 function togglePickDungeon(isPlayerTurn, turnPhase){

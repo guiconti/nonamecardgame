@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../../communication/eventEmitter');
 
-const getPlayerIndex = require('../../utils/getPlayerIndex');
 const sendGameToPlayers = require('../sendGameToPlayers');
+const getPlayerIndex = require('../../utils/getPlayerIndex');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -25,25 +25,22 @@ module.exports = (req, res) => {
             if (!validator.isHelperTurn(gameTable, req.userInfo)) return res.status(400).json({msg: 'It`s not your turn.'});
             if (!validator.isHelpAnswerEnable(gameTable.turnInfo.phase)) return res.status(400).json({msg: 'You cannot accept a help now.'});
 
+            let newInfo = {
+                title: gameTable.turnInfo.helperName + ' refused!',
+                body: 'Sorry, but ' + gameTable.turnInfo.helperName + ' refused to help you on this fight.'
+            };
+
             let playerInfo = {
                 id: gameTable.turnInfo.playerId
             };
 
-            let playerIndex = getPlayerIndex(gameTable, playerInfo);
-            let helperIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(playerInfo);
 
-            if (gameTable.players[playerIndex].combatPower + gameTable.players[helperIndex].combatPower <= gameTable.table.monster[0].stats.combatPower){
-                gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
-                    + ' on the fight. But it is still not enough to defeat the monster.');
-            } else {
-                gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_WINNING;
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
-                    + ' on the fight. Together they are winning the fight.');
-            }
+            gameTable.turnInfo.helperId = '';
+            gameTable.turnInfo.helperName = '';
+            gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
+            eventEmitter.sendInfoToPlayer(gameTable.id, gameTable.players[playerIndex].communicationId, newInfo);
             sendGameToPlayers(gameTable);
-
-            //  TODO: Add helper name
 
             return gameTable.save((err) => {
                 if (err) {

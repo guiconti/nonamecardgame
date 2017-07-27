@@ -112,7 +112,7 @@ exports.isUseItemEnable = (turnPhase) => {
 
 exports.isHelpEnable = (gameTable) => {
     try {
-        return gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && !gameTable.turnInfo.helperId;
+        return gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && (!gameTable.turnInfo.helperId || gameTable.turnInfo.helperId == '');
     } catch (err){
         logger.logError(err);
         return false;
