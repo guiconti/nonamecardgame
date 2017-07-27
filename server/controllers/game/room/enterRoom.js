@@ -25,6 +25,7 @@ module.exports = (req, res) => {
                 playerRoomId: req.cookies.session,
                 players: [],
                 notInGame: true,
+                renderStartButton: (validator.isOwner(gameTable, req.userInfo.id) && !gameTable.active),
                 boardDisplay: 'hidden'
             }
 

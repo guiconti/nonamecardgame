@@ -20,6 +20,15 @@ exports.isValidPlayerId = (playerId) => {
     return _.isString(playerId) && playerId.trim().length > 0;
 };
 
+exports.isOwner = (gameTable, playerId) => {
+    try {
+        return _.isString(playerId) && gameTable.ownerId == playerId;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
 exports.isValidPlayer = (playerInfo) => {
     try{
         return _.isString(playerInfo.name) && playerInfo.name.trim().length > 0;
