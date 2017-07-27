@@ -2,15 +2,31 @@
 <html>
     <head>
         <title>No Name Card Game</title>
+        <link href="/assets/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         {{#if user}}
-        <h1>Welcome {{name}}</h1>
-        <form action="">
-            <input id="roomName" autocomplete="off" /><button>Create Game</button>
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Welcome {{name}}</h1>
+                    <form action="">
+                        <input type="text" id="roomName" autocomplete="off" />
+                        <button class="btn green">Create Game</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
         <h2 id="roomId"></h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a type="button" class="btn green" style="display:none;" id="joinRoom">Entrar na partida</a>
+                </div>
+            </div>
+        </div>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
         <script>
             $(document).ready(function(){
@@ -32,6 +48,8 @@
                         },
                         success: function(data) {
                             $('#roomId').append("Room created, the room id is: " + data.msg.id);
+                            $('#joinRoom').attr('href', $(location).attr("href") + 'game/' + data.msg.id);
+                            $('#joinRoom').show();
                             //alert('Oi');
                         },
                         error: function(data) {

@@ -74,15 +74,6 @@ exports.isHelperTurn = (gameInfo, helperInfo) => {
     }
 };
 
-exports.isActualPhase = (gameInfo, validPhases) => {
-    try{
-        return validPhases.includes(gameInfo.turnInfo.phase);
-    } catch(err){
-        logger.logError(err);
-        return false;
-    }
-};
-
 exports.isPickDungeonPhase = (turnPhase) => {
     try {
         return turnPhase == turnPhases.DRAW_FIRST_DUNGEON || turnPhase == turnPhases.DRAW_SECOND_DUNGEON;
