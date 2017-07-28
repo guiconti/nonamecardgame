@@ -34,17 +34,52 @@ describe('All login possibilities', function(){
       });
   });
 
-  it('Login with a name', function(done){
+  it('Login with a name - Player one', function(done){
     api
       .post('/login')
       .send({
-        name: 'Testezao'
+        name: 'Player one'
       })
       .end(function(err, res){
         if (err){
           done(err);
         } else {
           expect(res.status, 'Status').to.equal(200);
+          players.one.header['cookie'] = res.header['set-cookie'];
+          done();
+        }
+      });
+  });
+
+  it('Login with a name - Player two', function(done){
+    api
+      .post('/login')
+      .send({
+        name: 'Player two'
+      })
+      .end(function(err, res){
+        if (err){
+          done(err);
+        } else {
+          expect(res.status, 'Status').to.equal(200);
+          players.two.header['cookie'] = res.header['set-cookie'];
+          done();
+        }
+      });
+  });
+
+  it('Login with a name - Player three', function(done){
+    api
+      .post('/login')
+      .send({
+        name: 'Player three'
+      })
+      .end(function(err, res){
+        if (err){
+          done(err);
+        } else {
+          expect(res.status, 'Status').to.equal(200);
+          players.three.header['cookie'] = res.header['set-cookie'];
           done();
         }
       });
