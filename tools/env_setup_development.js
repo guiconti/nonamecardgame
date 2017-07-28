@@ -89,7 +89,7 @@ function completeFile() {
         let envVar = envVars[key];
         let newLine = key + '=' + envVar;
         console.log('writing to file: ' + newLine);
-        writeStream.write(newLine + '\n');
+        writeStream.write('\n' + newLine);
     }
 
     writeStream.end('');

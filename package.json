@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tools/test/core/testController.js",
-    "dev": "npm-run-all --parallel env_setup server_development",
+    "start": "npm-run-all --parallel env_setup_production server_production",
+    "dev": "npm-run-all --parallel env_setup_development server_development",
+    "server_production": "node tools/serverProduction.js",
+    "env_setup_production": "node tools/env_setup_production.js",
     "server_development": "nodemon tools/serverDevelopment.js",
-    "env_setup": "node tools/env_setup.js"
+    "env_setup_development": "node tools/env_setup_development.js"
   },
   "repository": {
     "type": "git",
