@@ -15,7 +15,7 @@ const filename = '.env',
  */ 
 const envVars = {
     NODE_ENV: 'production',
-    PORT: 80
+    PORT: 2000
 };
 
 console.log('checking file ' + filename);
