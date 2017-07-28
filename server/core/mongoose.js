@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 
+const DB_HOST = process.env.NODE_ENV == 'development'?process.env.DB_HOST:(process.env.DB_HOST_PREFIX + process.env.DB_HOST_USERNAME + ':' + process.env.DB_HOST_PASSWORD + process.env.DB_HOST_SUFFIX);
+
 // Connect to the database
-if (process.env.PORT == 'development'){
-    mongoose.connect(process.env.DB_HOST, {server:{auto_reconnect:true}});
-} else {
-    mongoose.connect(process.env.DB_HOST_PREFIX + process.env.DB_HOST_USERNAME + ':' + process.env.DB_HOST_PASSWORD + process.env.DB_HOST_SUFFIX, {server:{auto_reconnect:true}});
-}
+mongoose.connect(DB_HOST, {server:{auto_reconnect:true}});
 
 const db = mongoose.connection;
 
@@ -23,7 +21,7 @@ db.once('open', function callback(){
 // Connect lost log the event and try to reconnect
 db.on('disconnected', function() {
     console.error('MongoDB disconnected.');
-    mongoose.connect(process.env.DB_HOST, {server:{auto_reconnect:true}});        
+    mongoose.connect(DB_HOST, {server:{auto_reconnect:true}});        
 });
 
 // Connect restablished log the event

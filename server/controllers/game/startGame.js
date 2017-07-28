@@ -25,19 +25,20 @@ module.exports = (req, res) => {
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){
-                res.status(500).json({msg: 'We could not find you game due to DB issues. Try again.'});
+                res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                 throw err;
             }
-            if (!gameTable) return res.status(404).json({msg: 'Game table not found.'});
-            if (gameTable.active) return res.status(400).json({msg: 'Game already begun.'});
-            if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({msg: 'Only the owner can start the game.'});
-            if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({msg: 'There`s not enough players to start the game.'});
+            if (!gameTable) return res.status(404).json({title: 'Game table not started', body: 'Game table not found.'});
+            if (gameTable.active) return res.status(400).json({title: 'Game already begun.', body: 'This game table is already active!'});
+            if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({title: 'Access denied', body: 'Only the owner can start the game.'});
+            if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({title: 'Game table not started',
+                body: 'There`s not enough players to start the game.'});
 
             eventEmitter.sendChatMessage(gameTable._id, 'The game started.');
             setupGame(gameTable);
             gameTable.save((err) => {
                 if (err) {
-                    res.status(500).json({msg: 'We could not save the game due to DB issues. Try again.'});
+                    res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                     throw err;
                 }
                 sendGameToPlayers(gameTable.toObject());

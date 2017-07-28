@@ -228,8 +228,11 @@
                         beforeSend: function(){
                             $('#startRoom').hide();
                         },
-                        error: function(data) {
-                            alert(data);
+                        error: function(errorDataJSON) {
+                            var errorData = JSON.parse(errorDataJSON);
+                            $('#informativeModalTitle').html(errorData.title);
+                            $('#informativeModalBody').html(errorData.body);
+                            $('#informativeModal').modal('show');
                             $('#startRoom').show();
                         }
                     });
