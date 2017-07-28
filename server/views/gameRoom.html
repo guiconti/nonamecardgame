@@ -202,10 +202,9 @@
                 });
                 $('#joinRoom').click(function(){
                     $.ajax({
-                        type: "POST",
-                        url: $(location).attr("href") + '/player/insert',
+                        type: "GET",
+                        url: $(location).attr("href") + '/join',
                         contentType: "application/json; charset=utf-8",
-                        dataType: "json",
                         beforeSend: function(){
                             $('#joinRoom').hide();
                         },

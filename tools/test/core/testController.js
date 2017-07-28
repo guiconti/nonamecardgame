@@ -20,3 +20,4 @@ gameInfo = {
 require('../controllers/login');
 require('../controllers/createGame');
 require('../controllers/enterGame');
+require('../controllers/joinGame');

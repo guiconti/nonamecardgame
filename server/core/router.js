@@ -14,7 +14,7 @@ router.post('/login', login.newUser);
 router.post('/game/create', middleware.validateToken, gameController.createRoom);
 router.get('/game/:gameId', middleware.validateToken, gameController.enterRoom);
 
-router.post('/game/:gameId/player/insert', middleware.validateToken, gameController.addPlayer);
+router.get('/game/:gameId/join', middleware.validateToken, gameController.addPlayer);
 router.get('/game/:gameId/start', middleware.validateToken, gameController.startGame);
 
 //  Card control APIs
