@@ -77,7 +77,7 @@ module.exports = (req, res) => {
         });    
     } catch(err){
         res.status(500).json({title: 'Unknown error', body: 'Something happened and even we don`t know what it is.'});
-        console,log(err);
+        console.log(err);
         return logger.logError(err);
     }
 };
