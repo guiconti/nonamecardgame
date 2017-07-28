@@ -1,2 +1,2 @@
 require('dotenv').config();
-require('../controllers/game');
+require('../controllers/login');

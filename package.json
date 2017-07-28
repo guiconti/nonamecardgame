@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tools/test/core/testController.js",
+    "test": "npm run env_setup_production && mocha tools/test/core/testController.js",
+    "test_dev": "npm run env_setup_development && mocha tools/test/core/testController.js",
     "start": "npm-run-all --parallel env_setup_production server_production",
     "dev": "npm-run-all --parallel env_setup_development server_development",
     "server_production": "node tools/serverProduction.js",
@@ -38,11 +39,14 @@
     "rollbar": "^2.1.0",
     "socket.io": "^2.0.3",
     "supertest": "^3.0.0",
-    "underscore": "^1.8.3",
-    "npm-run-all": "^4.0.2"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
     "morgan": "^1.8.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0",
+    "npm-run-all": "^4.0.2"
   }
 }
