@@ -1,4 +1,5 @@
 const _ = require('underscore');
+const mongoose = require('mongoose');
 const logger = require('../../../tools/logger');
 const turnPhases = require('../game/turnPhases');
 
@@ -13,7 +14,12 @@ exports.isValidGame = (gameInfo) => {
 };
 
 exports.isValidGameId = (gameId) => {
-    return _.isString(gameId) && gameId.trim().length > 0;
+    try {
+        return mongoose.Types.ObjectId.isValid(gameId);
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
 };
 
 exports.isValidPlayerId = (playerId) => {

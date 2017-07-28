@@ -18,4 +18,5 @@ gameInfo = {
 };
 
 require('../controllers/login');
-require('../controllers/game');
+require('../controllers/createGame');
+require('../controllers/enterGame');
