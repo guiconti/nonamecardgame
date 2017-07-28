@@ -13,6 +13,9 @@ players = {
     }
 };
 
-
+gameInfo = {
+    id: ''
+};
 
 require('../controllers/login');
+require('../controllers/game');
