@@ -12,12 +12,12 @@ describe('All create room possibilities', function(){
             name: 'Sala sem logar'
         })
         .end(function(err, res){
-        if (err){
-            done(err);
-        } else {
-            expect(res.status, 'Status').to.equal(302);
-            done();
-        }
+            if (err){
+                done(err);
+            } else {
+                expect(res.status, 'Status').to.equal(302);
+                done();
+            }
         });
   });
 
@@ -29,12 +29,12 @@ describe('All create room possibilities', function(){
         })
         .set(players.one.header)
         .end(function(err, res){
-        if (err){
-            done(err);
-        } else {
-            expect(res.status, 'Status').to.equal(400);
-            done();
-        }
+            if (err){
+                done(err);
+            } else {
+                expect(res.status, 'Status').to.equal(400);
+                done();
+            }
         });
   });
 
@@ -46,14 +46,14 @@ describe('All create room possibilities', function(){
         })
         .set(players.one.header)
         .end(function(err, res){
-        if (err){
-            done(err);
-        } else {
-            expect(res.status, 'Status').to.equal(200);
-            expect(res.body.msg.id).to.not.equal(undefined);
-            gameInfo.id = res.body.msg.id;
-            done();
-        }
+            if (err){
+                done(err);
+            } else {
+                expect(res.status, 'Status').to.equal(200);
+                expect(res.body.msg.id).to.not.equal(undefined);
+                gameInfo.id = res.body.msg.id;
+                done();
+            }
         });
   });
 
@@ -65,13 +65,13 @@ describe('All create room possibilities', function(){
         })
         .set(players.one.header)
         .end(function(err, res){
-        if (err){
-            done(err);
-        } else {
-            expect(res.status, 'Status').to.equal(200);
-            expect(res.body.msg.id).to.not.equal(undefined);
-            done();
-        }
+            if (err){
+                done(err);
+            } else {
+                expect(res.status, 'Status').to.equal(200);
+                expect(res.body.msg.id).to.not.equal(undefined);
+                done();
+            }
         });
   });
 
@@ -83,13 +83,13 @@ describe('All create room possibilities', function(){
         })
         .set(players.one.header)
         .end(function(err, res){
-        if (err){
-            done(err);
-        } else {
-            expect(res.status, 'Status').to.equal(200);
-            expect(res.body.msg.id).to.not.equal(undefined);
-            done();
-        }
+            if (err){
+                done(err);
+            } else {
+                expect(res.status, 'Status').to.equal(200);
+                expect(res.body.msg.id).to.not.equal(undefined);
+                done();
+            }
         });
   });
 });

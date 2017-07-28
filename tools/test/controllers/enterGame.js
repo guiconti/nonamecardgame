@@ -9,12 +9,12 @@ describe('All enter room possibilities', function(){
         api
             .get('/game/' + gameInfo.id)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(302);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(302);
+                    done();
+                }
             });
     });
 
@@ -22,13 +22,13 @@ describe('All enter room possibilities', function(){
         api
             .get('/game/' + '')
             .set(players.one.header)
-            .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(404);
-                done();
-            }
+                .end(function(err, res){
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(404);
+                    done();
+                }
             });
     });
 
@@ -37,12 +37,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + 'invalid_game_id')
             .set(players.one.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(400);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(400);
+                    done();
+                }
             });
     });
 
@@ -51,12 +51,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + 'sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`sadjkj2hej`hujhdsuad72197830217dsahcjxzcZXWQU*!@#*(S(DASCJXZC(!@#*SADxzcmkaskjczxnjcko-wqie0-213sda89as7dsa*sd-a*dss6xc4x5zc4*///*""""""/``/`/`/`')  
             .set(players.one.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(400);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(400);
+                    done();
+                }
             });
     });
 
@@ -65,12 +65,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + 'ñóǹäŝçíì汉语/漢华语/華語Huá中文Z')
             .set(players.one.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(404);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(404);
+                    done();
+                }
             });
     });
 
@@ -79,12 +79,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + gameInfo.id)
             .set(players.one.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(200);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(200);
+                    done();
+                }
             });
     });
 
@@ -93,12 +93,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + gameInfo.id)
             .set(players.two.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(200);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(200);
+                    done();
+                }
             });
     });
 
@@ -107,12 +107,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + gameInfo.id)
             .set(players.three.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(200);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(200);
+                    done();
+                }
             });
     });
 
@@ -121,12 +121,12 @@ describe('All enter room possibilities', function(){
             .get('/game/' + gameInfo.id)
             .set(players.one.header)
             .end(function(err, res){
-            if (err){
-                done(err);
-            } else {
-                expect(res.status, 'Status').to.equal(200);
-                done();
-            }
+                if (err){
+                    done(err);
+                } else {
+                    expect(res.status, 'Status').to.equal(200);
+                    done();
+                }
             });
     });
 });
