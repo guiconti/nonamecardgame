@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 
 // Connect to the database
-mongoose.connect(process.env.DB_HOST, {server:{auto_reconnect:true}});
+if (process.env.PORT == 'development'){
+    mongoose.connect(process.env.DB_HOST, {server:{auto_reconnect:true}});
+} else {
+    mongoose.connect(process.env.DB_HOST_PREFIX + process.env.DB_HOST_USERNAME + ':' + process.env.DB_HOST_PASSWORD + process.env.DB_HOST_SUFFIX, {server:{auto_reconnect:true}});
+}
+
 const db = mongoose.connection;
 
 // Connection fails log the error
