@@ -15,7 +15,6 @@ module.exports = (req, res) => {
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){
-                res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                 throw err;
             }
             if (!gameTable) return res.status(404).json({title: 'Game table not found', body: 'Could not find a game table with this game id.'});

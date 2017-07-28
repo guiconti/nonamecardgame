@@ -16,7 +16,6 @@ module.exports = (req, res) => {
             let newGameModel = new GameModel(gameBody);
             newGameModel.save((err, createdGame) => {
                 if (err) {
-                    res.status(500).json({msg: 'We could not create your game due to DB issues. Try again.'});
                     throw err;
                 }
                 return res.status(200).json({
@@ -27,6 +26,8 @@ module.exports = (req, res) => {
             })
         }    
     } catch(err){
+        res.status(500).json({title: 'Server error', body: 'Something happened and even we don`t know what it is.'});
+        console.log(err);
         return logger.logError(err);
     } 
 };

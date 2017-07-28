@@ -25,7 +25,6 @@ module.exports = (req, res) => {
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){
-                res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                 throw err;
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
@@ -38,7 +37,6 @@ module.exports = (req, res) => {
             setupGame(gameTable);
             gameTable.save((err) => {
                 if (err) {
-                    res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                     throw err;
                 }
                 sendGameToPlayers(gameTable.toObject());
@@ -46,7 +44,7 @@ module.exports = (req, res) => {
             });
         });    
     } catch(err){
-        res.status(500).json({title: 'Unknown error', body: 'Something happened and even we don`t know what it is.'});
+        res.status(500).json({title: 'Server error', body: 'Something happened and even we don`t know what it is.'});
         return logger.logError(err);
     }
 };

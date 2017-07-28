@@ -13,29 +13,28 @@ module.exports = (req, res) => {
 
     try{
         var params = _.pick(req.params, 'gameId');
-        if(!validator.isValidPlayer(req.userInfo)) return res.status(400).json({msg: 'Invalid player info.'});
-        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({msg: 'Invalid game id.'});
+        if(!validator.isValidPlayer(req.userInfo)) return res.status(400).json({title: 'Invalid player info', body: 'This player id is not valid.'});
+        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
         params.gameId = params.gameId.trim();
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err) {
-                res.status(500).json({msg: 'We could not find you table due to DB issues. Please try again later'});
                 throw err;
             }
-            if (!gameTable) return res.status(404).json({msg: 'Game table not found.'});
-            if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({msg: 'Game table already full.'});
-            if (gameTable.active) return res.status(400).json({msg: 'Game already started.'});
+            if (!gameTable) return res.status(404).json({title: 'Game table not found', body: 'Could not find a game table with this game id.'});
+            if (gameTable.players.length >= MAX_PLAYERS) return res.status(400).json({title: 'Game table already full.', 
+                body: 'This table has already reached the players limit (6)'});
+            if (gameTable.active) return res.status(400).json({title: 'Game already started.', body: 'You cannot join an ongoing game.'});
             
             let newPlayer = new Player(req.userInfo.name.trim(), req.userInfo.id, req.cookies.session);
             let playerIndex = getPlayerIndex(gameTable, newPlayer);
             if (playerIndex != -1){
-                return res.status(400).json({msg: 'Player already in game'});
+                return res.status(400).json({title: 'Player already in game', body: 'You already joined this room.'});
             }
 
             gameTable.players.push(newPlayer);
             gameTable.save((err) => {
                 if(err) {
-                    res.status(500).json({msg: 'We could not add you due to DB issues. Try again later'});
                     throw err;
                 }
                 eventEmitter.sendChatMessage(params.gameId, req.userInfo.name.trim() + ' entered the game.');
@@ -57,6 +56,8 @@ module.exports = (req, res) => {
             });
         });
     } catch(err){
+        res.status(500).json({title: 'Server error', body: 'Something happened and even we don`t know what it is.'});
+        console.log(err);
         return logger.logError(err);
     }
 };
