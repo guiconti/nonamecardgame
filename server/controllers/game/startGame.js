@@ -28,7 +28,7 @@ module.exports = (req, res) => {
                 res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                 throw err;
             }
-            if (!gameTable) return res.status(404).json({title: 'Game table not started', body: 'Game table not found.'});
+            if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (gameTable.active) return res.status(400).json({title: 'Game already begun.', body: 'This game table is already active!'});
             if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({title: 'Access denied', body: 'Only the owner can start the game.'});
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({title: 'Game table not started',
@@ -46,6 +46,7 @@ module.exports = (req, res) => {
             });
         });    
     } catch(err){
+        res.status(500).json({title: 'Unknown error', body: 'Something happened and even we don`t know what it is.'});
         return logger.logError(err);
     }
 };

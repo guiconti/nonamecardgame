@@ -213,8 +213,8 @@
                             $('#gameInfo').removeClass('hidden');
                             window.location = $(location).attr('href');
                         },
-                        error: function(data) {
-                            alert(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
                             $('#joinRoom').show();
                         }
                     });
@@ -246,8 +246,8 @@
                             },
                             success: function(jsonData) {
                             },
-                            error: function(data) {
-                                alert(data);
+                            error: function(errorData) {
+                                showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
                                 $('#pickDungeon').removeClass('disabled');
                             }
                         });
@@ -271,9 +271,8 @@
                         },
                         success: function(jsonData) {
                         },
-                        error: function(data) {
-                            alert(data.msg);
-                            console.log(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
                             $('#monsterRun').removeClass('disabled');
                             $('#monsterUseItem').removeClass('disabled');
                             $('#modalMonsterAskHelp').removeClass('disabled');
@@ -293,9 +292,8 @@
                         },
                         success: function(jsonData) {
                         },
-                        error: function(data) {
-                            alert(data.msg);
-                            console.log(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
                             $('#questionModal').modal('show');
                         }
                     });
@@ -310,9 +308,8 @@
                         },
                         success: function(jsonData) {
                         },
-                        error: function(data) {
-                            alert(data.msg);
-                            console.log(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
                             $('#questionModal').modal('show');
                         }
                     });

@@ -12,25 +12,27 @@ module.exports = (req, res) => {
 
     try {
         let params = _.pick(req.params, 'gameId');
-        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({msg: 'Invalid game id'});
+        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
         params.gameId = params.gameId.trim();
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){
-                res.status(500).json({msg: 'We could not find you game due to DB issues. Try again.'});
+                res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                 throw err;
             }
-            if (!gameTable) return res.status(404).json({msg: 'Game table not found.'});
-            if (!gameTable.active) return res.status(400).json({msg: 'Game has not begun.'});
-            if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({msg: 'It`s not your turn.'});
-            if (!validator.isPickDungeonPhase(gameTable.turnInfo.phase)) return res.status(400).json({msg: 'You cant pick up a dungeon now.'});
+            if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
+            if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only pick dungeons when the game starts.'});
+            if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
+                body: 'You can only pick dungeons when it is your turn.'});
+            if (!validator.isPickDungeonPhase(gameTable.turnInfo.phase)) return res.status(400).json({title: 'You can`t pick dungeon now', 
+                body: 'You can only pick dungeons when it is on dungeon draw phase.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);
             let dungeonPicked = getDungeon(gameTable);
             pickDungeonAction(gameTable, playerIndex, dungeonPicked);   
             return gameTable.save((err) => {
                 if (err) {
-                    res.status(500).json({msg: 'We could not save due to DB issues. Try again.'});
+                    res.status(500).json({title: 'Server error', body: 'We could not find you game due to DB issues. Please try again.'});
                     throw err;
                 } 
                 return res.status(200).json({msg: 'Dungeon picked.'});
@@ -38,6 +40,7 @@ module.exports = (req, res) => {
             
         });    
     } catch(err){
+        res.status(500).json({title: 'Unknown error', body: 'Something happened and even we don`t know what it is.'});
         console.log(err);
         return logger.logError(err);
     }
