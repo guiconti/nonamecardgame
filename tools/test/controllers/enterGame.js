@@ -129,5 +129,4 @@ describe('All enter room possibilities', function(){
             }
             });
     });
-
 });
