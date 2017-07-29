@@ -10,6 +10,7 @@ let GameSchema = new Schema({
         name: String,
         deck: Number,
         cardType: Number,
+        bonus: Number
     }],
     dungeons: [{
         name: String,

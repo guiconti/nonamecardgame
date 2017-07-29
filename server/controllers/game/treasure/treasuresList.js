@@ -7,7 +7,8 @@ module.exports = function() {
         {
             name: 'Treasure 1',
             deck: deckType.TREASURE,
-            cardType: treasuresType.CONSUMABLE
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 5
         },
         {
             name: 'Treasure 2',
@@ -17,7 +18,8 @@ module.exports = function() {
         {
             name: 'Treasure 3',
             deck: deckType.TREASURE,
-            cardType: treasuresType.CONSUMABLE
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 2
         },
         {
             name: 'Treasure 4',
@@ -27,7 +29,8 @@ module.exports = function() {
         {
             name: 'Treasure 5',
             deck: deckType.TREASURE,
-            cardType: treasuresType.CONSUMABLE
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 3
         },
         {
             name: 'Treasure 6',
@@ -37,7 +40,8 @@ module.exports = function() {
         {
             name: 'Treasure 7',
             deck: deckType.TREASURE,
-            cardType: treasuresType.CONSUMABLE
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 3
         },
         {
             name: 'Treasure 8',
@@ -47,7 +51,8 @@ module.exports = function() {
         {
             name: 'Treasure 9',
             deck: deckType.TREASURE,
-            cardType: treasuresType.CONSUMABLE
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 4
         },
         {
             name: 'Treasure 10',
