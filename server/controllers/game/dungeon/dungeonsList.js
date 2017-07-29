@@ -65,6 +65,68 @@ module.exports = function() {
             name: 'Dungeon 10',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.USABLE
+        },
+        {
+            name: 'Dungeon 11',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.CURSE
+        },
+        {
+            name: 'Monster 4',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 1,
+                treasureReward: 1
+            }
+        },
+        {
+            name: 'Dungeon 12',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.RACE
+        },
+        {
+            name: 'Monster 5',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 3,
+                treasureReward: 1
+            }
+        },
+        {
+            name: 'Dungeon 13',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.CURSE
+        },
+        {
+            name: 'Monster 6',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            stats:{
+                combatPower: 4,
+                treasureReward: 2
+            }
+        },
+        {
+            name: 'Dungeon 14',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.CURSE
+        },
+        {
+            name: 'Dungeon 15',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.ROLE
+        },
+        {
+            name: 'Dungeon 16',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.USABLE
+        },
+        {
+            name: 'Dungeon 17',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.USABLE
         }
     ]);
 };
