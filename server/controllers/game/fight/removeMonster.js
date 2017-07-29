@@ -8,7 +8,7 @@ module.exports = (gameTable) => {
         //  Add monster to discard pile
         return;
     } catch (err){
-        logger.log(error);
+        logger.logError(err);
         return;
     }
 };

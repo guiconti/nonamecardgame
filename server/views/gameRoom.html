@@ -252,8 +252,26 @@
                         });
                     }
                 });
+                 $('#monsterRun').click(function(){
+                    if(!$(this).hasClass('disabled')){
+                        $.ajax({
+                            type: "GET",
+                            url: $(location).attr("href") + '/fight/run',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            beforeSend: function(){
+                                $('#monsterRun').addClass('disabled');
+                            },
+                            success: function(jsonData) {
+                            },
+                            error: function(errorData) {
+                                showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                                $('#monsterRun').removeClass('disabled');
+                            }
+                        });
+                    }
+                });
                 $('#monsterAskHelp').click(function(){
-                    console.log('a');
                     if(!$(this).hasClass('disabled')){
                         var helperInfo = {
                             helperId: $('#helperName option:selected').val(),

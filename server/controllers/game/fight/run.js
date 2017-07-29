@@ -1,11 +1,13 @@
 const _ = require('underscore');
 const validator = require('../../utils/validator');
-const throwDice = require('../../utils/throwDice');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../../communication/eventEmitter');
+const nextPlayer = require('../nextPlayer');
+const sendGameToPlayers = require('../sendGameToPlayers');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
+const throwDice = require('../../utils/throwDice');
 const removeMonster = require('./removeMonster');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
@@ -39,12 +41,11 @@ module.exports = (req, res) => {
                 + ' on the dice and manages to run. He manage to run from the monster without consequences.');
             } else {
                 eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' got ' + diceResult
-                + ' on the dice and it`s not enough to run! He suffers the consequences from loosing tot he monster.');
+                + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.');
             }
 
             // End fight and change player to next
             removeMonster(gameTable);
-            gameTable.turnInfo.phase = turnPhases.DRAW_FIRST_DUNGEON;
             nextPlayer(gameTable, playerIndex);
             sendGameToPlayers(gameTable);
 
