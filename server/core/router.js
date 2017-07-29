@@ -24,5 +24,6 @@ router.get('/game/:gameId/dungeon/pick', middleware.validateToken, gameControlle
 router.post('/game/:gameId/fight/ask_help', middleware.validateToken, gameController.askHelp);
 router.get('/game/:gameId/fight/ask_help/accept', middleware.validateToken, gameController.acceptHelp);
 router.get('/game/:gameId/fight/ask_help/refuse', middleware.validateToken, gameController.refuseHelp);
+router.get('/game/:gameId/fight/run', middleware.validateToken, gameController.run);
 
 module.exports = router;

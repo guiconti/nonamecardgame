@@ -6,6 +6,7 @@ const pickDungeon = require('./game/pickDungeon');
 const askHelp = require('./game/fight/askHelp');
 const acceptHelp = require('./game/fight/acceptHelp');
 const refuseHelp = require('./game/fight/refuseHelp');
+const run = require('./game/fight/run');
 
 module.exports = {
     createRoom: createRoom,
@@ -15,6 +16,7 @@ module.exports = {
     pickDungeon: pickDungeon,
     askHelp: askHelp,
     acceptHelp: acceptHelp,
-    refuseHelp: refuseHelp
+    refuseHelp: refuseHelp,
+    run: run
 };
 
