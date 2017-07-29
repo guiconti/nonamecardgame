@@ -29,7 +29,7 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (gameTable.active) return res.status(400).json({title: 'Game already begun.', body: 'This game table is already active!'});
-            if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({title: 'Access denied', body: 'Only the owner can start the game.'});
+            if (!validator.isOwner(gameTable, req.userInfo.id)) return res.status(400).json({title: 'Game table not started', body: 'Only the owner can start the game.'});
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({title: 'Game table not started',
                 body: 'There`s not enough players to start the game.'});
 

@@ -14,10 +14,12 @@ players = {
 };
 
 gameInfo = {
-    id: ''
+    id: '',
+    idAux: ''
 };
 
 require('../controllers/login');
 require('../controllers/createGame');
 require('../controllers/enterGame');
 require('../controllers/joinGame');
+require('../controllers/startGame');
