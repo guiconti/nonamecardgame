@@ -16,7 +16,7 @@ module.exports = (req, res) => {
         };
         tokenManager.generateToken(userData).then((token) => {
             // Set the cookie
-            res.cookie('session', token, {maxAge: 9000000});
+            res.cookie('session', token, {maxAge: 365*24*60*60*1000});
             return res.status(200).json({redirectUrl: '/'});
         }, (err) => {
             res.status(500).json({msg: 'Error generating cookie'});
