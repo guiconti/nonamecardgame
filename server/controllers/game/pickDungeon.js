@@ -33,7 +33,7 @@ module.exports = (req, res) => {
                 if (err) {
                     throw err;
                 } 
-                return res.status(200).json({msg: 'Dungeon picked.'});
+                return res.status(200).json({msg: 'Dungeon picked.', type: dungeonPicked.cardType});
             });
             
         });    

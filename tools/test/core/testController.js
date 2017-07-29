@@ -23,3 +23,4 @@ require('../controllers/createGame');
 require('../controllers/enterGame');
 require('../controllers/joinGame');
 require('../controllers/startGame');
+require('../controllers/pickDungeon');
