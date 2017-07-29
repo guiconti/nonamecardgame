@@ -28,8 +28,31 @@
                 </div>
             </div>
         </div>
+        <!-- Modal for informations -->
+        <div id="informativeModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="informativeModalTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p id="informativeModalBody"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn green">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
         <script src="/assets/js/clipboard.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function(){
                 new Clipboard('.btn');
@@ -55,13 +78,18 @@
                             $('#copyLink').attr('data-clipboard-text', $(location).attr("href") + 'game/' + data.msg.id);
                             $('#joinRoom').show();
                             $('#copyLink').show();
-                            //alert('Oi');
                         },
-                        error: function(data) {
-                            //alert(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                            $('form').show();
                         }
                     });
                 });
+                function showInfoModal(title, body){
+                    $('#informativeModalTitle').html(title);
+                    $('#informativeModalBody').html(body);
+                    $('#informativeModal').modal('show');
+                }
             });
         </script>
         {{else}}
@@ -69,6 +97,7 @@
             <input id="playerName" autocomplete="off" /><button>Cadastrar</button>
         </form>
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function(){
                 $('form').submit(function(){
@@ -89,14 +118,19 @@
                         },
                         success: function(data) {
                             window.location = data.redirectUrl;
-                            //alert('Oi');
                         },
-                        error: function(data) {
-                            //alert(data);
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                            $('form').show();
                         }
                     });
                 });
             });
+            function showInfoModal(title, body){
+                $('#informativeModalTitle').html(title);
+                $('#informativeModalBody').html(body);
+                $('#informativeModal').modal('show');
+            }
         </script>
         {{/if}}
     </body>

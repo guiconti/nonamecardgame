@@ -10,7 +10,7 @@ module.exports = (req, res) => {
         var body = _.pick(req.body, 'name', 'password');
 
         if(!validator.isValidGame(body)) {
-            res.status(400).json({msg: 'Invalid new game parameters'});
+            res.status(400).json({title: 'Invalid room name', body: 'You have to insert a room name.'});
         } else {
             let gameBody = new Game(body.name.trim(), body.password, req.userInfo.id);
             let newGameModel = new GameModel(gameBody);

@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try{
         let body = _.pick(req.body, 'name');
         if(!validator.isValidUser(body)) {
-            return res.status(400).json({msg: 'Not valid user info.'});
+            return res.status(400).json({title: 'Not a valid user name.', body: 'You have to insert a username.'});
         }
 
         let userData = {
@@ -19,10 +19,10 @@ module.exports = (req, res) => {
             res.cookie('session', token, {maxAge: 365*24*60*60*1000});
             return res.status(200).json({redirectUrl: '/'});
         }, (err) => {
-            res.status(500).json({msg: 'Error generating cookie'});
             throw err;
         });    
     } catch(err){
+        res.status(500).json({title: 'Server error', body: 'Something happened and even we don`t know what it is.'});
         return logger.logError(err);
     }
     
