@@ -51,11 +51,11 @@
                                     </div>
                                 </div>
                                 {{#if isMain}}
-                                <button type="button" class="btn purple-plum {{isPickDungeonEnable}}" id="pickDungeon">Pick a dungeon</button>
+                                <a type="button" class="btn purple-plum {{isPickDungeonEnable}}" id="pickDungeon">Pick a dungeon</a>
                                 <br/>
-                                <button type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</button>
-                                <button type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</button>
-                                <button type="button" class="btn purple-plum {{isHelpEnable}}" id="modalMonsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</button>
+                                <a type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</a>
+                                <a type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</a>
+                                <a type="button" class="btn purple-plum {{isHelpEnable}}" id="modalMonsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</a>
                                 {{/if}}
                             </div>
                         </div>
@@ -253,30 +253,33 @@
                     }
                 });
                 $('#monsterAskHelp').click(function(){
-                    var helperInfo = {
-                        helperId: $('#helperName option:selected').val(),
-                        treasureAmount: $('#helperTreasureOffer').val()
-                    };
-                    $.ajax({
-                        type: "POST",
-                        url: $(location).attr("href") + '/fight/ask_help',
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(helperInfo),
-                        dataType: "json",
-                        beforeSend: function(){
-                            $('#monsterRun').addClass('disabled');
-                            $('#monsterUseItem').addClass('disabled');
-                            $('#modalMonsterAskHelp').addClass('disabled');
-                        },
-                        success: function(jsonData) {
-                        },
-                        error: function(errorData) {
-                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
-                            $('#monsterRun').removeClass('disabled');
-                            $('#monsterUseItem').removeClass('disabled');
-                            $('#modalMonsterAskHelp').removeClass('disabled');
-                        }
-                    });
+                    console.log('a');
+                    if(!$(this).hasClass('disabled')){
+                        var helperInfo = {
+                            helperId: $('#helperName option:selected').val(),
+                            treasureAmount: $('#helperTreasureOffer').val()
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: $(location).attr("href") + '/fight/ask_help',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(helperInfo),
+                            dataType: "json",
+                            beforeSend: function(){
+                                $('#monsterRun').addClass('disabled');
+                                $('#monsterUseItem').addClass('disabled');
+                                $('#modalMonsterAskHelp').addClass('disabled');
+                            },
+                            success: function(jsonData) {
+                            },
+                            error: function(errorData) {
+                                showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                                $('#monsterRun').removeClass('disabled');
+                                $('#monsterUseItem').removeClass('disabled');
+                                $('#modalMonsterAskHelp').removeClass('disabled');
+                            }
+                        });
+                    }
                 });
                 $('#questionAccept').click(function(){
                     $.ajax({

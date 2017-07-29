@@ -100,6 +100,7 @@ describe('All pick dungeons possibilities', function(){
                 } else {
                     expect(res.status, 'Status').to.equal(200);
                     gameInfo.lastDungeonType = res.body.type;
+                    gameInfo.lastPlayerPick = 1;
                     done();
                 }
             });
@@ -150,6 +151,7 @@ describe('All pick dungeons possibilities', function(){
                 } else {
                     expect(res.status, 'Status').to.equal(200);
                     gameInfo.lastDungeonType = res.body.type;
+                    gameInfo.lastPlayerPick = 1;
                     done();
                 }
             });
@@ -204,6 +206,7 @@ describe('All pick dungeons possibilities', function(){
                 } else {
                     expect(res.status, 'Status').to.equal(200);
                     gameInfo.lastDungeonType = res.body.type;
+                    gameInfo.lastPlayerPick = 2;
                     done();
                 }
             });
@@ -243,6 +246,7 @@ describe('All pick dungeons possibilities', function(){
                 } else {
                     expect(res.status, 'Status').to.equal(200);
                     gameInfo.lastDungeonType = res.body.type;
+                    gameInfo.lastPlayerPick = 2;
                     done();
                 }
             });
@@ -300,6 +304,7 @@ describe('All pick dungeons possibilities', function(){
                     return;
                 } else {
                     expect(res.status, 'Status').to.equal(200);
+                    gameInfo.lastPlayerPick = 3;
                     done();
                 }
             });
