@@ -48,14 +48,17 @@ let GameSchema = new Schema({
         }],
         cardsOnHand: {type: Number, default: 0}
     }],
-    table: {
+    fight: {
         monster: [{
             name: String,
-            stats: {
-                combatPower: Number,
-                treasureReward: Number
-            }
-        }]
+            combatPower: Number,
+            treasureReward: Number,
+            powerBonus: Number
+        }],
+        player: {
+            combatPower: Number,
+            powerBonus: Number
+        }
     }
 });
 

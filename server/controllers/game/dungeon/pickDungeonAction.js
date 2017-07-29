@@ -35,7 +35,7 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
 
 function monsterPick(gameTable, playerIndex, monsterPicked){
     //  TODO: fail proof
-    gameTable.table.monster = monsterPicked;
+    gameTable.fight.monster = monsterPicked;
     monsterFight.startFight(gameTable, playerIndex);
     return;
 }

@@ -38,7 +38,7 @@ module.exports = (req, res) => {
 
             if (helperIndex === -1 || helperIndex == playerIndex) return res.status(400).json({title: 'Helper not found', 
                 body: 'The helper you select does not exist in this game.'});
-            if (gameTable.table.monster[0].stats.treasureReward < helperInfo.treasureAmount) return res.status(400).json({title: 'Invalid treasure amount',
+            if (gameTable.fight.monster[0].treasureReward < helperInfo.treasureAmount) return res.status(400).json({title: 'Invalid treasure amount',
                 body: 'The treasure amount must be between 0 and the number of treasures given by the monster.'});
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_HELP_ANSWER;
             gameTable.turnInfo.helperId = helperInfo.id;
@@ -48,7 +48,7 @@ module.exports = (req, res) => {
             let askInfo = {
                 type: 0,
                 title: gameTable.turnInfo.playerName + ' is asking for your help',
-                body: gameTable.turnInfo.playerName + ' is asking for you to fight with him against ' + gameTable.table.monster[0].name + ' for ' + helperInfo.treasureAmount + ' treasure(s).',
+                body: gameTable.turnInfo.playerName + ' is asking for you to fight with him against ' + gameTable.fight.monster[0].name + ' for ' + helperInfo.treasureAmount + ' treasure(s).',
                 requester: gameTable.turnInfo.playerName,
                 treasureAmount: helperInfo.treasureAmount,
                 acceptSuffix: '/fight/ask_help/accept',

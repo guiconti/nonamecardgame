@@ -33,7 +33,7 @@ module.exports = (req, res) => {
             let playerIndex = getPlayerIndex(gameTable, playerInfo);
             let helperIndex = getPlayerIndex(gameTable, req.userInfo);
 
-            if (gameTable.players[playerIndex].combatPower + gameTable.players[helperIndex].combatPower <= gameTable.table.monster[0].stats.combatPower){
+            if (gameTable.players[playerIndex].combatPower + gameTable.players[helperIndex].combatPower <= gameTable.fight.monster[0].combatPower){
                 gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. But it is still not enough to defeat the monster.');
