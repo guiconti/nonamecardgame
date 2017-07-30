@@ -29,7 +29,9 @@
                                                 {{#if isMain}}
                                                     {{#each hand}}
                                                 <tr>
-                                                    <td id="{{id}}"> {{name}} </td>
+                                                    <td id="{{id}}"> {{name}}
+                                                        <a class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>
+                                                    </td>
                                                 </tr>
                                                     {{/each}}
                                                 {{/if}}
@@ -385,7 +387,7 @@
                     if (isMainPlayer){
                         var cards = '';
                         for (var i = 0; i < playerInfo.hand.length; i++){
-                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';
+                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name +  ' <a class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a></td><tr>';
                         }
                         $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + cards);
                     }

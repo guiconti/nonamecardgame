@@ -23,7 +23,21 @@ exports.isValidGameId = (gameId) => {
 };
 
 exports.isValidPlayerId = (playerId) => {
-    return _.isString(playerId) && playerId.trim().length > 0;
+    try{
+        return mongoose.Types.ObjectId.isValid(playerId);
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isValidItemId = (itemId) => {
+    try{
+        return mongoose.Types.ObjectId.isValid(itemId);
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
 };
 
 exports.isOwner = (gameTable, playerId) => {
@@ -109,7 +123,7 @@ exports.isRunEnable = (turnPhase) => {
 
 exports.isUseItemEnable = (turnPhase) => {
     try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING;
+        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;

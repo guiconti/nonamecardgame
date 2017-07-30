@@ -6,14 +6,16 @@ const eventEmitter = require('../../communication/eventEmitter');
 const sendGameToPlayers = require('../sendGameToPlayers');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
+const getHandItemIndex = require('../../utils/getHandItemIndex');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
 module.exports = (req, res) => {
     try {
         let params = _.pick(req.params, 'gameId');
-        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
-        params.gameId = params.gameId.trim();
+        let body = _.pick(req.body, 'itemId');
+        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game', body: 'This game id is not valid.'});
+        if(!validator.isValidItemId(body.itemId)) return res.status(400).json({title: 'Invalid item', body: 'This item id is not valid.'});
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){
@@ -23,24 +25,19 @@ module.exports = (req, res) => {
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only ask for help when the game starts.'});
             if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
                 body: 'You can only ask for help when it is your turn.'});
-            if (!validator.isRunEnable(gameTable.turnInfo.phase)) return res.status(400).json({title: 'You cannot run now', 
+            if (!validator.isUseItemEnable(gameTable.turnInfo.phase)) return res.status(400).json({title: 'You cannot use items now', 
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);
-            let diceResult = throwDice(DICE_SIZES);
+            let itemIndex = getHandItemIndex(gameTable, playerIndex, body.itemId);
 
-            eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' decided to run.');
-            if (diceResult >= MIN_TO_RUN){
-                eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' got ' + diceResult
-                + ' on the dice and manages to run. He manage to run from the monster without consequences.');
-            } else {
-                eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' got ' + diceResult
-                + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.');
-            }
+            if (itemIndex == -1) return res.status(400).json({title: 'You cannot use this item', body: 'You don`t have this item in your hand.'});
+            if (!validator.isItemToFight(gameTable, itemIndex)) return res.status(400).json({title: 'You cannot use this item', 
+                body: 'This item is not usable in a fight.'});
+            
+            //  Add bonus to fight and recalculate fight
+            gameTable.fight.player.powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
 
-            // End fight and change player to next
-            removeMonster(gameTable);
-            nextPlayer(gameTable, playerIndex);
             sendGameToPlayers(gameTable);
 
             return gameTable.save((err) => {

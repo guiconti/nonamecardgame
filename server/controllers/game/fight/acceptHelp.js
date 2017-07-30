@@ -13,7 +13,6 @@ module.exports = (req, res) => {
     try {
         let params = _.pick(req.params, 'gameId');
         if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
-        params.gameId = params.gameId.trim();
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err){

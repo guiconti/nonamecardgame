@@ -16,7 +16,6 @@ module.exports = (req, res) => {
         if(!validator.isValidPlayerId(body.helperId)) return res.status(400).json({title: 'Invalid helper', body: 'The helper you selected does not exists.'});
         if(!validator.isValidAmount(body.treasureAmount)) return res.status(400).json({title: 'Invalid treasure amount',
              body: 'The treasure amount must be between 0 and the number of treasures given by the monster.'});
-        params.gameId = params.gameId.trim();
         let helperInfo = {
             id: body.helperId.trim(),
             treasureAmount: body.treasureAmount,

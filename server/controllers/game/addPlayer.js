@@ -15,7 +15,6 @@ module.exports = (req, res) => {
         var params = _.pick(req.params, 'gameId');
         if(!validator.isValidPlayer(req.userInfo)) return res.status(400).json({title: 'Invalid player info', body: 'This player id is not valid.'});
         if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
-        params.gameId = params.gameId.trim();
 
         GameModel.findById(params.gameId, (err, gameTable) => {
             if (err) {
