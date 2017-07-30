@@ -39,7 +39,7 @@ module.exports = (req, res) => {
                 if (err) {
                     throw err;
                 }
-                sendGameToPlayers(gameTable.toObject());
+                sendGameToPlayers(gameTable);
                 return res.status(200).json({msg: 'Game started'});
             });
         });    

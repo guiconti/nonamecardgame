@@ -25,5 +25,6 @@ router.post('/game/:gameId/fight/ask_help', middleware.validateToken, gameContro
 router.get('/game/:gameId/fight/ask_help/accept', middleware.validateToken, gameController.acceptHelp);
 router.get('/game/:gameId/fight/ask_help/refuse', middleware.validateToken, gameController.refuseHelp);
 router.get('/game/:gameId/fight/run', middleware.validateToken, gameController.run);
+router.post('/game/:gameId/fight/use_item', middleware.validateToken, gameController.useItem);
 
 module.exports = router;

@@ -29,7 +29,7 @@
                                                 {{#if isMain}}
                                                     {{#each hand}}
                                                 <tr>
-                                                    <td> {{name}} </td>
+                                                    <td id="{{id}}"> {{name}} </td>
                                                 </tr>
                                                     {{/each}}
                                                 {{/if}}
@@ -42,7 +42,7 @@
                                                 {{#if isMain}}
                                                     {{#each board}}
                                                 <tr> 
-                                                    <td> {{name}} </td>
+                                                    <td id={{id}}> {{name}} </td>
                                                 </tr>
                                                     {{/each}}
                                                 {{/if}}
@@ -385,7 +385,7 @@
                     if (isMainPlayer){
                         var cards = '';
                         for (var i = 0; i < playerInfo.hand.length; i++){
-                            cards += '<tr id="' + playerInfo.hand[i].id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';
+                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + ' </td><tr>';
                         }
                         $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + cards);
                     }
