@@ -26,7 +26,7 @@ exports.isValidGameId = (gameId) => {
 
 exports.isValidPlayerId = (playerId) => {
     try{
-        return mongoose.Types.ObjectId.isValid(playerId);
+        return _.isString(playerId) && playerId.trim().length > 0;
     } catch (err){
         logger.logError(err);
         return false;

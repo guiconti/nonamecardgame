@@ -34,6 +34,8 @@ module.exports = (req, res) => {
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);
             let helperIndex = getPlayerIndex(gameTable, helperInfo);
+            console.log(playerIndex);
+            console.log(helperIndex);
 
             if (helperIndex === -1 || helperIndex == playerIndex) return res.status(400).json({title: 'Helper not found', 
                 body: 'The helper you select does not exist in this game.'});
