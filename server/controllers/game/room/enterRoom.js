@@ -27,7 +27,7 @@ module.exports = (req, res) => {
                 notInGame: true,
                 renderStartButton: (validator.isOwner(gameTable, req.userInfo.id) && !gameTable.active),
                 boardDisplay: 'hidden'
-            }
+            };
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);
 
