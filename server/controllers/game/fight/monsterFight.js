@@ -16,6 +16,3 @@ exports.startFight = (gameTable, playerIndex) => {
     }
     sendGameToPlayers(gameTable);
 };
-exports.askForHelp = (gameTable) => {
-
-};

@@ -2,6 +2,8 @@ const _ = require('underscore');
 const mongoose = require('mongoose');
 const logger = require('../../../tools/logger');
 const turnPhases = require('../game/turnPhases');
+const deckType = require('../game/deckType');
+const treasureType = require('../game/treasure/treasuresType');
 
 exports.isValidGame = (gameInfo) => {
     try{
@@ -123,8 +125,16 @@ exports.isRunEnable = (turnPhase) => {
 
 exports.isUseItemEnable = (turnPhase) => {
     try {
-        console.log(turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhase == turnPhases.FIGHT_MONSTER_WINNING);
         return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isItemToFight = (gameTable, playerIndex, itemIndex) => {
+    try {
+        return gameTable.players[playerIndex].hand[itemIndex].deck == deckType.TREASURE && gameTable.players[playerIndex].hand[itemIndex].cardType == treasureType.CONSUMABLE;
     } catch (err){
         logger.logError(err);
         return false;

@@ -10,7 +10,7 @@ let GameSchema = new Schema({
         name: String,
         deck: Number,
         cardType: Number,
-        bonus: Number
+        bonus: {type: Number, default: 0}
     }],
     dungeons: [{
         name: String,
@@ -44,20 +44,20 @@ let GameSchema = new Schema({
             name: String,
             deck: Number,
             cardType: Number,
-            bonus: Number
+            bonus: {type: Number, default: 0}
         }],
         cardsOnHand: {type: Number, default: 0}
     }],
     fight: {
         monster: [{
             name: String,
-            combatPower: Number,
-            treasureReward: Number,
-            powerBonus: Number
+            combatPower: {type: Number, default: 0},
+            treasureReward: {type: Number, default: 0},
+            powerBonus: {type: Number, default: 0}
         }],
         player: {
-            combatPower: Number,
-            powerBonus: Number
+            combatPower: {type: Number, default: 0},
+            powerBonus: {type: Number, default: 0}
         }
     }
 });

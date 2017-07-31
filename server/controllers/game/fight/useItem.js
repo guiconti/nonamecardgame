@@ -32,11 +32,12 @@ module.exports = (req, res) => {
             let itemIndex = getHandItemIndex(gameTable, playerIndex, body.itemId);
 
             if (itemIndex == -1) return res.status(400).json({title: 'You cannot use this item', body: 'You don`t have this item in your hand.'});
-            if (!validator.isItemToFight(gameTable, itemIndex)) return res.status(400).json({title: 'You cannot use this item', 
+            if (!validator.isItemToFight(gameTable, playerIndex, itemIndex)) return res.status(400).json({title: 'You cannot use this item', 
                 body: 'This item is not usable in a fight.'});
             
             //  Add bonus to fight and recalculate fight
             gameTable.fight.player.powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
+            //  TODO: Calculate the fight again
 
             sendGameToPlayers(gameTable);
 
