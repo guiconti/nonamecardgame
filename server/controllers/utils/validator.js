@@ -123,7 +123,8 @@ exports.isRunEnable = (turnPhase) => {
 
 exports.isUseItemEnable = (turnPhase) => {
     try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhases.FIGHT_MONSTER_WINNING;
+        console.log(turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhase == turnPhases.FIGHT_MONSTER_WINNING);
+        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;

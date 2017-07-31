@@ -30,7 +30,14 @@
                                                     {{#each hand}}
                                                 <tr>
                                                     <td id="{{id}}"> {{name}}
-                                                        <a class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>
+                                                        {{#eq deck 1}}
+                                                            {{#eq cardType 1}}
+                                                        <a name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isUseItemEnable}}" style="float:right"> Use </a>
+                                                            {{/eq}}
+                                                            {{#eq cardType 0}}
+                                                        <a name="useEquipment" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isEquipItemEnable}}" style="float:right"> Equip </a>
+                                                            {{/eq}}
+                                                        {{/eq}}
                                                     </td>
                                                 </tr>
                                                     {{/each}}
@@ -56,7 +63,6 @@
                                 <a type="button" class="btn purple-plum {{isPickDungeonEnable}}" id="pickDungeon">Pick a dungeon</a>
                                 <br/>
                                 <a type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</a>
-                                <a type="button" class="btn purple-plum {{isUseItemEnable}}" id="monsterUseItem">Use item</a>
                                 <a type="button" class="btn purple-plum {{isHelpEnable}}" id="modalMonsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</a>
                                 {{/if}}
                             </div>
@@ -185,6 +191,14 @@
         <script src="/assets/js/jquery-3.2.1.min.js"></script>
         <script src="/assets/js/bootstrap.min.js"></script>
         <script>
+            const DECK_TYPE = {
+                DUNGEON: 0,
+                TREASURE: 1
+            };
+            const TREASURE_TYPE = {
+                EQUIPMENT: 0,
+                CONSUMABLE: 1
+            };
             const TURN_PHASES = {
                 DRAW_FIRST_DUNGEON: 0,
                 DRAW_SECOND_DUNGEON: 1,
@@ -348,15 +362,15 @@
                     var gameInfo = JSON.parse(gameInfoJSON);
                     var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
                     var isThisHelperPlayer = isThisPlayer(gameInfo.turnInfo.helperId);
-                    togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleUseItem(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
-                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
                     gameInfo.players.forEach(function(player) {
                         if (!isThisPlayer(player.id)){
                             updatePlayerInfo(player, false);
                         }
                     });
+                    togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
+                    toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
+                    toggleUseItem(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
+                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
                 });
                 socket.on('askInfo', function(askInfoJSON){
                     var askInfo = JSON.parse(askInfoJSON);
@@ -386,8 +400,13 @@
                         + '<br/>Race:' + playerInfo.race + ' Class:' + playerInfo.role + ' Cards on hand: ' + playerInfo.cardsOnHand);
                     if (isMainPlayer){
                         var cards = '';
+                        var cardButton = '';
                         for (var i = 0; i < playerInfo.hand.length; i++){
-                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name +  ' <a class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a></td><tr>';
+                            cardButton = '';
+                            if (playerInfo.hand[i].deck == DECK_TYPE.TREASURE){
+                                cardButton = playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT?'<a name="useEquipment" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>':'<a name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                            }
+                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + cardButton +'</td><tr>';
                         }
                         $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + cards);
                     }
@@ -413,10 +432,10 @@
                     }
                 }
                 function toggleUseItem(isPlayerTurn, isHelperTurn, turnPhase){
-                    if ((isPlayerTurn || isHelperTurn) && turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING) {
-                        $('#monsterUseItem').removeClass('disabled');
+                    if ((isPlayerTurn || isHelperTurn) && (turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING || turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING)) {
+                        $('a[name=useConsumable]').removeClass('disabled');
                     } else {
-                        $('#monsterUseItem').addClass('disabled');
+                        $('a[name=useConsumable]').addClass('disabled');
                     }
                 }
                 function toggleAskHelp(isPlayerTurn, turnPhase, isHelperPresent){

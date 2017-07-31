@@ -33,6 +33,7 @@
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.10",
+    "handlebars-helpers": "^0.9.6",
     "jsonwebtoken": "^7.4.1",
     "mocha": "^3.4.2",
     "mongoose": "^4.10.7",

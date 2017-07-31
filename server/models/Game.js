@@ -16,10 +16,8 @@ let GameSchema = new Schema({
         name: String,
         deck: Number,
         cardType: Number,
-        stats:{
-            combatPower: Number,
-            treasureReward: Number
-        }
+        combatPower: Number,
+        treasureReward: Number
     }],
     turnInfo:  {
         playerId: String,

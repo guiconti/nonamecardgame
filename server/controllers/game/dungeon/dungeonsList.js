@@ -13,10 +13,8 @@ module.exports = function() {
             name: 'Monster 1',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 1,
-                treasureReward: 1
-            }
+            combatPower: 1,
+            treasureReward: 1
         },
         {
             name: 'Dungeon 3',
@@ -27,10 +25,8 @@ module.exports = function() {
             name: 'Monster 2',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 3,
-                treasureReward: 1
-            }
+            combatPower: 3,
+            treasureReward: 1
         },
         {
             name: 'Dungeon 5',
@@ -41,10 +37,8 @@ module.exports = function() {
             name: 'Monster 3',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 4,
-                treasureReward: 2
-            }
+            combatPower: 4,
+            treasureReward: 2
         },
         {
             name: 'Dungeon 7',
@@ -75,10 +69,8 @@ module.exports = function() {
             name: 'Monster 4',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 1,
-                treasureReward: 1
-            }
+            combatPower: 1,
+            treasureReward: 1
         },
         {
             name: 'Dungeon 12',
@@ -89,10 +81,8 @@ module.exports = function() {
             name: 'Monster 5',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 3,
-                treasureReward: 1
-            }
+            combatPower: 3,
+            treasureReward: 1
         },
         {
             name: 'Dungeon 13',
@@ -103,10 +93,8 @@ module.exports = function() {
             name: 'Monster 6',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            stats:{
-                combatPower: 4,
-                treasureReward: 2
-            }
+            combatPower: 4,
+            treasureReward: 2
         },
         {
             name: 'Dungeon 14',
