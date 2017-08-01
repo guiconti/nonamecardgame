@@ -350,8 +350,7 @@
                         }
                     });
                 });
-                $('a[name=useConsumable]').click(function(){
-                    console.log('a');
+                $('thead').on('click', 'a[name=useConsumable]', function(){
                     var itemInfo = {
                         itemId: this.id
                     };
