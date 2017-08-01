@@ -46,12 +46,15 @@ module.exports = (req, res) => {
             gameTable.players[playerIndex].cardsOnHand--;
             //  TODO: Add card to fight
             calculateFightResult(gameTable);
+            let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
+            let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
+
 
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is still loosing this fight.');
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is still loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
                 //  Enable Run, Item and Help commands
             } else {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is now able to defeat the monster. Will anyone interfere?');
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is now able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
             }
 
             sendGameToPlayers(gameTable);
