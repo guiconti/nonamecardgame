@@ -158,3 +158,12 @@ exports.isHelpAnswerEnable = (turnPhase) => {
         return false;
     }
 };
+
+exports.isInterfereEnable = (turnPhase) => {
+    try {
+        return turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};

@@ -49,7 +49,8 @@ module.exports = (req, res) => {
                     isPickDungeonEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isPickDungeonPhase(gameTable.turnInfo.phase))?'disabled':'',
                     isRunEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isRunEnable(gameTable.turnInfo.phase))?'disabled':'',
                     isUseItemEnable: ((gameTable.turnInfo.playerId != req.userInfo.id && gameTable.turnInfo.helperId != req.userInfo.id) || !validator.isUseItemEnable(gameTable.turnInfo.phase))?'disabled':'',
-                    isHelpEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isHelpEnable(gameTable))?'disabled':''
+                    isHelpEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isHelpEnable(gameTable))?'disabled':'',
+                    isInterfereEnable: (gameTable.turnInfo.playerId == req.userInfo.id || gameTable.turnInfo.helperId == req.userInfo.id || !validator.isInterfereEnable(gameTable.turnInfo.phase))?'disabled':''
                 };
                 gameRoomInfo.players.push(playerInfo);
             }

@@ -64,6 +64,7 @@
                                 <br/>
                                 <a type="button" class="btn purple-plum {{isRunEnable}}" id="monsterRun">Run</a>
                                 <a type="button" class="btn purple-plum {{isHelpEnable}}" id="modalMonsterAskHelp" data-toggle="modal" href="#helpModal">Ask for help</a>
+                                <a type="button" class="btn purple-plum {{isInterfereEnable}}" id="interferePass">Finish Interfere</a>
                                 {{/if}}
                             </div>
                         </div>
@@ -350,6 +351,9 @@
                         }
                     });
                 });
+                $('#interferePass').click(function(){
+                    console.log('Pass');
+                });
                 $('thead').on('click', 'a[name=useConsumable]', function(){
                     var itemInfo = {
                         itemId: this.id
@@ -392,6 +396,7 @@
                     toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
                     toggleUseItem(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
                     toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
+                    toggleInterfere(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
                 });
                 socket.on('askInfo', function(askInfoJSON){
                     var askInfo = JSON.parse(askInfoJSON);
@@ -464,6 +469,13 @@
                         $('#modalMonsterAskHelp').removeClass('disabled');
                     } else {
                         $('#modalMonsterAskHelp').addClass('disabled');
+                    }
+                }
+                function toggleInterfere(isPlayerTurn, isHelperTurn, turnPhase){
+                    if (!(isPlayerTurn || isHelperTurn) && turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING) {
+                        $('#interferePass').removeClass('disabled');
+                    } else {
+                        $('#interferePass').addClass('disabled');
                     }
                 }
             });
