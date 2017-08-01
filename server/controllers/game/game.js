@@ -20,7 +20,9 @@ function Game(name, password, ownerId){
         phase: 0
     },
     this.treasures = [];
+    this.discardedTreasures = [];
     this.dungeons = [];
+    this.discardedDungeons = [];
 }
 
 module.exports = Game;

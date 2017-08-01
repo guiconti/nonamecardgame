@@ -7,6 +7,7 @@ const sendGameToPlayers = require('../sendGameToPlayers');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const getHandItemIndex = require('../../utils/getHandItemIndex');
+const discardTreasure = require('../treasure/discardTreasure');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -37,6 +38,12 @@ module.exports = (req, res) => {
             
             //  Add bonus to fight and recalculate fight
             gameTable.fight.player.powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
+            eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' used ' +  gameTable.players[playerIndex].hand[itemIndex].name + ' and added '
+                + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power on this fight.');
+
+            discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(itemIndex, 1));
+            gameTable.players[playerIndex].cardsOnHand--;
+            //  TODO: Add card to fight
             //  TODO: Calculate the fight again
 
             sendGameToPlayers(gameTable);
@@ -45,7 +52,7 @@ module.exports = (req, res) => {
                 if (err) {
                     throw err;
                 } 
-                return res.status(200).json({msg: 'Player ran.'});
+                return res.status(200).json({msg: 'Item used.'});
             });
             
         });    

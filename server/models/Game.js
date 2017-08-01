@@ -12,6 +12,12 @@ let GameSchema = new Schema({
         cardType: Number,
         bonus: {type: Number, default: 0}
     }],
+    discardedTreasures: [{
+        name: String,
+        deck: Number,
+        cardType: Number,
+        bonus: {type: Number, default: 0}
+    }],
     dungeons: [{
         name: String,
         deck: Number,
