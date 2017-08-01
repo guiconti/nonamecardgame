@@ -6,6 +6,7 @@ const eventEmitter = require('../../communication/eventEmitter');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const sendGameToPlayers = require('../sendGameToPlayers');
+const calculateFightResult = require('./calculateFightResult');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -31,18 +32,19 @@ module.exports = (req, res) => {
 
             let playerIndex = getPlayerIndex(gameTable, playerInfo);
             let helperIndex = getPlayerIndex(gameTable, req.userInfo);
+            
+            //  Update combat power
+            gameTable.fight.player.combatPower += gameTable.players[helperIndex].combatPower;
+            calculateFightResult(gameTable);
 
-            if (gameTable.players[playerIndex].combatPower + gameTable.players[helperIndex].combatPower <= gameTable.fight.monster[0].combatPower){
-                gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
+            if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING){
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. But it is still not enough to defeat the monster.');
             } else {
-                gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_WINNING;
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. Together they are winning the fight.');
             }
             sendGameToPlayers(gameTable);
-
             //  TODO: Add helper name
 
             return gameTable.save((err) => {

@@ -8,6 +8,7 @@ const sendGameToPlayers = require('../sendGameToPlayers');
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const getHandItemIndex = require('../../utils/getHandItemIndex');
 const discardTreasure = require('../treasure/discardTreasure');
+const calculateFightResult = require('./calculateFightResult');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -23,9 +24,9 @@ module.exports = (req, res) => {
                 throw err;
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
-            if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only ask for help when the game starts.'});
-            if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
-                body: 'You can only ask for help when it is your turn.'});
+            if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only use items when the game starts.'});
+            if (!validator.isPlayerTurn(gameTable, req.userInfo) && !validator.isHelperTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
+                body: 'You can only use items when it`s your turn.'});
             if (!validator.isUseItemEnable(gameTable.turnInfo.phase)) return res.status(400).json({title: 'You cannot use items now', 
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
@@ -44,7 +45,14 @@ module.exports = (req, res) => {
             discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(itemIndex, 1));
             gameTable.players[playerIndex].cardsOnHand--;
             //  TODO: Add card to fight
-            //  TODO: Calculate the fight again
+            calculateFightResult(gameTable);
+
+            if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is still loosing this fight.');
+                //  Enable Run, Item and Help commands
+            } else {
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is now able to defeat the monster. Will anyone interfere?');
+            }
 
             sendGameToPlayers(gameTable);
 
