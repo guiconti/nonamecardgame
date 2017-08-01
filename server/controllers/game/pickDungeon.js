@@ -22,7 +22,7 @@ module.exports = (req, res) => {
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only pick dungeons when the game starts.'});
             if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
                 body: 'You can only pick dungeons when it is your turn.'});
-            if (!validator.isPickDungeonPhase(gameTable.turnInfo.phase)) return res.status(400).json({title: 'You can`t pick dungeon now', 
+            if (!validator.isPickDungeonEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You can`t pick dungeon now', 
                 body: 'You can only pick dungeons when it is on dungeon draw phase.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo);

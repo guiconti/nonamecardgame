@@ -46,11 +46,11 @@ module.exports = (req, res) => {
                     hand: gameTable.players[playerIndex].hand,
                     board: gameTable.players[playerIndex].board,
                     isMain: true,
-                    isPickDungeonEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isPickDungeonPhase(gameTable.turnInfo.phase))?'disabled':'',
-                    isRunEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isRunEnable(gameTable.turnInfo.phase))?'disabled':'',
-                    isUseItemEnable: ((gameTable.turnInfo.playerId != req.userInfo.id && gameTable.turnInfo.helperId != req.userInfo.id) || !validator.isUseItemEnable(gameTable.turnInfo.phase))?'disabled':'',
-                    isHelpEnable: (gameTable.turnInfo.playerId != req.userInfo.id || !validator.isHelpEnable(gameTable))?'disabled':'',
-                    isInterfereEnable: (gameTable.turnInfo.playerId == req.userInfo.id || gameTable.turnInfo.helperId == req.userInfo.id || !validator.isInterfereEnable(gameTable.turnInfo.phase))?'disabled':''
+                    isPickDungeonEnable: validator.isPickDungeonEnable(gameTable, req.userInfo.id)?'':'disabled',
+                    isRunEnable: validator.isRunEnable(gameTable, req.userInfo.id)?'':'disabled',
+                    isUseItemEnable: validator.isUseItemEnable(gameTable, req.userInfo.id)?'':'disabled',
+                    isHelpEnable: validator.isHelpEnable(gameTable, req.userInfo.id)?'':'disabled',
+                    isInterfereEnable: validator.isInterfereEnable(gameTable, req.userInfo.id)?'':'disabled'
                 };
                 gameRoomInfo.players.push(playerInfo);
             }

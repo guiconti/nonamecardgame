@@ -105,27 +105,54 @@ exports.isHelperTurn = (gameInfo, helperInfo) => {
     }
 };
 
-exports.isPickDungeonPhase = (turnPhase) => {
+exports.isPickDungeonEnable = (gameTable, playerId) => {
     try {
-        return turnPhase == turnPhases.DRAW_FIRST_DUNGEON || turnPhase == turnPhases.DRAW_SECOND_DUNGEON;
+        return (gameTable.turnInfo.phase == turnPhases.DRAW_FIRST_DUNGEON || gameTable.turnInfo.phase == turnPhases.DRAW_SECOND_DUNGEON) && gameTable.turnInfo.playerId == playerId;
     } catch (err){
         logger.logError(err);
         return false;
     }
 };
 
-exports.isRunEnable = (turnPhase) => {
+exports.isRunEnable = (gameTable, playerId) => {
     try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING;
+        return gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && gameTable.turnInfo.playerId == playerId;
     } catch (err){
         logger.logError(err);
         return false;
     }
 };
 
-exports.isUseItemEnable = (turnPhase) => {
+exports.isUseItemEnable = (gameTable, playerId) => {
     try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_LOOSING || turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
+        return ((gameTable.turnInfo.playerId == playerId || gameTable.turnInfo.helperId == playerId) || isInterfereEnable(gameTable, playerId)) && (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING);
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isHelpEnable = (gameTable, playerId) => {
+    try {
+        return gameTable.turnInfo.playerId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && (!gameTable.turnInfo.helperId || gameTable.turnInfo.helperId == '');
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isHelpAnswerEnable = (gameTable, playerId) => {
+    try {
+        return gameTable.turnInfo.helperId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_HELP_ANSWER;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isInterfereEnable = (gameTable, playerId) => {
+    try {
+        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != helperId && turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;
@@ -135,33 +162,6 @@ exports.isUseItemEnable = (turnPhase) => {
 exports.isItemToFight = (gameTable, playerIndex, itemIndex) => {
     try {
         return gameTable.players[playerIndex].hand[itemIndex].deck == deckType.TREASURE && gameTable.players[playerIndex].hand[itemIndex].cardType == treasureType.CONSUMABLE;
-    } catch (err){
-        logger.logError(err);
-        return false;
-    }
-};
-
-exports.isHelpEnable = (gameTable) => {
-    try {
-        return gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && (!gameTable.turnInfo.helperId || gameTable.turnInfo.helperId == '');
-    } catch (err){
-        logger.logError(err);
-        return false;
-    }
-};
-
-exports.isHelpAnswerEnable = (turnPhase) => {
-    try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_HELP_ANSWER;
-    } catch (err){
-        logger.logError(err);
-        return false;
-    }
-};
-
-exports.isInterfereEnable = (turnPhase) => {
-    try {
-        return turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;
