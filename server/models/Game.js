@@ -60,7 +60,8 @@ let GameSchema = new Schema({
             name: String,
             combatPower: {type: Number, default: 0},
             treasureReward: {type: Number, default: 0},
-            powerBonus: {type: Number, default: 0}
+            levelReward: {type: Number, default: 1},
+            powerBonus: {type: Number, default: 0},
         }],
         player: {
             combatPower: {type: Number, default: 0},

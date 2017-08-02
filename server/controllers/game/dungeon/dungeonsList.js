@@ -14,7 +14,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 1,
-            treasureReward: 1
+            treasureReward: 1,
+            levelReward: 1
         },
         {
             name: 'Dungeon 3',
@@ -26,7 +27,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 3,
-            treasureReward: 1
+            treasureReward: 1,
+            levelReward: 1
         },
         {
             name: 'Dungeon 5',
@@ -38,7 +40,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 4,
-            treasureReward: 2
+            treasureReward: 2,
+            levelReward: 1
         },
         {
             name: 'Dungeon 7',
@@ -70,7 +73,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 1,
-            treasureReward: 1
+            treasureReward: 1,
+            levelReward: 1
         },
         {
             name: 'Dungeon 12',
@@ -82,7 +86,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 3,
-            treasureReward: 1
+            treasureReward: 1,
+            levelReward: 1
         },
         {
             name: 'Dungeon 13',
@@ -94,7 +99,8 @@ module.exports = function() {
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 4,
-            treasureReward: 2
+            treasureReward: 2,
+            levelReward: 1
         },
         {
             name: 'Dungeon 14',
