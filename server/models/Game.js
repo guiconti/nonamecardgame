@@ -64,7 +64,8 @@ let GameSchema = new Schema({
         player: {
             combatPower: {type: Number, default: 0},
             powerBonus: {type: Number, default: 0}
-        }
+        },
+        finishedInterferes: [String]
     }
 });
 

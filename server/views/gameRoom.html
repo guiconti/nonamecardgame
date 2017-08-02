@@ -352,7 +352,20 @@
                     });
                 });
                 $('#interferePass').click(function(){
-                    console.log('Pass');
+                    $.ajax({
+                        type: "GET",
+                        url: $(location).attr("href") +  '/fight/finish_interfere',
+                        contentType: "application/json; charset=utf-8",
+                        beforeSend: function(){
+                            $('#interferePass').addClass('disabled');
+                        },
+                        success: function(jsonData) {
+                        },
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                            $('#interferePass').removeClass('disabled');
+                        }
+                    });
                 });
                 $('thead').on('click', 'a[name=useConsumable]', function(){
                     var itemInfo = {
@@ -394,9 +407,11 @@
                     });
                     togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
                     toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleUseItem(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
                     toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
-                    toggleInterfere(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase);
+                    var finishedInterferes = gameInfo.fight?gameInfo.fight.finishedInterferes:[];
+                    var isInterfereEnable = checkInterfere(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase, finishedInterferes);
+                    toggleUseItem(isThisMainPlayer, isThisHelperPlayer, isInterfereEnable, gameInfo.turnInfo.phase);
+                    toggleInterfere(isInterfereEnable);
                 });
                 socket.on('askInfo', function(askInfoJSON){
                     var askInfo = JSON.parse(askInfoJSON);
@@ -457,8 +472,8 @@
                         $('#monsterRun').addClass('disabled');
                     }
                 }
-                function toggleUseItem(isPlayerTurn, isHelperTurn, turnPhase){
-                    if ((isPlayerTurn || isHelperTurn) && (turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING || turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING)) {
+                function toggleUseItem(isPlayerTurn, isHelperTurn, isInterfereEnable, turnPhase){
+                    if ((isPlayerTurn || isHelperTurn || isInterfereEnable) && (turnPhase == TURN_PHASES.FIGHT_MONSTER_LOOSING || turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING)) {
                         $('a[name=useConsumable]').removeClass('disabled');
                     } else {
                         $('a[name=useConsumable]').addClass('disabled');
@@ -471,8 +486,19 @@
                         $('#modalMonsterAskHelp').addClass('disabled');
                     }
                 }
-                function toggleInterfere(isPlayerTurn, isHelperTurn, turnPhase){
-                    if (!(isPlayerTurn || isHelperTurn) && turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING) {
+                function checkInterfere(isPlayerTurn, isHelperTurn, turnPhase, finishedInterferes){
+                    var interfereFinished = -1;
+                    var playerIdRegExp = new RegExp(/id="hand_([^"]+)"/i);
+                    var playerId = playerIdRegExp.exec($('body').html())[1];
+                    for (var i = 0; i < finishedInterferes.length; i++){
+                        if (finishedInterferes[i] == playerId){
+                            interfereFinished == 1;
+                        }
+                    }
+                    return !isPlayerTurn && !isHelperTurn && interfereFinished == -1 && turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING;
+                }
+                function toggleInterfere(isInterfereEnable){
+                    if (isInterfereEnable) {
                         $('#interferePass').removeClass('disabled');
                     } else {
                         $('#interferePass').addClass('disabled');

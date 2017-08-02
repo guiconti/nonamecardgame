@@ -30,7 +30,7 @@ module.exports = (req, res) => {
             if (!validator.isHelpEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cant ask for help now.',
                  body: 'You can only ask for help when you are in a loosing fight without help.'});
 
-            let playerIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let helperIndex = getPlayerIndex(gameTable, helperInfo);
 
             if (helperIndex === -1 || helperIndex == playerIndex) return res.status(400).json({title: 'Helper not found', 

@@ -3,10 +3,11 @@ const calculateFightResult = require('./calculateFightResult');
 const sendGameToPlayers = require('../sendGameToPlayers');
 const turnPhases = require('../turnPhases');
 
-exports.startFight = (gameTable, playerIndex) => {
+module.exports = (gameTable, playerIndex) => {
     eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
     //  TODO: Change this to front message
     eventEmitter.sendChatMessage(gameTable.id, gameTable.fight.monster[0].name + ' Power: ' + gameTable.fight.monster[0].combatPower + ' Treasures: ' + gameTable.fight.monster[0].treasureReward);
+    gameTable.fight.finishedInterferes = [];
     gameTable.fight.player.combatPower = gameTable.players[playerIndex].combatPower;
     calculateFightResult(gameTable);
     if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {

@@ -29,7 +29,7 @@ module.exports = (req, res) => {
             if (!validator.isRunEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cannot run now', 
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
-            let playerIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let diceResult = throwDice(DICE_SIZES);
 
             eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' decided to run.');

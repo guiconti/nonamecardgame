@@ -28,7 +28,7 @@ module.exports = (req, res) => {
             if (!validator.isUseItemEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cannot use items now', 
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
-            let playerIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let itemIndex = getHandItemIndex(gameTable, playerIndex, body.itemId);
 
             if (itemIndex == -1) return res.status(400).json({title: 'You cannot use this item', body: 'You don`t have this item in your hand.'});
@@ -61,8 +61,8 @@ module.exports = (req, res) => {
 
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
-                //  Enable Run, Item and Help commands
             } else {
+                gameTable.fight.finishedInterferes = [];
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
             }
 

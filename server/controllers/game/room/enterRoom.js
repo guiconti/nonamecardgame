@@ -29,7 +29,7 @@ module.exports = (req, res) => {
                 boardDisplay: 'hidden'
             };
 
-            let playerIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
 
             if (playerIndex != -1){
                 gameRoomInfo.notInGame = false;

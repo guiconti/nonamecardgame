@@ -20,20 +20,19 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only ask for help when the game starts.'});
-            if (!validator.isHelpAnswerEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'It`s not your turn', 
-                body: 'You can only accept for help when someone asks you.'});
+            if (!validator.isInterfereEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'Intefere is not avaiable', 
+                body: 'You can only intefer when the player is winning.'});
+            
+            gameTable.fight.finishedInterferes.push(req.userInfo.id);
 
-            let newInfo = {
-                title: gameTable.turnInfo.helperName + ' refused!',
-                body: 'Sorry, but ' + gameTable.turnInfo.helperName + ' refused to help you on this fight.'
-            };
+            //  Check if everyone finished interfeering
+            let isPlayerBeingHelped = gameTable.turnInfo.helperId == '' || !gameTable.turnInfo.helperId?0:1;
 
-            let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
-
-            gameTable.turnInfo.helperId = '';
-            gameTable.turnInfo.helperName = '';
-            gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
-            eventEmitter.sendInfoToPlayer(gameTable.id, gameTable.players[playerIndex].communicationId, newInfo);
+            if (gameTable.players.length <= gameTable.fight.finishedInterferes.length + isPlayerBeingHelped + 1){
+                console.log('Fight ended');
+                //  Finish the fight, reward the player
+            }
+            
             sendGameToPlayers(gameTable);
 
             return gameTable.save((err) => {

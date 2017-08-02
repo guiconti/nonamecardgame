@@ -24,12 +24,8 @@ module.exports = (req, res) => {
             if (!validator.isHelpAnswerEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'It`s not your turn', 
                 body: 'You can only accept for help when someone asks you.'});
 
-            let playerInfo = {
-                id: gameTable.turnInfo.playerId
-            };
-
-            let playerIndex = getPlayerIndex(gameTable, playerInfo);
-            let helperIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
+            let helperIndex = getPlayerIndex(gameTable, req.userInfo.id);
             
             //  Update combat power
             gameTable.fight.player.combatPower += gameTable.players[helperIndex].combatPower;
@@ -39,6 +35,7 @@ module.exports = (req, res) => {
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. But it is still not enough to defeat the monster.');
             } else {
+                gameTable.fight.finishedInterferes = [];
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. Together they are winning the fight.');
             }

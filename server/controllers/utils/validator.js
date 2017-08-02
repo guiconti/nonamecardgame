@@ -152,7 +152,10 @@ exports.isHelpAnswerEnable = (gameTable, playerId) => {
 
 exports.isInterfereEnable = (gameTable, playerId) => {
     try {
-        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != helperId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING;
+        let interfereFinished = gameTable.fight.finishedInterferes.findIndex((interfereId) => {
+            return interfereId == playerId;
+        });
+        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != playerId && interfereFinished == -1 && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;

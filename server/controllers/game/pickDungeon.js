@@ -23,7 +23,7 @@ module.exports = (req, res) => {
             if (!validator.isPickDungeonEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You can`t pick dungeon now', 
                 body: 'You can only pick dungeons when it is on dungeon draw phase.'});
 
-            let playerIndex = getPlayerIndex(gameTable, req.userInfo);
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let dungeonPicked = getDungeon(gameTable);
             pickDungeonAction(gameTable, playerIndex, dungeonPicked);   
             return gameTable.save((err) => {

@@ -26,7 +26,7 @@ module.exports = (req, res) => {
             if (gameTable.active) return res.status(400).json({title: 'Game already started.', body: 'You cannot join an ongoing game.'});
             
             let newPlayer = new Player(req.userInfo.name.trim(), req.userInfo.id, req.cookies.session);
-            let playerIndex = getPlayerIndex(gameTable, newPlayer);
+            let playerIndex = getPlayerIndex(gameTable, newPlayer.id);
             if (playerIndex != -1){
                 return res.status(400).json({title: 'Player already in game', body: 'You already joined this room.'});
             }
