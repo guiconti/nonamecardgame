@@ -6,6 +6,8 @@ const eventEmitter = require('../../communication/eventEmitter');
 
 const sendGameToPlayers = require('../sendGameToPlayers');
 const getPlayerIndex = require('../../utils/getPlayerIndex');
+const endFight = require('./endFight');
+const nextPlayer = require('../nextPlayer');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -29,8 +31,9 @@ module.exports = (req, res) => {
             let isPlayerBeingHelped = gameTable.turnInfo.helperId == '' || !gameTable.turnInfo.helperId?0:1;
 
             if (gameTable.players.length <= gameTable.fight.finishedInterferes.length + isPlayerBeingHelped + 1){
-                console.log('Fight ended');
-                //  Finish the fight, reward the player
+                let playerIndex = getPlayerIndex(gameTable.turnInfo.playerId);
+                endFight(gameTable);
+                nextPlayer(gameTable, playerIndex);
             }
             
             sendGameToPlayers(gameTable);

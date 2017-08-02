@@ -10,6 +10,9 @@ module.exports = (gameTable, playerIndex) => {
     gameTable.turnInfo = {
         playerId: gameTable.players[playerIndex].id,
         playerName: gameTable.players[playerIndex].name,
+        helperId: '',
+        helperName: '',
+        helperTreasures: 0,
         phase: turnPhases.DRAW_FIRST_DUNGEON
     };
     eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameTable.turnInfo.playerName + ' turn.');

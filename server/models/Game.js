@@ -27,9 +27,10 @@ let GameSchema = new Schema({
     }],
     turnInfo:  {
         playerId: String,
-        helperId: String,
         playerName: String,
+        helperId: String,
         helperName: String,
+        helperTreasures: Number,
         phase: Number
     },
     players: [{

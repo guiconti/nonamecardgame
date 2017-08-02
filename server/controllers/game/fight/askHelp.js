@@ -40,6 +40,7 @@ module.exports = (req, res) => {
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_HELP_ANSWER;
             gameTable.turnInfo.helperId = helperInfo.id;
             gameTable.turnInfo.helperName = gameTable.players[helperIndex].name;
+            gameTable.turnInfo.helperTreasures = body.treasureAmount;
             //  TODO: Add helper name
 
             let askInfo = {
