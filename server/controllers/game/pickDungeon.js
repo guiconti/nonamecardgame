@@ -20,8 +20,6 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only pick dungeons when the game starts.'});
-            if (!validator.isPlayerTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
-                body: 'You can only pick dungeons when it is your turn.'});
             if (!validator.isPickDungeonEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You can`t pick dungeon now', 
                 body: 'You can only pick dungeons when it is on dungeon draw phase.'});
 

@@ -125,7 +125,7 @@ exports.isRunEnable = (gameTable, playerId) => {
 
 exports.isUseItemEnable = (gameTable, playerId) => {
     try {
-        return ((gameTable.turnInfo.playerId == playerId || gameTable.turnInfo.helperId == playerId) || isInterfereEnable(gameTable, playerId)) && (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING);
+        return ((gameTable.turnInfo.playerId == playerId || gameTable.turnInfo.helperId == playerId) || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING) && (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING);
     } catch (err){
         logger.logError(err);
         return false;
@@ -152,7 +152,7 @@ exports.isHelpAnswerEnable = (gameTable, playerId) => {
 
 exports.isInterfereEnable = (gameTable, playerId) => {
     try {
-        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != helperId && turnPhase == turnPhases.FIGHT_MONSTER_WINNING;
+        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != helperId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;

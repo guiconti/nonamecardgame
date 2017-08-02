@@ -20,8 +20,6 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only ask for help when the game starts.'});
-            if (!validator.isHelperTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
-                body: 'You can only accept for help when someone asks you.'});
             if (!validator.isHelpAnswerEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'It`s not your turn', 
                 body: 'You can only accept for help when someone asks you.'});
 

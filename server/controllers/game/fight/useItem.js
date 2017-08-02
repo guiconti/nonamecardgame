@@ -25,8 +25,6 @@ module.exports = (req, res) => {
             }
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only use items when the game starts.'});
-            if (!validator.isPlayerTurn(gameTable, req.userInfo) && !validator.isHelperTurn(gameTable, req.userInfo)) return res.status(400).json({title: 'It`s not your turn', 
-                body: 'You can only use items when it`s your turn.'});
             if (!validator.isUseItemEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cannot use items now', 
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
@@ -36,11 +34,22 @@ module.exports = (req, res) => {
             if (itemIndex == -1) return res.status(400).json({title: 'You cannot use this item', body: 'You don`t have this item in your hand.'});
             if (!validator.isItemToFight(gameTable, playerIndex, itemIndex)) return res.status(400).json({title: 'You cannot use this item', 
                 body: 'This item is not usable in a fight.'});
-            
+
+            let useItemMessage = '';
+
+            //  Check if it`s for the monster or the player (For now only goest to monster if interfering)
+            if (!validator.isPlayerTurn(gameTable, req.userInfo) && !validator.isHelperTurn(gameTable, req.userInfo)){
+                gameTable.fight.monster[0].powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
+                useItemMessage = gameTable.players[playerIndex].name + ' used ' +  gameTable.players[playerIndex].hand[itemIndex].name + ' and added '
+                    + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to ' + gameTable.fight.monster[0].name + ' combat power on this fight.'
+            } else {
+                gameTable.fight.player.powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
+                useItemMessage = gameTable.players[playerIndex].name + ' used ' +  gameTable.players[playerIndex].hand[itemIndex].name + ' and added '
+                + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power on this fight.'
+            }
+
             //  Add bonus to fight and recalculate fight
-            gameTable.fight.player.powerBonus += gameTable.players[playerIndex].hand[itemIndex].bonus;
-            eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' used ' +  gameTable.players[playerIndex].hand[itemIndex].name + ' and added '
-                + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power on this fight.');
+            eventEmitter.sendChatMessage(gameTable._id, useItemMessage);
 
             discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(itemIndex, 1));
             gameTable.players[playerIndex].cardsOnHand--;
@@ -51,10 +60,10 @@ module.exports = (req, res) => {
 
 
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is still loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
                 //  Enable Run, Item and Help commands
             } else {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is now able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
             }
 
             sendGameToPlayers(gameTable);
