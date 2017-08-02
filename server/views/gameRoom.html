@@ -492,7 +492,7 @@
                     var playerId = playerIdRegExp.exec($('body').html())[1];
                     for (var i = 0; i < finishedInterferes.length; i++){
                         if (finishedInterferes[i] == playerId){
-                            interfereFinished == 1;
+                            interfereFinished = 1;
                         }
                     }
                     return !isPlayerTurn && !isHelperTurn && interfereFinished == -1 && turnPhase == TURN_PHASES.FIGHT_MONSTER_WINNING;

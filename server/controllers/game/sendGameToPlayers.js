@@ -12,7 +12,8 @@ module.exports = (gameTable) => {
             players: gameTable.players.map((player) => {
                 return _.omit(player, 'communicationId', 'hand', '_id');
             }),
-            turnInfo: gameTable.turnInfo
+            turnInfo: gameTable.turnInfo,
+            fight: gameTable.fight
         };
         //  TODO: Send only what changed
         eventEmitter.sendGameInfo(gameTable._id, JSON.stringify(gameInfoCensored));
