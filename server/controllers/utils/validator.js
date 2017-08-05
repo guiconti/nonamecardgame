@@ -80,7 +80,7 @@ exports.isValidCookie = (cookie) => {
 
 exports.isValidAmount = (amount) => {
     try{
-        return amount > 0;
+        return amount >= 0;
     } catch(err){
         logger.logError(err);
         return false;
