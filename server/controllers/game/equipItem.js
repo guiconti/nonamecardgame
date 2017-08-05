@@ -1,0 +1,58 @@
+const _ = require('underscore');
+const validator = require('../utils/validator');
+const mongoose = require('mongoose');
+const GameModel = mongoose.model('Game');
+const eventEmitter = require('../communication/eventEmitter');
+const sendGameToPlayers = require('./sendGameToPlayers');
+
+const getPlayerIndex = require('../utils/getPlayerIndex');
+const getHandItemIndex = require('../utils/getHandItemIndex');
+const turnPhases = require('./turnPhases');
+const logger = require('../../../tools/logger');
+
+module.exports = (req, res) => {
+    try {
+        let params = _.pick(req.params, 'gameId');
+        let body = _.pick(req.body, 'equipmentId');
+        if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game', body: 'This game id is not valid.'});
+        if(!validator.isValidItemId(body.equipmentId)) return res.status(400).json({title: 'Invalid equipment', body: 'This equipment id is not valid.'});
+
+        GameModel.findById(params.gameId, (err, gameTable) => {
+            if (err){
+                throw err;
+            }
+            if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
+            if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only use items when the game starts.'});
+            if (!validator.isEquipItemEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cannot equip items now', 
+                body: 'You can only equip items when it`s your turn.'});
+
+            let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
+            let equipmentIndex = getHandItemIndex(gameTable, playerIndex, body.equipmentId);
+
+            if (equipmentIndex == -1) return res.status(400).json({title: 'You cannot use this equipment', body: 'You don`t have this equipment in your hand.'});
+            if (!validator.isEquipment(gameTable, playerIndex, equipmentIndex)) return res.status(400).json({title: 'You cannot use this item', 
+                body: 'This item is not equipable.'});
+
+            console.log(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1));
+            gameTable.players[playerIndex].combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
+            gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1));
+
+            gameTable.players[playerIndex].cardsOnHand--;
+            //  TODO: Add card to fight
+
+            sendGameToPlayers(gameTable);
+
+            return gameTable.save((err) => {
+                if (err) {
+                    throw err;
+                } 
+                return res.status(200).json({msg: 'Item used.'});
+            });
+            
+        });    
+    } catch(err){
+        res.status(500).json({title: 'Server error', body: 'Something happened and even we don`t know what it is.'});
+        console.log(err);
+        return logger.logError(err);
+    }
+};

@@ -1,5 +1,6 @@
 const deckType = require('../deckType');
 const treasuresType = require('./treasuresType');
+const equipmentsType = require('./equipmentsType');
 
 //  All treasures (This will go to a database)
 module.exports = function() {
@@ -11,9 +12,11 @@ module.exports = function() {
             bonus: 5
         },
         {
-            name: 'Treasure 2',
+            name: 'Equipment 2',
             deck: deckType.TREASURE,
-            cardType: treasuresType.EQUIPMENT
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.HEAD,
+            bonus: 1
         },
         {
             name: 'Treasure 3',
@@ -22,9 +25,11 @@ module.exports = function() {
             bonus: 2
         },
         {
-            name: 'Treasure 4',
+            name: 'Equipment 4',
             deck: deckType.TREASURE,
-            cardType: treasuresType.EQUIPMENT
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.CHEST,
+            bonus: 3
         },
         {
             name: 'Treasure 5',
@@ -33,9 +38,11 @@ module.exports = function() {
             bonus: 3
         },
         {
-            name: 'Treasure 6',
+            name: 'Equipment 6',
             deck: deckType.TREASURE,
-            cardType: treasuresType.EQUIPMENT
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ONE_HAND,
+            bonus: 2
         },
         {
             name: 'Treasure 7',
@@ -44,9 +51,11 @@ module.exports = function() {
             bonus: 3
         },
         {
-            name: 'Treasure 8',
+            name: 'Equipment 8',
             deck: deckType.TREASURE,
-            cardType: treasuresType.EQUIPMENT
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.HEAD,
+            bonus: 2
         },
         {
             name: 'Treasure 9',
@@ -55,9 +64,11 @@ module.exports = function() {
             bonus: 4
         },
         {
-            name: 'Treasure 10',
+            name: 'Equipment 10',
             deck: deckType.TREASURE,
-            cardType: treasuresType.EQUIPMENT
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.TWO_HAND,
+            bonus: 3
         }
     ]);
 };

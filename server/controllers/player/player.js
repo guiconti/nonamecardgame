@@ -9,7 +9,7 @@ let equipmentBonus;
 let combatPower;
 let race;
 let role;
-let board = [];
+let equipment = [];
 let hand = [];
 let cardsOnHand;
 
@@ -22,7 +22,7 @@ function Player(name, id, communicationId){
     this.combatPower = this.level + this.equipmentBonus;
     this.race = racesList.HUMAN;
     this.role = rolesList.NONE;
-    this.board = [];
+    this.equipment = [];
     this.hand = [];
     this.cardsOnHand = this.hand.length;
 }

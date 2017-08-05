@@ -10,12 +10,14 @@ let GameSchema = new Schema({
         name: String,
         deck: Number,
         cardType: Number,
+        equipmentType: {type: Number, default: -1},
         bonus: {type: Number, default: 0}
     }],
     discardedTreasures: [{
         name: String,
         deck: Number,
         cardType: Number,
+        equipmentType: Number,
         bonus: {type: Number, default: 0}
     }],
     dungeons: [{
@@ -42,15 +44,18 @@ let GameSchema = new Schema({
         combatPower: Number,
         race: Number,
         role: Number,
-        board: [{
+        equipment: [{
             name: String,
             deck: Number,
-            cardType: Number
+            cardType: Number,
+            equipmentType: Number,
+            bonus: {type: Number, default: 0}
         }],
         hand: [{
             name: String,
             deck: Number,
             cardType: Number,
+            equipmentType: {type: Number, default: -1},
             bonus: {type: Number, default: 0}
         }],
         cardsOnHand: {type: Number, default: 0}

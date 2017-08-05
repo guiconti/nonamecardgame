@@ -35,7 +35,7 @@
                                                         <a id="{{id}}" name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isUseItemEnable}}" style="float:right"> Use </a>
                                                             {{/eq}}
                                                             {{#eq cardType 0}}
-                                                        <a id="{{id}}" name="useEquipment" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isEquipItemEnable}}" style="float:right"> Equip </a>
+                                                        <a id="{{id}}" name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isEquipItemEnable}}" style="float:right"> Equip </a>
                                                             {{/eq}}
                                                         {{/eq}}
                                                     </td>
@@ -44,12 +44,12 @@
                                                 {{/if}}
                                             </thead>
                                             {{/if}}
-                                            <thead id="board_{{id}}">
+                                            <thead id="equipment_{{id}}">
                                                 <tr>
-                                                    <th> Board Cards </th>
+                                                    <th> Equipment Cards </th>
                                                 </tr>
                                                 {{#if isMain}}
-                                                    {{#each board}}
+                                                    {{#each equipment}}
                                                 <tr> 
                                                     <td id={{id}}> {{name}} </td>
                                                 </tr>
@@ -388,6 +388,27 @@
                         }
                     });
                 });
+                $('thead').on('click', 'a[name=equipItem]', function(){
+                    var equipmentInfo = {
+                        equipmentId: this.id
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: $(location).attr("href") + '/equip_item',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(equipmentInfo),
+                        dataType: "json",
+                        beforeSend: function(){
+                            $('#' + this.id).addClass('disabled');
+                        },
+                        success: function(jsonData) {
+                        },
+                        error: function(errorData) {
+                            showInfoModal(errorData.responseJSON.title, errorData.responseJSON.body);
+                            $('#' + this.id).removeClass('disabled');
+                        }
+                    });
+                });
                 socket.on('chatMessage', function(msg){
                     $('#messages').prepend($('<li>').text(msg));
                 });
@@ -426,7 +447,7 @@
                     showInfoModal(newInfo.title, newInfo.body);
                 });
                 socket.on('newPlayer', function(playerInfo){
-                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">' + '</div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="board_'+ playerInfo.id +'"><tr><th> Board Cards </th></tr></thead></table></div></div></div></div>');
+                    $('#playerBoards').append('<div class="col-md-3"><div class="portlet box green-meadow"><div class="portlet-title"><div class="caption"><i id="stats_' + playerInfo.id + '" class="fa">' + '</div></div><div class="portlet-body"><div class="table-scrollable"><table class="table table-striped table-hover"><thead id="equipment_'+ playerInfo.id +'"><tr><th> Equipment Cards </th></tr></thead></table></div></div></div></div>');
                     $('#helperName').append('<option value="' + playerInfo.id + '">' + playerInfo.name + '</option>');
                     updatePlayerInfo(playerInfo, false);
                 });
@@ -445,7 +466,7 @@
                         for (var i = 0; i < playerInfo.hand.length; i++){
                             cardButton = '';
                             if (playerInfo.hand[i].deck == DECK_TYPE.TREASURE){
-                                cardButton = playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT?'<a id="' + playerInfo.hand[i]._id +'"name="useEquipment" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>':'<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                                cardButton = playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT?'<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>':'<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
                             }
                             cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + cardButton +'</td><tr>';
                         }

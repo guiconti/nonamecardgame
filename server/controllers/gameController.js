@@ -9,6 +9,7 @@ const refuseHelp = require('./game/fight/refuseHelp');
 const run = require('./game/fight/run');
 const useItem = require('./game/fight/useItem');
 const finishInterfere = require('./game/fight/finishInterfere');
+const equipItem = require('./game/equipItem');
 
 module.exports = {
     createRoom: createRoom,
@@ -21,6 +22,7 @@ module.exports = {
     refuseHelp: refuseHelp,
     run: run,
     useItem: useItem,
-    finishInterfere: finishInterfere
+    finishInterfere: finishInterfere,
+    equipItem: equipItem
 };
 

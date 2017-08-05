@@ -26,7 +26,7 @@ module.exports = (req, res) => {
             if (!gameTable) return res.status(404).json({title: 'Game not found', body: 'This game table was not created.'});
             if (!gameTable.active) return res.status(400).json({title: 'Game has not begun.', body: 'You can only use items when the game starts.'});
             if (!validator.isUseItemEnable(gameTable, req.userInfo.id)) return res.status(400).json({title: 'You cannot use items now', 
-                body: 'You can only run when it`s your turn and you are loosing a fight.'});
+                body: 'You can only use items when it`s your turn.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let itemIndex = getHandItemIndex(gameTable, playerIndex, body.itemId);
@@ -57,7 +57,6 @@ module.exports = (req, res) => {
             calculateFightResult(gameTable);
             let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
             let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
-
 
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);

@@ -44,7 +44,7 @@ module.exports = (req, res) => {
                     role: gameTable.players[playerIndex].role,
                     cardsOnHand: gameTable.players[playerIndex].hand.length,
                     hand: gameTable.players[playerIndex].hand,
-                    board: gameTable.players[playerIndex].board,
+                    equipment: gameTable.players[playerIndex].equipment,
                     isMain: true,
                     isPickDungeonEnable: validator.isPickDungeonEnable(gameTable, req.userInfo.id)?'':'disabled',
                     isRunEnable: validator.isRunEnable(gameTable, req.userInfo.id)?'':'disabled',
@@ -66,7 +66,7 @@ module.exports = (req, res) => {
                         race: gameTable.players[i].race,
                         role: gameTable.players[i].role,
                         cardsOnHand: gameTable.players[i].hand.length,
-                        board: gameTable.players[i].board,
+                        equipment: gameTable.players[i].equipment,
                     };
                     gameRoomInfo.players.push(playerInfo);
                 }
