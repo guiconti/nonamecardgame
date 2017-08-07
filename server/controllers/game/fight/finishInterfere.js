@@ -31,7 +31,7 @@ module.exports = (req, res) => {
             let isPlayerBeingHelped = gameTable.turnInfo.helperId == '' || !gameTable.turnInfo.helperId?0:1;
 
             if (gameTable.players.length <= gameTable.fight.finishedInterferes.length + isPlayerBeingHelped + 1){
-                let playerIndex = getPlayerIndex(gameTable.turnInfo.playerId);
+                let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
                 endFight(gameTable);
                 nextPlayer(gameTable, playerIndex);
             }

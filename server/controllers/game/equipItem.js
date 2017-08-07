@@ -54,7 +54,7 @@ module.exports = (req, res) => {
             gameTable.players[playerIndex].cardsOnHand--;
 
             if (gameTable.turnInfo.phase == turnPhases.DISCARD_CARDS && gameTable.players[playerIndex].cardsOnHand <= HAND_LIMIT){
-                nextPlayer(gameTable);
+                nextPlayer(gameTable, playerIndex);
             }
 
             sendGameToPlayers(gameTable);

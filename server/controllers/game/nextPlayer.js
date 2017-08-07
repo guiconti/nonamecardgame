@@ -22,7 +22,7 @@ module.exports = (gameTable, playerIndex) => {
             }
         }
     }
-    
+  
     playerIndex = playerIndex >= gameTable.players.length - 1?0:playerIndex + 1;
     gameTable.turnInfo = {
         playerId: gameTable.players[playerIndex].id,
