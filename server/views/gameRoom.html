@@ -51,7 +51,9 @@
                                                 {{#if isMain}}
                                                     {{#each equipment}}
                                                 <tr> 
-                                                    <td id={{id}}> {{name}} </td>
+                                                    <td> {{name}} 
+                                                        <a id="{{id}}" name="sellItem" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isSellItemEnable}}" style="float:right"> Sell </a>
+                                                    </td>
                                                 </tr>
                                                     {{/each}}
                                                 {{/if}}
@@ -461,16 +463,28 @@
                     $('#stats_' + playerInfoClean).html(playerInfo.name + ' Level:' + playerInfo.level + ' Combat Power:' + playerInfo.combatPower
                         + '<br/>Race:' + playerInfo.race + ' Class:' + playerInfo.role + ' Cards on hand: ' + playerInfo.cardsOnHand);
                     if (isMainPlayer){
-                        var cards = '';
+                        var handCards = '';
+                        var equipmentCards = '';
                         var cardButton = '';
+                        //  Fill hand
                         for (var i = 0; i < playerInfo.hand.length; i++){
                             cardButton = '';
                             if (playerInfo.hand[i].deck == DECK_TYPE.TREASURE){
-                                cardButton = playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT?'<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>':'<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                                if (playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT){
+                                    cardButton = '<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>';
+                                } else {
+                                    cardbutton = '<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                                }
                             }
-                            cards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + cardButton +'</td><tr>';
+                            handCards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + cardButton +'</td><tr>';
                         }
-                        $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + cards);
+                        $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + handCards);
+                        // Fill equipment
+                        for (var i = 0; i < playerInfo.equipment.length; i++){
+                            cardButton = '<a id="' + playerInfo.equipment[i]._id +'"name="sellItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Sell </a>';
+                            equipmentCards += '<tr id="' + playerInfo.equipment[i]._id + '"><td> ' + playerInfo.equipment[i].name + cardButton +'</td><tr>';
+                        }
+                        $('#equipment_' + playerInfoClean).html('<tr><th> Equipment Cards </th></tr>' + equipmentCards);
                     }
                 }
                 function isThisPlayer(playerId){

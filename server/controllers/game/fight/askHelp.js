@@ -12,7 +12,6 @@ module.exports = (req, res) => {
     try {
         let params = _.pick(req.params, 'gameId');
         let body = _.pick(req.body, 'helperId', 'treasureAmount');
-        console.log(body);
         if(!validator.isValidGameId(params.gameId)) return res.status(400).json({title: 'Invalid game id', body: 'This game id is not valid.'});
         if(!validator.isValidPlayerId(body.helperId)) return res.status(400).json({title: 'Invalid helper', body: 'The helper you selected does not exists.'});
         if(!validator.isValidAmount(body.treasureAmount)) return res.status(400).json({title: 'Invalid treasure amount',

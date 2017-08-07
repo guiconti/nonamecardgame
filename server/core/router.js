@@ -19,7 +19,7 @@ router.get('/game/:gameId/start', middleware.validateToken, gameController.start
 
 //  Card control APIs
 router.get('/game/:gameId/dungeon/pick', middleware.validateToken, gameController.pickDungeon);
-//router.post('/game/:gameId/equip_item', middleware.validateToken, gameController.equipItem);
+router.post('/game/:gameId/equip_item', middleware.validateToken, gameController.equipItem);
 
 //  Fight APIs
 router.post('/game/:gameId/fight/ask_help', middleware.validateToken, gameController.askHelp);

@@ -33,12 +33,9 @@ module.exports = (req, res) => {
             if (!validator.isEquipment(gameTable, playerIndex, equipmentIndex)) return res.status(400).json({title: 'You cannot use this item', 
                 body: 'This item is not equipable.'});
 
-            console.log(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1));
             gameTable.players[playerIndex].combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
-            gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1));
-
+            gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1)[0]);
             gameTable.players[playerIndex].cardsOnHand--;
-            //  TODO: Add card to fight
 
             sendGameToPlayers(gameTable);
 
