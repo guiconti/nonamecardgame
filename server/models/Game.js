@@ -25,6 +25,15 @@ let GameSchema = new Schema({
         deck: Number,
         cardType: Number,
         combatPower: Number,
+        levelReward: Number,
+        treasureReward: Number
+    }],
+    discardedDungeons: [{
+        name: String,
+        deck: Number,
+        cardType: Number,
+        combatPower: Number,
+        levelReward: Number,
         treasureReward: Number
     }],
     turnInfo:  {
@@ -63,6 +72,8 @@ let GameSchema = new Schema({
     fight: {
         monster: [{
             name: String,
+            deck: Number,
+            cardType: Number,
             combatPower: {type: Number, default: 0},
             treasureReward: {type: Number, default: 0},
             levelReward: {type: Number, default: 1},

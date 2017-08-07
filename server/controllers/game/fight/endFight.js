@@ -2,6 +2,7 @@ const eventEmitter = require('../../communication/eventEmitter');
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const addCardToHand = require('../../player/addCardToHand');
 const getTreasure = require('../treasure/getTreasure');
+const discardDungeon = require('../dungeon/discardDungeon');
 const turnPhases = require('../turnPhases');
 
 module.exports = (gameTable) => {
@@ -27,6 +28,9 @@ module.exports = (gameTable) => {
         eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' helped and won ' + gameTable.turnInfo.helperTreasures + ' treasure(s) from the monster');
     }
 
+    gameTable.fight.monster.forEach((monster) => {
+        discardDungeon(gameTable, monster);
+    })
     gameTable.fight.finishedInterferes = [];
     gameTable.fight.monster = [];
     gameTable.fight.player = {};
