@@ -7,8 +7,12 @@ const sendGameToPlayers = require('./sendGameToPlayers');
 
 const getPlayerIndex = require('../utils/getPlayerIndex');
 const getHandItemIndex = require('../utils/getHandItemIndex');
+const nextPlayer = require('./nextPlayer');
+const calculateFightResult = require('./fight/calculateFightResult');
 const turnPhases = require('./turnPhases');
 const logger = require('../../../tools/logger');
+
+const HAND_LIMIT = 5;
 
 module.exports = (req, res) => {
     try {
@@ -34,8 +38,24 @@ module.exports = (req, res) => {
                 body: 'This item is not equipable.'});
 
             gameTable.players[playerIndex].combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
+            
+            //  Update if fight is going on
+            if (gameTable.fight.monster.length > 0 && (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.turnInfo.helperId)){
+                gameTable.fight.player.combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
+                calculateFightResult(gameTable);
+                if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING){
+                    let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
+                    let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
+                    gameTable.fight.finishedInterferes = [];
+                    eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                }
+            }
             gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1)[0]);
             gameTable.players[playerIndex].cardsOnHand--;
+
+            if (gameTable.turnInfo.phase == turnPhases.DISCARD_CARDS && gameTable.players[playerIndex].cardsOnHand <= HAND_LIMIT){
+                nextPlayer(gameTable);
+            }
 
             sendGameToPlayers(gameTable);
 
