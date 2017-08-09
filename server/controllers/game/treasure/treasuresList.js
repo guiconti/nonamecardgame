@@ -20,7 +20,7 @@ module.exports = function() {
             cardType: treasuresType.EQUIPMENT,
             equipmentType: equipmentsType.RACE,
             raceType: racesList.ORC,
-            sexType: sexList.FEMALE
+            sexType: sexList.MALE
         },
         {
             name: 'Female Orc',
@@ -28,7 +28,7 @@ module.exports = function() {
             cardType: treasuresType.EQUIPMENT,
             equipmentType: equipmentsType.RACE,
             raceType: racesList.ORC,
-            sexType: sexList.MALE
+            sexType: sexList.FEMALE
         },
         {
             name: 'Male Dwarf',

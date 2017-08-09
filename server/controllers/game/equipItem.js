@@ -44,12 +44,14 @@ module.exports = (req, res) => {
 
             if (gameTable.players[playerIndex].hand[equipmentIndex].raceType != -1){
                 changeRace(gameTable, playerIndex, equipmentIndex);
-            }
-            if (gameTable.players[playerIndex].hand[equipmentIndex].roleType != -1){
+                if (gameTable.players[playerIndex].hand[equipmentIndex].sexType != -1){
+                    changeSex(gameTable, playerIndex, equipmentIndex);
+                }
+            } else if (gameTable.players[playerIndex].hand[equipmentIndex].roleType != -1){
                 changeRole(gameTable, playerIndex, equipmentIndex);
-            }
-            if (gameTable.players[playerIndex].hand[equipmentIndex].sexType != -1){
-                changeSex(gameTable, playerIndex, equipmentIndex);
+            } else {
+                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' equipped ' + gameTable.players[playerIndex].hand[equipmentIndex].name +
+                    ' and added ' + gameTable.players[playerIndex].hand[equipmentIndex].bonus + ' to his/her combat power.');
             }
 
             gameTable.players[playerIndex].combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
