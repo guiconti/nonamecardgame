@@ -38,6 +38,7 @@
                                                         <a id="{{id}}" name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isEquipItemEnable}}" style="float:right"> Equip </a>
                                                             {{/eq}}
                                                         {{/eq}}
+                                                        <a id="{{id}}" name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>
                                                     </td>
                                                 </tr>
                                                     {{/each}}
@@ -515,9 +516,10 @@
                                 if (playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT){
                                     cardButton = '<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>';
                                 } else {
-                                    cardbutton = '<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                                    cardButton = '<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
                                 }
                             }
+                            cardButton += '<a id="' + playerInfo.hand[i]._id +'"name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>';
                             handCards += '<tr id="' + playerInfo.hand[i]._id + '"><td> ' + playerInfo.hand[i].name + cardButton +'</td><tr>';
                         }
                         $('#hand_' + playerInfoClean).html('<tr><th> Hand Cards </th></tr>' + handCards);
