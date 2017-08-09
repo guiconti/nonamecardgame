@@ -6,6 +6,7 @@ const handlebarsHelpers = require('handlebars-helpers');
 const comparisonHelpers = handlebarsHelpers.comparison();
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const racesName = require('../../player/racesName');
+const rolesName = require('../../player/rolesName');
 const eventListener = require('../../communication/eventListener');
 const eventEmitter = require('../../communication/eventEmitter');
 const logger = require('../../../../tools/logger');
@@ -42,7 +43,7 @@ module.exports = (req, res) => {
                     equipmentBonus: gameTable.players[playerIndex].equipmentBonus,
                     combatPower: gameTable.players[playerIndex].combatPower,
                     race: racesName[gameTable.players[playerIndex].race],
-                    role: gameTable.players[playerIndex].role,
+                    role: rolesName[gameTable.players[playerIndex].role],
                     cardsOnHand: gameTable.players[playerIndex].hand.length,
                     hand: gameTable.players[playerIndex].hand,
                     equipment: gameTable.players[playerIndex].equipment,

@@ -16,7 +16,7 @@
                             <div class="portlet box green-meadow">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i id="stats_{{id}}" class="fa">{{name}} Level:{{level}} Combat Power:{{combatPower}} <br/> Race:{{race}} Class:{{role}} Cards on Hand:{{cardsOnHand}}</i> </div>
+                                        <i id="stats_{{id}}" class="fa">{{name}} Level:{{level}} Combat Power:{{combatPower}} <br/> Race:{{race}} Class:{{role}} <br/> Cards on Hand:{{cardsOnHand}}</i> </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="table-scrollable">
@@ -482,7 +482,7 @@
                 function updatePlayerInfo(playerInfo, isMainPlayer){
                     var playerInfoClean = playerInfo.id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
                     $('#stats_' + playerInfoClean).html(playerInfo.name + ' Level:' + playerInfo.level + ' Combat Power:' + playerInfo.combatPower
-                        + '<br/>Race:' + RACES_LIST[playerInfo.race] + ' Class:' + ROLES_LIST[playerInfo.role] + ' Sex:' + SEX_LIST[playerInfo.sex] + ' Cards on hand: ' + playerInfo.cardsOnHand);
+                        + '<br/>Race:' + RACES_LIST[playerInfo.race] + ' Class:' + ROLES_LIST[playerInfo.role] + ' Sex:' + SEX_LIST[playerInfo.sex] + '<br/>Cards on hand: ' + playerInfo.cardsOnHand);
                     if (isMainPlayer){
                         var handCards = '';
                         var equipmentCards = '';

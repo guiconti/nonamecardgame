@@ -217,7 +217,6 @@ exports.isEquipmentSlotAvaiable = (gameTable, playerIndex, itemIndex) => {
                 twoHandAmount++;
             }
         });
-        console.log(equippedTypeAmount);
         if (equippedTypeAmount >= MAX_EQUIPMENT_AMOUNT[equippedTypeAmount]){
             return false;
         }
