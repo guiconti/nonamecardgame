@@ -1,6 +1,9 @@
 const deckType = require('../deckType');
 const treasuresType = require('./treasuresType');
 const equipmentsType = require('./equipmentsType');
+const racesList = require('../../player/racesList');
+const rolesList = require('../../player/rolesList');
+const sexList = require('../../player/sexList');
 
 //  All treasures (This will go to a database)
 module.exports = function() {
@@ -10,6 +13,98 @@ module.exports = function() {
             deck: deckType.TREASURE,
             cardType: treasuresType.CONSUMABLE,
             bonus: 5
+        },
+        {
+            name: 'Male Orc',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ORC,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Female Orc',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ORC,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Male Dwarf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.DWARF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Female Dwarf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.Dwarf,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Female Halfling',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.HALFLING,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Male Halfling',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.HALFLING,
+            sexType: sexList.Male
+        },
+        {
+            name: 'Female Elf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ELF,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Male Elf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ELF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Cleric',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.CLERIC
+        },
+        {
+            name: 'Thief',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.THIEF
+        },
+        {
+            name: 'Warrior',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WARRIOR
+        },
+        {
+            name: 'Wizard',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WIZARD
         },
         {
             name: 'Equipment 2',

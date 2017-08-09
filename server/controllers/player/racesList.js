@@ -4,4 +4,5 @@ module.exports = {
     DWARF: 2,
     HALFLING: 3,
     ORC: 4
-}
+};
+

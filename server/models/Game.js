@@ -11,6 +11,9 @@ let GameSchema = new Schema({
         deck: Number,
         cardType: Number,
         equipmentType: {type: Number, default: -1},
+        raceType: {type: Number, default: -1},
+        roleType: {type: Number, default: -1},
+        sexType: {type: Number, default: -1},
         bonus: {type: Number, default: 0}
     }],
     discardedTreasures: [{
@@ -53,11 +56,15 @@ let GameSchema = new Schema({
         combatPower: Number,
         race: Number,
         role: Number,
+        sex: Number,
         equipment: [{
             name: String,
             deck: Number,
             cardType: Number,
             equipmentType: Number,
+            raceType: {type: Number, default: -1},
+            roleType: {type: Number, default: -1},
+            sexType: {type: Number, default: -1},
             bonus: {type: Number, default: 0}
         }],
         hand: [{
@@ -65,6 +72,9 @@ let GameSchema = new Schema({
             deck: Number,
             cardType: Number,
             equipmentType: {type: Number, default: -1},
+            raceType: {type: Number, default: -1},
+            roleType: {type: Number, default: -1},
+            sexType: {type: Number, default: -1},
             bonus: {type: Number, default: 0}
         }],
         cardsOnHand: {type: Number, default: 0}

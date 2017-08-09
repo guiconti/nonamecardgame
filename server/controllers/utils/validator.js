@@ -4,6 +4,21 @@ const logger = require('../../../tools/logger');
 const turnPhases = require('../game/turnPhases');
 const deckType = require('../game/deckType');
 const treasureType = require('../game/treasure/treasuresType');
+const equipmentsType = require('../game/treasure/equipmentsType');
+
+//  TODO: This will be in player info database
+const MAX_EQUIPMENT_AMOUNT = [
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    Number.MAX_SAFE_INTEGER
+];
 
 exports.isValidGame = (gameInfo) => {
     try{
@@ -183,6 +198,36 @@ exports.isItemToFight = (gameTable, playerIndex, itemIndex) => {
 exports.isEquipment = (gameTable, playerIndex, itemIndex) => {
     try {
         return gameTable.players[playerIndex].hand[itemIndex].deck == deckType.TREASURE && gameTable.players[playerIndex].hand[itemIndex].cardType == treasureType.EQUIPMENT;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
+exports.isEquipmentSlotAvaiable = (gameTable, playerIndex, itemIndex) => {
+    try {
+        let itemEquipmentType = gameTable.players[playerIndex].hand[itemIndex].equipmentType;
+        let equippedTypeAmount = 0;
+        let twoHandAmount = 0;
+        let isHandEquipType = itemEquipmentType == equipmentsType.ONE_HAND || itemEquipmentType == equipmentsType.TWO_HAND;
+        gameTable.players[playerIndex].equipment.forEach((equipment) => {
+            if (equipment.equipmentType == itemEquipmentType) {
+                equippedTypeAmount++
+            } else if (isHandEquipType && equipment.equipmentType == equipmentsType.TWO_HAND){
+                twoHandAmount++;
+            }
+        });
+        console.log(equippedTypeAmount);
+        if (equippedTypeAmount >= MAX_EQUIPMENT_AMOUNT[equippedTypeAmount]){
+            return false;
+        }
+        if (isHandEquipType){
+            if (twoHandAmount > 0 && equippedTypeAmount == equipmentsType.TWO_HAND){
+                return false;
+            }
+        }
+        return true;
+
     } catch (err){
         logger.logError(err);
         return false;

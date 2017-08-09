@@ -7,5 +7,7 @@ module.exports = {
     PANTS: 4,
     GLOVES: 5,
     BOOTS: 6,
-    ETC: 7
+    RACE: 7,
+    ROLE: 8,
+    ETC: 9
 };
