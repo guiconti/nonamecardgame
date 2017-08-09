@@ -46,7 +46,7 @@ module.exports = (req, res) => {
                     race: racesName[gameTable.players[playerIndex].race],
                     role: rolesName[gameTable.players[playerIndex].role],
                     sex: sexName[gameTable.players[playerIndex].sex],
-                    cardsOnHand: gameTable.players[playerIndex].hand.length,
+                    cardsOnHand: gameTable.players[playerIndex].cardsOnHand,
                     hand: gameTable.players[playerIndex].hand,
                     equipment: gameTable.players[playerIndex].equipment,
                     isMain: true,

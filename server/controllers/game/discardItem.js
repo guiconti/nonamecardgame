@@ -39,13 +39,13 @@ module.exports = (req, res) => {
             if (handIndex == -1 && equipmentIndex == -1) return res.status(400).json({title: 'You cannot discard this item', body: 'You don`t have this item in your hand or equipments.'});
             if (handIndex != -1){
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].hand[handIndex].name + ' from hand.');
-                discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1));     
+                discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1));    
+                gameTable.players[playerIndex].cardsOnHand--; 
             } else {
                 updatePlayerInfo(gameTable, playerIndex, equipmentIndex, false);
                 eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].equipment[equipmentIndex].name + ' from equipments.');
                 discardTreasure(gameTable,gameTable.players[playerIndex].equipment.splice(equipmentIndex, 1));
             }
-            gameTable.players[playerIndex].cardsOnHand--;
 
             if (gameTable.turnInfo.phase == turnPhases.DISCARD_CARDS && gameTable.players[playerIndex].cardsOnHand <= HAND_LIMIT){
                 nextPlayer(gameTable, playerIndex);
