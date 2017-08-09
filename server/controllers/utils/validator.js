@@ -186,6 +186,15 @@ exports.isEquipItemEnable = (gameTable, playerId) => {
     }
 };
 
+exports.isDiscardItemEnable = (gameTable, playerId) => {
+    try {
+        return true;
+    } catch (err){
+        logger.logError(err);
+        return false;
+    }
+};
+
 exports.isItemToFight = (gameTable, playerIndex, itemIndex) => {
     try {
         return gameTable.players[playerIndex].hand[itemIndex].deck == deckType.TREASURE && gameTable.players[playerIndex].hand[itemIndex].cardType == treasureType.CONSUMABLE;

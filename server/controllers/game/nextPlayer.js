@@ -9,15 +9,22 @@ const HAND_LIMIT = 5;
 module.exports = (gameTable, playerIndex) => {
 
     if (playerIndex != -1){
+        let mainPlayerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
         let helperIndex = getPlayerIndex(gameTable, gameTable.turnInfo.helperId);
 
-        if (gameTable.players[playerIndex].cardsOnHand > HAND_LIMIT){
+        if (gameTable.players[mainPlayerIndex].cardsOnHand > HAND_LIMIT){
             gameTable.turnInfo.phase = turnPhases.DISCARD_CARDS;
+            if (mainPlayerIndex == playerIndex){
+                eventEmitter.sendChatMessage(gameTable.id, 'The game cannot go on because some players have more cards than the maximum allowed.');
+            }
             return;
         }
         if (helperIndex != -1) {
             if (gameTable.players[helperIndex].cardsOnHand > HAND_LIMIT){
                 gameTable.turnInfo.phase = turnPhases.DISCARD_CARDS;
+                if (helperIndex == playerIndex){
+                   eventEmitter.sendChatMessage(gameTable.id, 'The game cannot go on because some players have more cards than the maximum allowed.');
+                }
                 return;
             }
         }

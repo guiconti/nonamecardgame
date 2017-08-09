@@ -20,7 +20,10 @@ let GameSchema = new Schema({
         name: String,
         deck: Number,
         cardType: Number,
-        equipmentType: Number,
+        equipmentType: {type: Number, default: -1},
+        raceType: {type: Number, default: -1},
+        roleType: {type: Number, default: -1},
+        sexType: {type: Number, default: -1},
         bonus: {type: Number, default: 0}
     }],
     dungeons: [{

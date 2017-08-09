@@ -7,9 +7,7 @@ const sendGameToPlayers = require('./sendGameToPlayers');
 
 const getPlayerIndex = require('../utils/getPlayerIndex');
 const getHandItemIndex = require('../utils/getHandItemIndex');
-const changeRace = require('../player/changeRace');
-const changeRole = require('../player/changeRole');
-const changeSex = require('../player/changeSex');
+const updatePlayerInfo = require('../player/updatePlayerInfo');
 const nextPlayer = require('./nextPlayer');
 const calculateFightResult = require('./fight/calculateFightResult');
 const turnPhases = require('./turnPhases');
@@ -42,19 +40,9 @@ module.exports = (req, res) => {
             if (!validator.isEquipmentSlotAvaiable(gameTable, playerIndex, equipmentIndex)) return res.status(400).json({title: 'You cannot equip this item', 
                 body: 'You already have the maximum allowed amount of this type of equipment equipped.'});
 
-            if (gameTable.players[playerIndex].hand[equipmentIndex].raceType != -1){
-                changeRace(gameTable, playerIndex, equipmentIndex);
-                if (gameTable.players[playerIndex].hand[equipmentIndex].sexType != -1){
-                    changeSex(gameTable, playerIndex, equipmentIndex);
-                }
-            } else if (gameTable.players[playerIndex].hand[equipmentIndex].roleType != -1){
-                changeRole(gameTable, playerIndex, equipmentIndex);
-            } else {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' equipped ' + gameTable.players[playerIndex].hand[equipmentIndex].name +
-                    ' and added ' + gameTable.players[playerIndex].hand[equipmentIndex].bonus + ' to his/her combat power.');
-            }
-
-            gameTable.players[playerIndex].combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
+            updatePlayerInfo(gameTable, playerIndex, equipmentIndex, true);
+            gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1)[0]);
+            gameTable.players[playerIndex].cardsOnHand--;
             
             //  Update if fight is going on
             if (gameTable.fight.monster.length > 0 && (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.turnInfo.helperId)){
@@ -67,9 +55,6 @@ module.exports = (req, res) => {
                     eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
                 }
             }
-
-            gameTable.players[playerIndex].equipment.push(gameTable.players[playerIndex].hand.splice(equipmentIndex, 1)[0]);
-            gameTable.players[playerIndex].cardsOnHand--;
 
             if (gameTable.turnInfo.phase == turnPhases.DISCARD_CARDS && gameTable.players[playerIndex].cardsOnHand <= HAND_LIMIT){
                 nextPlayer(gameTable, playerIndex);
