@@ -5,6 +5,7 @@ const GameModel = mongoose.model('Game');
 const handlebarsHelpers = require('handlebars-helpers');
 const comparisonHelpers = handlebarsHelpers.comparison();
 const getPlayerIndex = require('../../utils/getPlayerIndex');
+const racesName = require('../../player/racesName');
 const eventListener = require('../../communication/eventListener');
 const eventEmitter = require('../../communication/eventEmitter');
 const logger = require('../../../../tools/logger');
@@ -40,7 +41,7 @@ module.exports = (req, res) => {
                     level: gameTable.players[playerIndex].level,
                     equipmentBonus: gameTable.players[playerIndex].equipmentBonus,
                     combatPower: gameTable.players[playerIndex].combatPower,
-                    race: gameTable.players[playerIndex].race,
+                    race: racesName[gameTable.players[playerIndex].race],
                     role: gameTable.players[playerIndex].role,
                     cardsOnHand: gameTable.players[playerIndex].hand.length,
                     hand: gameTable.players[playerIndex].hand,
