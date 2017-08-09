@@ -7,6 +7,7 @@ const comparisonHelpers = handlebarsHelpers.comparison();
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const racesName = require('../../player/racesName');
 const rolesName = require('../../player/rolesName');
+const sexName = require('../../player/sexName');
 const eventListener = require('../../communication/eventListener');
 const eventEmitter = require('../../communication/eventEmitter');
 const logger = require('../../../../tools/logger');
@@ -44,6 +45,7 @@ module.exports = (req, res) => {
                     combatPower: gameTable.players[playerIndex].combatPower,
                     race: racesName[gameTable.players[playerIndex].race],
                     role: rolesName[gameTable.players[playerIndex].role],
+                    sex: sexName[gameTable.players[playerIndex].sex],
                     cardsOnHand: gameTable.players[playerIndex].hand.length,
                     hand: gameTable.players[playerIndex].hand,
                     equipment: gameTable.players[playerIndex].equipment,
@@ -65,8 +67,9 @@ module.exports = (req, res) => {
                         level: gameTable.players[i].level,
                         equipmentBonus: gameTable.players[i].equipmentBonus,
                         combatPower: gameTable.players[i].combatPower,
-                        race: gameTable.players[i].race,
-                        role: gameTable.players[i].role,
+                        race: racesName[gameTable.players[i].race],
+                        role: rolesName[gameTable.players[i].role],
+                        sex: sexName[gameTable.players[i].sex],
                         cardsOnHand: gameTable.players[i].hand.length,
                         equipment: gameTable.players[i].equipment,
                     };

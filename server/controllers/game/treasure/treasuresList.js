@@ -60,7 +60,7 @@ module.exports = function() {
             cardType: treasuresType.EQUIPMENT,
             equipmentType: equipmentsType.RACE,
             raceType: racesList.HALFLING,
-            sexType: sexList.Male
+            sexType: sexList.MALE
         },
         {
             name: 'Female Elf',
