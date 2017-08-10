@@ -1,4 +1,5 @@
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const changeRace = require('./changeRace');
 const changeRole = require('./changeRole');
 const changeSex = require('./changeSex');
@@ -17,8 +18,12 @@ module.exports = (gameTable, playerIndex, itemIndex, isEquipping) => {
         } else if (gameTable.players[playerIndex].hand[itemIndex].roleType != -1){
             changeRole(gameTable, playerIndex, gameTable.players[playerIndex].hand[itemIndex].roleType);
         } else {
-            eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' equipped ' + gameTable.players[playerIndex].hand[itemIndex].name +
-                ' and added ' + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power.');
+            let message = {
+                type: messagesType.INFO,
+                text: gameTable.players[playerIndex].name + ' equipped ' + gameTable.players[playerIndex].hand[itemIndex].name +
+                    ' and added ' + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power.'
+            };
+            eventEmitter.sendChatMessage(gameTable.id, message);
         }
     } else {
         //  Unequipping

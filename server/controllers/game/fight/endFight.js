@@ -1,4 +1,5 @@
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const addCardToHand = require('../../player/addCardToHand');
 const getTreasure = require('../treasure/getTreasure');
@@ -6,7 +7,11 @@ const discardDungeon = require('../dungeon/discardDungeon');
 const turnPhases = require('../turnPhases');
 
 module.exports = (gameTable) => {
-    eventEmitter.sendChatMessage(gameTable.id, 'Fight ended!');
+    let message = {
+        type: messagesType.MONSTER,
+        text: 'Fight ended!'
+    };
+    eventEmitter.sendChatMessage(gameTable.id, message);
 
     let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
     let helperIndex = getPlayerIndex(gameTable, gameTable.turnInfo.helperId);
@@ -19,13 +24,15 @@ module.exports = (gameTable) => {
     for (let i = 0; i < playerTreasuresAmount; i++){
         addCardToHand(gameTable.players[playerIndex], getTreasure(gameTable));
     }
-    eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' won ' + playerTreasuresAmount + ' treasure(s) from the monster');
+    message.text = gameTable.players[playerIndex].name + ' won ' + playerTreasuresAmount + ' treasure(s) from the monster';
+    eventEmitter.sendChatMessage(gameTable.id, message);
 
     if (gameTable.turnInfo.helperTreasures > 0){
         for (let i = 0; i < gameTable.turnInfo.helperTreasures; i++){
             addCardToHand(gameTable.players[helperIndex], getTreasure(gameTable));
         }
-        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' helped and won ' + gameTable.turnInfo.helperTreasures + ' treasure(s) from the monster');
+        message.text = gameTable.players[helperIndex].name + ' helped and won ' + gameTable.turnInfo.helperTreasures + ' treasure(s) from the monster';
+        eventEmitter.sendChatMessage(gameTable.id, message);
     }
 
     gameTable.fight.monster.forEach((monster) => {

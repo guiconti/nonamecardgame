@@ -1,20 +1,29 @@
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 const calculateFightResult = require('./calculateFightResult');
 const sendGameToPlayers = require('../sendGameToPlayers');
 const turnPhases = require('../turnPhases');
 
 module.exports = (gameTable, playerIndex) => {
-    eventEmitter.sendChatMessage(gameTable.id, 'It`s a monster!');
+    let message = {
+        type: messagesType.MONSTER,
+        text: 'It`s a monster!'
+    };
+    eventEmitter.sendChatMessage(gameTable.id, message);
     //  TODO: Change this to front message
-    eventEmitter.sendChatMessage(gameTable.id, gameTable.fight.monster[0].name + ' Power: ' + gameTable.fight.monster[0].combatPower + ' Treasures: ' + gameTable.fight.monster[0].treasureReward);
+    message.text = gameTable.fight.monster[0].name + ' Power: ' + gameTable.fight.monster[0].combatPower + ' Treasures: ' 
+        + gameTable.fight.monster[0].treasureReward;
+    eventEmitter.sendChatMessage(gameTable.id, message);
     gameTable.fight.finishedInterferes = [];
     gameTable.fight.player.combatPower = gameTable.players[playerIndex].combatPower;
     calculateFightResult(gameTable);
     if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
-        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' cannot fight it alone. He have to ask for help, use items or run.');
+        message.text = gameTable.players[playerIndex].name + ' cannot fight it alone. He have to ask for help, use items or run.';
+        eventEmitter.sendChatMessage(gameTable.id, message);
         //  Enable Run, Item and Help commands
     } else {
-        eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' is able to defeat the monster. Will anyone interfere?');
+        message.text = gameTable.players[playerIndex].name + ' is able to defeat the monster. Will anyone interfere?';
+        eventEmitter.sendChatMessage(gameTable.id, message);
     }
     sendGameToPlayers(gameTable);
 };

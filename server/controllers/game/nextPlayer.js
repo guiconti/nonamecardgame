@@ -1,4 +1,5 @@
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const getPlayerIndex = require('../utils/getPlayerIndex');
 const turnPhases = require('./turnPhases');
 const mongoose = require('mongoose');
@@ -15,7 +16,11 @@ module.exports = (gameTable, playerIndex) => {
         if (gameTable.players[mainPlayerIndex].cardsOnHand > HAND_LIMIT){
             gameTable.turnInfo.phase = turnPhases.DISCARD_CARDS;
             if (mainPlayerIndex == playerIndex){
-                eventEmitter.sendChatMessage(gameTable.id, 'The game cannot go on because some players have more cards than the maximum allowed.');
+                let message = {
+                    type: messagesType.INFO,
+                    text: 'The game cannot go on because some players have more cards than the maximum allowed.'
+                };
+                eventEmitter.sendChatMessage(gameTable.id, message);
             }
             return;
         }
@@ -23,7 +28,11 @@ module.exports = (gameTable, playerIndex) => {
             if (gameTable.players[helperIndex].cardsOnHand > HAND_LIMIT){
                 gameTable.turnInfo.phase = turnPhases.DISCARD_CARDS;
                 if (helperIndex == playerIndex){
-                   eventEmitter.sendChatMessage(gameTable.id, 'The game cannot go on because some players have more cards than the maximum allowed.');
+                    let message = {
+                        type: messagesType.INFO,
+                        text: 'The game cannot go on because some players have more cards than the maximum allowed.'
+                    };
+                   eventEmitter.sendChatMessage(gameTable.id, message);
                 }
                 return;
             }
@@ -39,6 +48,10 @@ module.exports = (gameTable, playerIndex) => {
         helperTreasures: 0,
         phase: turnPhases.DRAW_FIRST_DUNGEON
     };
-    eventEmitter.sendChatMessage(gameTable._id, 'It`s ' + gameTable.turnInfo.playerName + ' turn.');
+    let message = {
+        type: messagesType.INFO,
+        text: 'It`s ' + gameTable.turnInfo.playerName + ' turn.'
+    };
+    eventEmitter.sendChatMessage(gameTable._id, message);
     return;
 };

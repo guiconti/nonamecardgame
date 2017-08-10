@@ -3,6 +3,7 @@ const validator = require('../../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 const sendGameToPlayers = require('../sendGameToPlayers');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
@@ -49,7 +50,11 @@ module.exports = (req, res) => {
             }
 
             //  Add bonus to fight and recalculate fight
-            eventEmitter.sendChatMessage(gameTable._id, useItemMessage);
+            let message = {
+                type: messagesType.MONSTER,
+                text: useItemMessage
+            };
+            eventEmitter.sendChatMessage(gameTable._id, message);
 
             discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(itemIndex, 1));
             gameTable.players[playerIndex].cardsOnHand--;
@@ -59,10 +64,12 @@ module.exports = (req, res) => {
             let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
 
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                message.text = gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower;
+                eventEmitter.sendChatMessage(gameTable.id, message);
             } else {
                 gameTable.fight.finishedInterferes = [];
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                message.text = gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower;
+                eventEmitter.sendChatMessage(gameTable.id, message);
             }
 
             sendGameToPlayers(gameTable);

@@ -3,6 +3,7 @@ const validator = require('../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const logger = require('../../../tools/logger');
 
 const sendGameToPlayers = require('./sendGameToPlayers');
@@ -32,7 +33,11 @@ module.exports = (req, res) => {
             if (gameTable.players.length < MIN_PLAYERS_TO_MATCH) return res.status(400).json({title: 'Game table not started',
                 body: 'There`s not enough players to start the game.'});
 
-            eventEmitter.sendChatMessage(gameTable._id, 'The game started.');
+            let message = {
+                type: messagesType.INFO,
+                text: 'The game started.'
+            };
+            eventEmitter.sendChatMessage(gameTable._id, message);
             setupGame(gameTable);
             gameTable.save((err) => {
                 if (err) {

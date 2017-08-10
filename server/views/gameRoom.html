@@ -45,7 +45,7 @@
                                                 {{/if}}
                                             </thead>
                                             {{/if}}
-                                            <thead id="equipment_{{id}}">
+                                            <thead id="equipment_{{id}}" class="equipment">
                                                 <tr>
                                                     <th> Equipment Cards </th>
                                                 </tr>
@@ -99,16 +99,6 @@
                     {{/if}}
                 {{/if}}
                 {{> chat}}
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul id="messages"></ul>
-                            <form action="">
-                                <input id="m" autocomplete="off" /><button>Send</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
                 <!-- Modal for questions -->
                 <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
@@ -197,6 +187,11 @@
         <script src="/assets/js/bootstrap.min.js"></script>
         <script>
             //  TODO: All this const should come from the an API
+            const MESSAGE_TYPE = {
+                USER: 0,
+                INFO: 1,
+                MONSTER: 2
+            };
             const DECK_TYPE = {
                 DUNGEON: 0,
                 TREASURE: 1
@@ -238,8 +233,12 @@
             $(document).ready(function(){
                 var socket = io('/' + '{{namespace}}');
                 $('form').submit(function(){
-                    socket.emit('chatMessage', $('#m').val());
-                    $('#m').val('');
+                    var message = {
+                        type: MESSAGE_TYPE.USER,
+                        text:  $('#sendMessage').val()
+                    };
+                    socket.emit('chatMessage', message);
+                    $('#sendMessage').val('');
                     return false;
                 });
                 $('#joinRoom').click(function(){
@@ -456,7 +455,20 @@
                     });
                 });
                 socket.on('chatMessage', function(msg){
-                    $('#messages').prepend($('<li>').text(msg));
+                    var labelClass = labelClass = '<div class="label label-sm label-info"><i class="fa fa-bullhorn"></i></div>';
+                    switch(msg.type){
+                        case(MESSAGE_TYPE.USER):
+                            labelClass = '<div class="label label-sm label-user"><i class="fa fa-comment"></i></div>';
+                            break;
+                        case(MESSAGE_TYPE.MONSTER):
+                            labelClass = '<div class="label label-sm label-fight"><i class="fa fa-qq"></i></div>';
+                            break;
+                    }
+                    $('#messages').prepend('<li><div class="col1"><div class="cont"><div class="cont-col1">' + labelClass + '</div><div class="cont-col2"><div class="desc">' + msg.text + '</div></div></div></div></div></li>');
+                    //<div class="col2">
+                        //<div class="date"> Just now </div>
+                    //</div>
+                         
                 });
                 //  TODO: Send less info on this socket since we are sending most of infos on gameInfo socket
                 socket.on('playerInfo', function(playerInfoJSON){

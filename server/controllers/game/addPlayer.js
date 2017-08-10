@@ -3,6 +3,7 @@ const validator = require('../utils/validator');
 const getPlayerIndex = require('../utils/getPlayerIndex');
 const Player = require('../player/player');
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const logger = require('../../../tools/logger');
@@ -36,7 +37,11 @@ module.exports = (req, res) => {
                 if(err) {
                     throw err;
                 }
-                eventEmitter.sendChatMessage(params.gameId, req.userInfo.name.trim() + ' entered the game.');
+                let message = {
+                    type: messagesType.INFO,
+                    text: req.userInfo.name.trim() + ' entered the game.'
+                };
+                eventEmitter.sendChatMessage(params.gameId, message);
 
                 //  Build player info for other players to add
                 let playerInfo = {

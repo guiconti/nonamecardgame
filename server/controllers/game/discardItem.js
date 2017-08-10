@@ -2,6 +2,7 @@ const _ = require('underscore');
 const validator = require('../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
+const messagesType = require('../communication/messagesType');
 const eventEmitter = require('../communication/eventEmitter');
 const sendGameToPlayers = require('./sendGameToPlayers');
 
@@ -38,12 +39,20 @@ module.exports = (req, res) => {
 
             if (handIndex == -1 && equipmentIndex == -1) return res.status(400).json({title: 'You cannot discard this item', body: 'You don`t have this item in your hand or equipments.'});
             if (handIndex != -1){
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].hand[handIndex].name + ' from hand.');
+                let message = {
+                    type: messagesType.INFO,
+                    text: gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].hand[handIndex].name + ' from hand.'
+                };
+                eventEmitter.sendChatMessage(gameTable.id, message);
                 discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1));    
                 gameTable.players[playerIndex].cardsOnHand--; 
             } else {
                 updatePlayerInfo(gameTable, playerIndex, equipmentIndex, false);
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].equipment[equipmentIndex].name + ' from equipments.');
+                let message = {
+                    type: messagesType.INFO,
+                    text: gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].equipment[equipmentIndex].name + ' from equipments.'
+                };
+                eventEmitter.sendChatMessage(gameTable.id, message);
                 discardTreasure(gameTable,gameTable.players[playerIndex].equipment.splice(equipmentIndex, 1));
             }
 

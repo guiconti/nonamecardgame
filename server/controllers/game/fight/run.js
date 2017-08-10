@@ -3,6 +3,7 @@ const validator = require('../../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 const nextPlayer = require('../nextPlayer');
 const sendGameToPlayers = require('../sendGameToPlayers');
 
@@ -32,13 +33,19 @@ module.exports = (req, res) => {
             let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let diceResult = throwDice(DICE_SIZES);
 
-            eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' decided to run.');
+            let message = {
+                type: messagesType.MONSTER,
+                text: gameTable.players[playerIndex].name + ' decided to run.'
+            };
+            eventEmitter.sendChatMessage(gameTable._id, message);
             if (diceResult >= MIN_TO_RUN){
-                eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' got ' + diceResult
-                + ' on the dice and manages to run. He manage to run from the monster without consequences.');
+                message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
+                    + ' on the dice and manages to run. He manage to run from the monster without consequences.';
+                eventEmitter.sendChatMessage(gameTable._id, message);
             } else {
-                eventEmitter.sendChatMessage(gameTable._id, gameTable.players[playerIndex].name + ' got ' + diceResult
-                + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.');
+                message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
+                    + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.';
+                eventEmitter.sendChatMessage(gameTable._id, message);
             }
 
             // End fight and change player to next

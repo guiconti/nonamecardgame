@@ -10,6 +10,7 @@ const rolesName = require('../../player/rolesName');
 const sexName = require('../../player/sexName');
 const eventListener = require('../../communication/eventListener');
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 const logger = require('../../../../tools/logger');
 
 module.exports = (req, res) => {
@@ -78,7 +79,11 @@ module.exports = (req, res) => {
             }
 
             eventListener.createGameChat(params.gameId);
-            eventEmitter.sendChatMessage(params.gameId, req.userInfo.name + ' connected');
+            let message = {
+                type: messagesType.INFO,
+                text: req.userInfo.name + ' connected'
+            };
+            eventEmitter.sendChatMessage(params.gameId, message);
 
             return res.status(200).render('gameRoom', gameRoomInfo);
         });    

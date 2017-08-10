@@ -47,6 +47,24 @@ body {
   direction: "ltr";
   font-size: 14px; }
 
+.chat {
+  height: 20em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.hand {
+  height: 20em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.equipment {
+  height: 2em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 /*
  Internet Explorer 10 doesn't differentiate device width from viewport width, and thus doesn't 
  properly apply the media queries in Bootstrap's CSS. To address this, 
@@ -7018,10 +7036,20 @@ Customized Bootstrap Labels
   .label-success[href]:hover, .label-success[href]:focus {
     background-color: #27a4b0; }
 
+.label-user {
+  background-color: #272D2D; }
+  .label-success[href]:hover, .label-success[href]:focus {
+    background-color: #272D2D; }
+
+.label-fight {
+  background-color: #C3423F; }
+  .label-success[href]:hover, .label-success[href]:focus {
+    background-color: #C3423F; }
+
 .label-info {
-  background-color: #659be0; }
+  background-color: #5BC0EB; }
   .label-info[href]:hover, .label-info[href]:focus {
-    background-color: #3a80d7; }
+    background-color: #5BC0EB; }
 
 .label-warning {
   background-color: #F1C40F; }

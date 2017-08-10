@@ -3,6 +3,7 @@ const validator = require('../../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../../communication/eventEmitter');
+const messagesType = require('../../communication/messagesType');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const sendGameToPlayers = require('../sendGameToPlayers');
@@ -30,14 +31,19 @@ module.exports = (req, res) => {
             //  Update combat power
             gameTable.fight.player.combatPower += gameTable.players[helperIndex].combatPower;
             calculateFightResult(gameTable);
-
+            let message = {
+                type: messagesType.MONSTER,
+                text: ''
+            };
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING){
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
-                    + ' on the fight. But it is still not enough to defeat the monster.');
+                message.text = gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
+                    + ' on the fight. But it is still not enough to defeat the monster.';
+                eventEmitter.sendChatMessage(gameTable.id, message);
             } else {
                 gameTable.fight.finishedInterferes = [];
-                eventEmitter.sendChatMessage(gameTable.id, gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
-                    + ' on the fight. Together they are winning the fight.');
+                message.text = gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
+                    + ' on the fight. Together they are winning the fight.';
+                eventEmitter.sendChatMessage(gameTable.id, message);
             }
             sendGameToPlayers(gameTable);
             //  TODO: Add helper name

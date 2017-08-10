@@ -3,6 +3,7 @@ const validator = require('../utils/validator');
 const mongoose = require('mongoose');
 const GameModel = mongoose.model('Game');
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const sendGameToPlayers = require('./sendGameToPlayers');
 
 const getPlayerIndex = require('../utils/getPlayerIndex');
@@ -52,7 +53,11 @@ module.exports = (req, res) => {
                     let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
                     let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
                     gameTable.fight.finishedInterferes = [];
-                    eventEmitter.sendChatMessage(gameTable.id, gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower);
+                    let message = {
+                        type: messagesType.MONSTER,
+                        text: gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower
+                    };
+                    eventEmitter.sendChatMessage(gameTable.id, message);
                 }
             }
 

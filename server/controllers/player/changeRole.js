@@ -1,7 +1,12 @@
 const eventEmitter = require('../communication/eventEmitter');
+const messagesType = require('../communication/messagesType');
 const rolesName = require('./rolesName');
 
 module.exports = (gameTable, playerIndex, newRole) => {
     gameTable.players[playerIndex].role = newRole;
-    eventEmitter.sendChatMessage(gameTable.id, gameTable.players[playerIndex].name + ' changed his role to ' + rolesName[gameTable.players[playerIndex].role]);
+    let message = {
+        type: messagesType.INFO,
+        text: gameTable.players[playerIndex].name + ' changed his role to ' + rolesName[gameTable.players[playerIndex].role]
+    };
+    eventEmitter.sendChatMessage(gameTable.id, message);
 };
