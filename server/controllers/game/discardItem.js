@@ -10,6 +10,8 @@ const getPlayerIndex = require('../utils/getPlayerIndex');
 const getHandItemIndex = require('../utils/getHandItemIndex');
 const getEquipmentItemIndex = require('../utils/getEquipmentItemIndex');
 const updatePlayerInfo = require('../player/updatePlayerInfo');
+const deckType = require('./deckType');
+const discardDungeon = require('./dungeon/discardDungeon');
 const discardTreasure = require('./treasure/discardTreasure');
 const nextPlayer = require('./nextPlayer');
 const turnPhases = require('./turnPhases');
@@ -45,7 +47,12 @@ module.exports = (req, res) => {
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
                 gameTable.chatHistory.unshift(message);
-                discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1));    
+                if (gameTable.players[playerIndex].hand[handIndex].deck == deckType.TREASURE){
+                    discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1)); 
+                }
+                if (gameTable.players[playerIndex].hand[handIndex].deck == deckType.DUNGEON){
+                    discardDungeon(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1)); 
+                }           
                 gameTable.players[playerIndex].cardsOnHand--; 
             } else {
                 updatePlayerInfo(gameTable, playerIndex, equipmentIndex, false);
