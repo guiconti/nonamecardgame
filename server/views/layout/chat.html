@@ -11,8 +11,31 @@
           <div class="tab-content">
               <div class="tab-pane active" id="tab_1_1">
                   <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-                      <ul id="messages" class="chat feeds">
-                      </ul>
+                        <ul id="messages" class="chat feeds">
+                        {{#each this.chatHistory}}
+                            <li>
+                                <div class="col1">
+                                    <div class="cont">
+                                        <div class="cont-col1">
+                                            {{#eq type 1}}
+                                            <div class="label label-sm label-info">
+                                                <i class="fa fa-bullhorn"></i>
+                                            </div>
+                                            {{/eq}}
+                                            {{#eq type 2}}
+                                            <div class="label label-sm label-fight">
+                                                <i class="fa fa-qq"></i>
+                                            </div>
+                                            {{/eq}}
+                                        </div>
+                                    <div class="cont-col2">
+                                        <div class="desc"> {{text}} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/each}}    
+                        </ul>
                   </div>
               </div>
           </div>
@@ -24,6 +47,4 @@
     </div>
   </form>
   </div>
-  <!-- END PORTLET -->
-
 </div>

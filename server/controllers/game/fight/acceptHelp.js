@@ -39,11 +39,13 @@ module.exports = (req, res) => {
                 message.text = gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. But it is still not enough to defeat the monster.';
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
             } else {
                 gameTable.fight.finishedInterferes = [];
                 message.text = gameTable.players[helperIndex].name + ' is helping ' + gameTable.players[playerIndex].name
                     + ' on the fight. Together they are winning the fight.';
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
             }
             sendGameToPlayers(gameTable);
             //  TODO: Add helper name

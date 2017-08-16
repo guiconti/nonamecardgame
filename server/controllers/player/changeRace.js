@@ -9,4 +9,5 @@ module.exports = (gameTable, playerIndex, newRace) => {
         text: gameTable.players[playerIndex].name + ' changed his race to ' + racesName[gameTable.players[playerIndex].race]
     };
     eventEmitter.sendChatMessage(gameTable.id, message);
+    gameTable.chatHistory.unshift(message);
 };

@@ -6,6 +6,10 @@ let GameSchema = new Schema({
     password: String,
     active: {type: Boolean, default: false},
     ownerId: String,
+    chatHistory: [{
+        type: {type: Number},
+        text: String
+    }],
     treasures: [{
         name: String,
         deck: Number,

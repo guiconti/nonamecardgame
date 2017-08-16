@@ -1,4 +1,7 @@
 /** global io:true */
+const mongoose = require('mongoose');
+const GameModel = mongoose.model('Game');
+
 const EVENT_TYPES = {
     CHAT_MESSAGE: 'chatMessage',
     NEW_PLAYER: 'newPlayer',

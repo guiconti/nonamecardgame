@@ -38,14 +38,17 @@ module.exports = (req, res) => {
                 text: gameTable.players[playerIndex].name + ' decided to run.'
             };
             eventEmitter.sendChatMessage(gameTable._id, message);
+            gameTable.chatHistory.unshift(message);
             if (diceResult >= MIN_TO_RUN){
                 message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
                     + ' on the dice and manages to run. He manage to run from the monster without consequences.';
                 eventEmitter.sendChatMessage(gameTable._id, message);
+                gameTable.chatHistory.unshift(message);
             } else {
                 message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
                     + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.';
                 eventEmitter.sendChatMessage(gameTable._id, message);
+                gameTable.chatHistory.unshift(message);
             }
 
             // End fight and change player to next

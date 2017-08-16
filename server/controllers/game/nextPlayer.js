@@ -21,6 +21,7 @@ module.exports = (gameTable, playerIndex) => {
                     text: 'The game cannot go on because some players have more cards than the maximum allowed.'
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
             }
             return;
         }
@@ -33,6 +34,7 @@ module.exports = (gameTable, playerIndex) => {
                         text: 'The game cannot go on because some players have more cards than the maximum allowed.'
                     };
                    eventEmitter.sendChatMessage(gameTable.id, message);
+                   gameTable.chatHistory.unshift(message);
                 }
                 return;
             }
@@ -53,5 +55,6 @@ module.exports = (gameTable, playerIndex) => {
         text: 'It`s ' + gameTable.turnInfo.playerName + ' turn.'
     };
     eventEmitter.sendChatMessage(gameTable._id, message);
+    gameTable.chatHistory.unshift(message);
     return;
 };

@@ -9,4 +9,5 @@ module.exports = (gameTable, playerIndex, newRole) => {
         text: gameTable.players[playerIndex].name + ' changed his role to ' + rolesName[gameTable.players[playerIndex].role]
     };
     eventEmitter.sendChatMessage(gameTable.id, message);
+    gameTable.chatHistory.unshift(message);
 };

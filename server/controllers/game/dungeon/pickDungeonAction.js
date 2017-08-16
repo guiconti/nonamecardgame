@@ -16,6 +16,7 @@ module.exports = (gameTable, playerIndex, dungeonPicked) => {
         text: gameTable.players[playerIndex].name + ' picked a dungeon.'
     };                                                                                                                                                                                                  
     eventEmitter.sendChatMessage(gameTable._id, message);
+    gameTable.chatHistory.unshift(message);
     //  TODO: fail proof
     //  TODO: Improve this
     switch(dungeonPicked.cardType){
@@ -51,12 +52,14 @@ function noActionPick(gameTable, playerIndex, dungeonPicked){
         text: 'It`s not a monster or a curse so ' + gameTable.players[playerIndex].name + ' added the card to his/her hand.'
     };
     eventEmitter.sendChatMessage(gameTable.id, message);
+    gameTable.chatHistory.unshift(message);
     addCardToHand(gameTable.players[playerIndex], dungeonPicked);
     let playerInfo = _.omit(gameTable.toObject().players[playerIndex], '_id', 'communicationId');
     eventEmitter.sendPrivatePlayerInfo(gameTable._id, gameTable.players[playerIndex].communicationId, JSON.stringify(playerInfo));
     if (gameTable.turnInfo.phase == turnPhases.DRAW_FIRST_DUNGEON){
         message.text = gameTable.players[playerIndex].name + ' can now pick a second dungeon.'
         eventEmitter.sendChatMessage(gameTable.id, message);
+        gameTable.chatHistory.unshift(message);
         gameTable.turnInfo.phase = turnPhases.DRAW_SECOND_DUNGEON;
         sendGameToPlayers(gameTable);
         return;

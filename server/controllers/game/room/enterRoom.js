@@ -78,12 +78,15 @@ module.exports = (req, res) => {
                 }
             }
 
+            gameRoomInfo.chatHistory = gameTable.chatHistory;
+
             eventListener.createGameChat(params.gameId);
             let message = {
                 type: messagesType.INFO,
                 text: req.userInfo.name + ' connected'
             };
             eventEmitter.sendChatMessage(params.gameId, message);
+            gameTable.chatHistory.unshift(message);
 
             return res.status(200).render('gameRoom', gameRoomInfo);
         });    

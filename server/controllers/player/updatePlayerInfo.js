@@ -24,6 +24,7 @@ module.exports = (gameTable, playerIndex, itemIndex, isEquipping) => {
                     ' and added ' + gameTable.players[playerIndex].hand[itemIndex].bonus + ' to his/her combat power.'
             };
             eventEmitter.sendChatMessage(gameTable.id, message);
+            gameTable.chatHistory.unshift(message);
         }
     } else {
         //  Unequipping

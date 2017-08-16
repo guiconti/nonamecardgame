@@ -9,4 +9,5 @@ module.exports = (gameTable, playerIndex, newSex) => {
         text: gameTable.players[playerIndex].name + ' changed his sex to ' + sexName[gameTable.players[playerIndex].sex]
     };
     eventEmitter.sendChatMessage(gameTable.id, message);
+    gameTable.chatHistory.unshift(message);
 };

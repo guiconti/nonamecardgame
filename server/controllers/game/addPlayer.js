@@ -31,17 +31,17 @@ module.exports = (req, res) => {
             if (playerIndex != -1){
                 return res.status(400).json({title: 'Player already in game', body: 'You already joined this room.'});
             }
-
+            let message = {
+                type: messagesType.INFO,
+                text: req.userInfo.name.trim() + ' entered the game.'
+            };
+            eventEmitter.sendChatMessage(params.gameId, message);
+            gameTable.chatHistory.unshift(message);
             gameTable.players.push(newPlayer);
             gameTable.save((err) => {
                 if(err) {
                     throw err;
                 }
-                let message = {
-                    type: messagesType.INFO,
-                    text: req.userInfo.name.trim() + ' entered the game.'
-                };
-                eventEmitter.sendChatMessage(params.gameId, message);
 
                 //  Build player info for other players to add
                 let playerInfo = {

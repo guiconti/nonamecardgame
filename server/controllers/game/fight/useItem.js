@@ -55,6 +55,7 @@ module.exports = (req, res) => {
                 text: useItemMessage
             };
             eventEmitter.sendChatMessage(gameTable._id, message);
+            gameTable.chatHistory.unshift(message);
 
             discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(itemIndex, 1));
             gameTable.players[playerIndex].cardsOnHand--;
@@ -66,10 +67,12 @@ module.exports = (req, res) => {
             if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
                 message.text = gameTable.turnInfo.playerName + ' is loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower;
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
             } else {
                 gameTable.fight.finishedInterferes = [];
                 message.text = gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower;
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
             }
 
             sendGameToPlayers(gameTable);

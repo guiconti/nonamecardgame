@@ -44,6 +44,7 @@ module.exports = (req, res) => {
                     text: gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].hand[handIndex].name + ' from hand.'
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
                 discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1));    
                 gameTable.players[playerIndex].cardsOnHand--; 
             } else {
@@ -53,6 +54,7 @@ module.exports = (req, res) => {
                     text: gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].equipment[equipmentIndex].name + ' from equipments.'
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
+                gameTable.chatHistory.unshift(message);
                 discardTreasure(gameTable,gameTable.players[playerIndex].equipment.splice(equipmentIndex, 1));
             }
 
