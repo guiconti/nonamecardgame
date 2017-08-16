@@ -52,8 +52,8 @@
                                                     {{#each equipment}}
                                                 <tr> 
                                                     <td> {{name}} 
-                                                        {{#if isMain}}
-                                                        <a id="{{id}}" name="discardItem" class="btn btn-outline btn-circle red btn-sm blue {{../isDiscardItemEnable}}" style="float:right"> Discard </a>
+                                                        {{#if ../isMain}}
+                                                        <a id="{{id}}" name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>
                                                         {{/if}}
                                                     </td>
                                                 </tr>

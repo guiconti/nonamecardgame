@@ -58,7 +58,7 @@ module.exports = (req, res) => {
                         text: gameTable.turnInfo.playerName + ' is able to defeat the monster. Will anyone interfere? The total is Player:' + playerPower + ' X Monsters:' + monsterPower
                     };
                     eventEmitter.sendChatMessage(gameTable.id, message);
-                    gameTable.chatHistory.unshift(message);s
+                    gameTable.chatHistory.unshift(message);
                 }
             }
 
