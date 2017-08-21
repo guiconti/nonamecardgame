@@ -23,7 +23,7 @@ const viewsPath = (process.cwd() + '/server/views');
 const layoutsPath = (process.cwd() + '/server/views/layout');
 const hbs = require('express-handlebars');
 
-app.engine('.html', hbs({extname: '.html', layoutsDir:layoutsPath}));
+app.engine('.html', hbs({extname: '.html', layoutsDir:layoutsPath, partialsDir: layoutsPath}));
 app.set('view engine', '.html');
 app.set('views', viewsPath);
 
