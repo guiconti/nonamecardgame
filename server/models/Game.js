@@ -49,9 +49,6 @@ let GameSchema = new Schema({
     turnInfo:  {
         playerId: String,
         playerName: String,
-        helperId: String,
-        helperName: String,
-        helperTreasures: Number,
         phase: Number
     },
     players: [{
@@ -99,6 +96,11 @@ let GameSchema = new Schema({
         player: {
             combatPower: {type: Number, default: 0},
             powerBonus: {type: Number, default: 0}
+        },
+        helper: {
+            helperId: String,
+            helperName: String,
+            helperTreasures: Number,
         },
         finishedInterferes: [String]
     }

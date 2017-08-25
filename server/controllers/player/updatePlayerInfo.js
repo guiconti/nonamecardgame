@@ -29,7 +29,7 @@ module.exports = (gameTable, playerIndex, itemIndex, isEquipping) => {
     } else {
         //  Unequipping
         gameTable.players[playerIndex].combatPower -= gameTable.players[playerIndex].equipment[itemIndex].bonus;
-        if (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.turnInfo.helperId){
+        if (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.fight.helper.helperId){
             gameTable.fight.player.combatPower -= gameTable.players[playerIndex].equipment[itemIndex].bonus;
         }
         if (gameTable.players[playerIndex].equipment[itemIndex].raceType != -1){

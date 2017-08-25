@@ -46,7 +46,7 @@ module.exports = (req, res) => {
             gameTable.players[playerIndex].cardsOnHand--;
             
             //  Update if fight is going on
-            if (gameTable.fight.monster.length > 0 && (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.turnInfo.helperId)){
+            if (gameTable.fight.monster.length > 0 && (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.fight.helper.helperId)){
                 gameTable.fight.player.combatPower += gameTable.players[playerIndex].hand[equipmentIndex].bonus;
                 calculateFightResult(gameTable);
                 if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING){

@@ -24,15 +24,15 @@ module.exports = (req, res) => {
                 body: 'You can only accept for help when someone asks you.'});
 
             let newInfo = {
-                title: gameTable.turnInfo.helperName + ' refused!',
-                body: 'Sorry, but ' + gameTable.turnInfo.helperName + ' refused to help you on this fight.'
+                title: gameTable.fight.helper.helperName + ' refused!',
+                body: 'Sorry, but ' + gameTable.fight.helper.helperName + ' refused to help you on this fight.'
             };
 
             let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
 
-            gameTable.turnInfo.helperId = '';
-            gameTable.turnInfo.helperName = '';
-            gameTable.turnInfo.helperTreasures = 0;
+            gameTable.fight.helper.helperId = '';
+            gameTable.fight.helper.helperName = '';
+            gameTable.fight.helper.helperTreasures = 0;
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
             eventEmitter.sendInfoToPlayer(gameTable.id, gameTable.players[playerIndex].communicationId, newInfo);
             sendGameToPlayers(gameTable);

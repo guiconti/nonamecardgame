@@ -15,13 +15,13 @@ module.exports = (gameTable) => {
     gameTable.chatHistory.unshift(message);
 
     let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
-    let helperIndex = getPlayerIndex(gameTable, gameTable.turnInfo.helperId);
+    let helperIndex = getPlayerIndex(gameTable, gameTable.fight.helper.helperId);
 
     gameTable.players[playerIndex].level += gameTable.fight.monster[0].levelReward;
     //  TODO: Create a function to update combat power
     gameTable.players[playerIndex].combatPower += gameTable.fight.monster[0].levelReward;
     
-    let playerTreasuresAmount = gameTable.fight.monster[0].treasureReward - gameTable.turnInfo.helperTreasures;
+    let playerTreasuresAmount = gameTable.fight.monster[0].treasureReward - gameTable.fight.helper.helperTreasures;
     for (let i = 0; i < playerTreasuresAmount; i++){
         addCardToHand(gameTable.players[playerIndex], getTreasure(gameTable));
     }
@@ -29,11 +29,11 @@ module.exports = (gameTable) => {
     eventEmitter.sendChatMessage(gameTable.id, message);
     gameTable.chatHistory.unshift(message);
 
-    if (gameTable.turnInfo.helperTreasures > 0){
-        for (let i = 0; i < gameTable.turnInfo.helperTreasures; i++){
+    if (gameTable.fight.helper.helperTreasures > 0){
+        for (let i = 0; i < gameTable.fight.helper.helperTreasures; i++){
             addCardToHand(gameTable.players[helperIndex], getTreasure(gameTable));
         }
-        message.text = gameTable.players[helperIndex].name + ' helped and won ' + gameTable.turnInfo.helperTreasures + ' treasure(s) from the monster';
+        message.text = gameTable.players[helperIndex].name + ' helped and won ' + gameTable.fight.helper.helperTreasures + ' treasure(s) from the monster';
         eventEmitter.sendChatMessage(gameTable.id, message);
         gameTable.chatHistory.unshift(message);
     }

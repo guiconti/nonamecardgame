@@ -38,9 +38,9 @@ module.exports = (req, res) => {
             if (gameTable.fight.monster[0].treasureReward < helperInfo.treasureAmount) return res.status(400).json({title: 'Invalid treasure amount',
                 body: 'The treasure amount must be between 0 and the number of treasures given by the monster.'});
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_HELP_ANSWER;
-            gameTable.turnInfo.helperId = helperInfo.id;
-            gameTable.turnInfo.helperName = gameTable.players[helperIndex].name;
-            gameTable.turnInfo.helperTreasures = body.treasureAmount;
+            gameTable.fight.helper.helperId = helperInfo.id;
+            gameTable.fight.helper.helperName = gameTable.players[helperIndex].name;
+            gameTable.fight.helper.helperTreasures = body.treasureAmount;
             //  TODO: Add helper name
 
             let askInfo = {

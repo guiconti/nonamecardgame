@@ -28,7 +28,7 @@ module.exports = (req, res) => {
             gameTable.fight.finishedInterferes.push(req.userInfo.id);
 
             //  Check if everyone finished interfeering
-            let isPlayerBeingHelped = gameTable.turnInfo.helperId == '' || !gameTable.turnInfo.helperId?0:1;
+            let isPlayerBeingHelped = gameTable.fight.helper.helperId == '' || !gameTable.fight.helper.helperId?0:1;
 
             if (gameTable.players.length <= gameTable.fight.finishedInterferes.length + isPlayerBeingHelped + 1){
                 let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);

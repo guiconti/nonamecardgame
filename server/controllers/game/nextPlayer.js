@@ -11,7 +11,7 @@ module.exports = (gameTable, playerIndex) => {
 
     if (playerIndex != -1){
         let mainPlayerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
-        let helperIndex = getPlayerIndex(gameTable, gameTable.turnInfo.helperId);
+        let helperIndex = getPlayerIndex(gameTable, gameTable.fight.helper.helperId);
 
         if (gameTable.players[mainPlayerIndex].cardsOnHand > HAND_LIMIT){
             gameTable.turnInfo.phase = turnPhases.DISCARD_CARDS;

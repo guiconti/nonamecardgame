@@ -113,7 +113,7 @@ exports.isPlayerTurn = (gameInfo, playerInfo) => {
 
 exports.isHelperTurn = (gameInfo, helperInfo) => {
     try{
-        return gameInfo.turnInfo.helperId == helperInfo.id;
+        return gameInfo.fight.helper.helperId == helperInfo.id;
     } catch(err){
         logger.logError(err);
         return false;
@@ -140,7 +140,7 @@ exports.isRunEnable = (gameTable, playerId) => {
 
 exports.isUseItemEnable = (gameTable, playerId) => {
     try {
-        return ((gameTable.turnInfo.playerId == playerId || gameTable.turnInfo.helperId == playerId) || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING) && (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING);
+        return ((gameTable.turnInfo.playerId == playerId || gameTable.fight.helper.helperId == playerId) || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING) && (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING || gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING);
     } catch (err){
         logger.logError(err);
         return false;
@@ -149,7 +149,7 @@ exports.isUseItemEnable = (gameTable, playerId) => {
 
 exports.isHelpEnable = (gameTable, playerId) => {
     try {
-        return gameTable.turnInfo.playerId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && (!gameTable.turnInfo.helperId || gameTable.turnInfo.helperId == '');
+        return gameTable.turnInfo.playerId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING && (!gameTable.fight.helper.helperId || gameTable.fight.helper.helperId == '');
     } catch (err){
         logger.logError(err);
         return false;
@@ -158,7 +158,7 @@ exports.isHelpEnable = (gameTable, playerId) => {
 
 exports.isHelpAnswerEnable = (gameTable, playerId) => {
     try {
-        return gameTable.turnInfo.helperId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_HELP_ANSWER;
+        return gameTable.fight.helper.helperId == playerId && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_HELP_ANSWER;
     } catch (err){
         logger.logError(err);
         return false;
@@ -170,7 +170,7 @@ exports.isInterfereEnable = (gameTable, playerId) => {
         let interfereFinished = gameTable.fight.finishedInterferes.findIndex((interfereId) => {
             return interfereId == playerId;
         });
-        return gameTable.turnInfo.playerId != playerId && gameTable.turnInfo.helper != playerId && interfereFinished == -1 && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING;
+        return gameTable.turnInfo.playerId != playerId && gameTable.fight.helper.helperId != playerId && interfereFinished == -1 && gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING;
     } catch (err){
         logger.logError(err);
         return false;

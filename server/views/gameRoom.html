@@ -478,7 +478,7 @@
                 socket.on('gameInfo', function(gameInfoJSON){
                     var gameInfo = JSON.parse(gameInfoJSON);
                     var isThisMainPlayer = isThisPlayer(gameInfo.turnInfo.playerId);
-                    var isThisHelperPlayer = isThisPlayer(gameInfo.turnInfo.helperId);
+                    var isThisHelperPlayer = isThisPlayer(gameInfo.fight.helper.helperId);
                     gameInfo.players.forEach(function(player) {
                         if (!isThisPlayer(player.id)){
                             updatePlayerInfo(player, false);
@@ -486,7 +486,7 @@
                     });
                     togglePickDungeon(isThisMainPlayer, gameInfo.turnInfo.phase);
                     toggleRun(isThisMainPlayer, gameInfo.turnInfo.phase);
-                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.turnInfo.helperId);
+                    toggleAskHelp(isThisMainPlayer, gameInfo.turnInfo.phase, gameInfo.fight.helper.helperId);
                     var finishedInterferes = gameInfo.fight?gameInfo.fight.finishedInterferes:[];
                     var isInterfereEnable = checkInterfere(isThisMainPlayer, isThisHelperPlayer, gameInfo.turnInfo.phase, finishedInterferes);
                     toggleUseItem(isThisMainPlayer, isThisHelperPlayer, isInterfereEnable, gameInfo.turnInfo.phase);
