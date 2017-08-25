@@ -57,6 +57,11 @@ module.exports = (req, res) => {
                     isHelpEnable: validator.isHelpEnable(gameTable, req.userInfo.id)?'':'disabled',
                     isInterfereEnable: validator.isInterfereEnable(gameTable, req.userInfo.id)?'':'disabled'
                 };
+                //  Send pending questions
+                if (playerIndex != -1 && gameTable.players[playerIndex].id == gameTable.turnInfo.pendingAnswer.playerId){
+                    gameRoomInfo.questionAvaiable = true,
+                    gameRoomInfo.questionInfo = gameTable.turnInfo.pendingAnswer.question;
+                }
                 gameRoomInfo.players.push(playerInfo);
             }
 

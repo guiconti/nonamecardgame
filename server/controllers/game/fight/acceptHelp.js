@@ -27,6 +27,8 @@ module.exports = (req, res) => {
 
             let playerIndex = getPlayerIndex(gameTable, gameTable.turnInfo.playerId);
             let helperIndex = getPlayerIndex(gameTable, req.userInfo.id);
+            gameTable.turnInfo.pendingAnswer.playerId = '';
+            gameTable.turnInfo.question = {};
             
             //  Update combat power
             gameTable.fight.player.combatPower += gameTable.players[helperIndex].combatPower;

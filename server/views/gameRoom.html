@@ -100,9 +100,27 @@
                 {{/if}}
                 {{> chat}}
                 <!-- Modal for questions -->
-                <div id="questionModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                <div id="questionModal" class="modal fade bs-modal-sm modal-question" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
+                            {{#if questionAvaiable}}
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="questionModalTitle">{{questionInfo.title}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p id="questionModalBody">{{questionInfo.body}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" name="{{questionInfo.refuseSuffix}}" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
+                                <button type="button" data-dismiss="modal" name="{{questionInfo.acceptSuffix}}" class="btn green" id="questionAccept">Accept</button>
+                            </div>  
+                            {{else}}
                             <div class="modal-header">
                                 <h4 class="modal-title" id="questionModalTitle"></h4>
                             </div>
@@ -119,6 +137,7 @@
                                 <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="questionRefuse">Refuse</button>
                                 <button type="button" data-dismiss="modal" class="btn green" id="questionAccept">Accept</button>
                             </div>
+                            {{/if}}
                         </div>
                     </div>
                 </div>
@@ -232,6 +251,9 @@
             };
             $(document).ready(function(){
                 var socket = io('/' + '{{namespace}}');
+                {{#if questionAvaiable}}
+                $('#questionModal').modal('show');
+                {{/if}}
                 $('form').submit(function(){
                     var message = {
                         type: MESSAGE_TYPE.USER,

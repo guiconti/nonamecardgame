@@ -49,7 +49,11 @@ let GameSchema = new Schema({
     turnInfo:  {
         playerId: String,
         playerName: String,
-        phase: Number
+        phase: Number,
+        pendingAnswer: {
+            playerId: String,
+            question: Object
+        }
     },
     players: [{
         name: String,

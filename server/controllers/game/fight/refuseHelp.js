@@ -33,6 +33,8 @@ module.exports = (req, res) => {
             gameTable.fight.helper.helperId = '';
             gameTable.fight.helper.helperName = '';
             gameTable.fight.helper.helperTreasures = 0;
+            gameTable.turnInfo.pendingAnswer.playerId = '';
+            gameTable.turnInfo.question = {};
             gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
             eventEmitter.sendInfoToPlayer(gameTable.id, gameTable.players[playerIndex].communicationId, newInfo);
             sendGameToPlayers(gameTable);

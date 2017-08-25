@@ -52,10 +52,22 @@ module.exports = (req, res) => {
                 acceptSuffix: '/fight/ask_help/accept',
                 refuseSuffix: '/fight/ask_help/refuse'
             };
+            gameTable.turnInfo.pendingAnswer.playerId = gameTable.players[helperIndex].id;
+            //gameTable.turnInfo.pendingAnswer.question = _.clone(askInfo);
+            gameTable.turnInfo.pendingAnswer.question = {
+                type: askInfo.type,
+                title: askInfo.title,
+                body: askInfo.body,
+                requester: askInfo.requester,
+                treasureAmount: askInfo.treasureAmount,
+                acceptSuffix: askInfo.acceptSuffix,
+                refuseSuffix: askInfo.refuseSuffix
+            }
             eventEmitter.askPlayer(gameTable._id, gameTable.players[helperIndex].communicationId, JSON.stringify(askInfo));
-
+            
             return gameTable.save((err) => {
                 if (err) {
+                    console.log(err);
                     throw err;
                 } 
                 return res.status(200).json({msg: 'Help asked.'});
