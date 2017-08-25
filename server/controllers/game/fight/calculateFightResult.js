@@ -9,6 +9,7 @@ module.exports = (gameTable) => {
 
     if (totalPlayerCombatPower <= totalMonsterCombatPower) {
         gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_LOOSING;
+        gameTable.fight.finishedInterferes = [];
     } else {
         gameTable.turnInfo.phase = turnPhases.FIGHT_MONSTER_WINNING;
     }

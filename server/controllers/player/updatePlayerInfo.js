@@ -29,6 +29,9 @@ module.exports = (gameTable, playerIndex, itemIndex, isEquipping) => {
     } else {
         //  Unequipping
         gameTable.players[playerIndex].combatPower -= gameTable.players[playerIndex].equipment[itemIndex].bonus;
+        if (gameTable.players[playerIndex].id == gameTable.turnInfo.playerId || gameTable.players[playerIndex].id == gameTable.turnInfo.helperId){
+            gameTable.fight.player.combatPower -= gameTable.players[playerIndex].equipment[itemIndex].bonus;
+        }
         if (gameTable.players[playerIndex].equipment[itemIndex].raceType != -1){
             changeRace(gameTable, playerIndex, racesList.HUMAN);
             if (gameTable.players[playerIndex].equipment[itemIndex].sexType != -1){

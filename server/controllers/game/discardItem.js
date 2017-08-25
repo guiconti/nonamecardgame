@@ -13,6 +13,7 @@ const updatePlayerInfo = require('../player/updatePlayerInfo');
 const deckType = require('./deckType');
 const discardDungeon = require('./dungeon/discardDungeon');
 const discardTreasure = require('./treasure/discardTreasure');
+const calculateFightResult = require('./fight/calculateFightResult');
 const nextPlayer = require('./nextPlayer');
 const turnPhases = require('./turnPhases');
 const logger = require('../../../tools/logger');
@@ -38,19 +39,20 @@ module.exports = (req, res) => {
             let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
             let handIndex = getHandItemIndex(gameTable, playerIndex, body.itemId);
             let equipmentIndex = getEquipmentItemIndex(gameTable, playerIndex, body.itemId);
+            let discardedCard = gameTable.players[playerIndex].hand[handIndex];
 
             if (handIndex == -1 && equipmentIndex == -1) return res.status(400).json({title: 'You cannot discard this item', body: 'You don`t have this item in your hand or equipments.'});
             if (handIndex != -1){
                 let message = {
                     type: messagesType.INFO,
-                    text: gameTable.players[playerIndex].name + ' discarded ' + gameTable.players[playerIndex].hand[handIndex].name + ' from hand.'
+                    text: gameTable.players[playerIndex].name + ' discarded ' + discardedCard.name + ' from hand.'
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
                 gameTable.chatHistory.unshift(message);
-                if (gameTable.players[playerIndex].hand[handIndex].deck == deckType.TREASURE){
+                if (discardedCard.deck == deckType.TREASURE){
                     discardTreasure(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1)); 
                 }
-                if (gameTable.players[playerIndex].hand[handIndex].deck == deckType.DUNGEON){
+                if (discardedCard.deck == deckType.DUNGEON){
                     discardDungeon(gameTable, gameTable.players[playerIndex].hand.splice(handIndex, 1)); 
                 }           
                 gameTable.players[playerIndex].cardsOnHand--; 
@@ -62,6 +64,18 @@ module.exports = (req, res) => {
                 };
                 eventEmitter.sendChatMessage(gameTable.id, message);
                 gameTable.chatHistory.unshift(message);
+                if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING) {
+                    console.log('é');
+                    calculateFightResult(gameTable);
+                    if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
+                        let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
+                        let monsterPower = gameTable.fight.monster[0].combatPower + gameTable.fight.monster[0].powerBonus;
+                        message.type = messagesType.MONSTER
+                        message.text = gameTable.turnInfo.playerName + ' is now loosing this fight. The total is Player:' + playerPower + ' X Monsters:' + monsterPower;
+                        eventEmitter.sendChatMessage(gameTable.id, message);
+                        gameTable.chatHistory.unshift(message);
+                    }
+                }
                 discardTreasure(gameTable,gameTable.players[playerIndex].equipment.splice(equipmentIndex, 1));
             }
 
