@@ -2,18 +2,18 @@ const logger = require('../../../../../tools/logger');
 const messagesType = require('../../../communication/messagesType');
 const isHighestLevel = require('../../../utils/isHighestLevel');
 
-const cardName = 'Whine At The GM';
+const CARD_NAME = 'Whine At The GM';
 const LEVEL_BONUS = 1;
-const successMessage = {
+let successMessage = {
     type: messagesType.INFO,
-    text: ' used ' + cardName + ' and goes up a level.'
+    text: ' used ' + CARD_NAME + ' and goes up a level.'
 };
 
-const unableToPlayMessage = {
+let unableToPlayMessage = {
     title: 'You can`t play this card'
 };
 
-const errorMessage = {
+let errorMessage = {
     title: 'Unexpect error',
     body: 'Something happened and even we don`t know what it is.'
 };

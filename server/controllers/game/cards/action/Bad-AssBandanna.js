@@ -3,18 +3,18 @@ const messagesType = require('../../../communication/messagesType');
 const racesList = require('../../../player/racesList');
 const updateCombatPower = require('../../../utils/updateCombatPower');
 
-const cardName = 'Bad-Ass Bandanna';
+const CARD_NAME = 'Bad-Ass Bandanna';
 const EQUIPMENT_BONUS = 3;
-const successMessage = {
+let successMessage = {
     type: messagesType.INFO,
-    text: ' equipped ' + cardName + ' and his/her combat power goes up to .'
+    text: ' equipped ' + CARD_NAME + ' and his/her combat power goes up to .'
 };
 
-const unableToPlayMessage = {
+let unableToPlayMessage = {
     title: 'You can`t play this card'
 };
 
-const errorMessage = {
+let errorMessage = {
     title: 'Unexpect error',
     body: 'Something happened and even we don`t know what it is.'
 };

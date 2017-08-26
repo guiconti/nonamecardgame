@@ -1,14 +1,14 @@
 const logger = require('../../../../../tools/logger');
 const messagesType = require('../../../communication/messagesType');
 
-const cardName = '1000 Gold Pieces';
+const CARD_NAME = '1000 Gold Pieces';
 const LEVEL_BONUS = 1;
-const successMessage = {
+let successMessage = {
     type: messagesType.INFO,
-    text: ' used ' + cardName + ' and goes up a level.'
+    text: ' used ' + CARD_NAME + ' and goes up a level.'
 };
 
-const errorMessage = {
+let errorMessage = {
     title: 'Unexpect error',
     body: 'Something happened and even we don`t know what it is.'
 };

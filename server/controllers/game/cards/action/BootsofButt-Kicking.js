@@ -2,14 +2,14 @@ const logger = require('../../../../../tools/logger');
 const messagesType = require('../../../communication/messagesType');
 const updateCombatPower = require('../../../utils/updateCombatPower');
 
-const cardName = 'Boots of Butt-Kicking';
+const CARD_NAME = 'Boots of Butt-Kicking';
 const EQUIPMENT_BONUS = 2;
-const successMessage = {
+let successMessage = {
     type: messagesType.INFO,
-    text: ' equipped ' + cardName + ' and his/her combat power goes up to .'
+    text: ' equipped ' + CARD_NAME + ' and his/her combat power goes up to .'
 };
 
-const errorMessage = {
+let errorMessage = {
     title: 'Unexpect error',
     body: 'Something happened and even we don`t know what it is.'
 };

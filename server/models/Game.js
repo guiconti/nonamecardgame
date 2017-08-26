@@ -43,6 +43,9 @@ let GameSchema = new Schema({
         combatPower: Number,
         levelReward: Number,
         treasureReward: Number,
+        bonusOnRaces: [Number],
+        bonusOnRoles: [Number],
+        modificationBonus: Number,
         text: String
     }],
     discardedDungeons: [{
@@ -52,6 +55,9 @@ let GameSchema = new Schema({
         combatPower: Number,
         levelReward: Number,
         treasureReward: Number,
+        bonusOnRaces: [Number],
+        bonusOnRoles: [Number],
+        modificationBonus: Number,
         text: String
     }],
     turnInfo:  {
@@ -97,6 +103,9 @@ let GameSchema = new Schema({
             bonus: {type: Number, default: 0},
             usableByRaces: [Number],
             usableByRoles: [Number],
+            bonusOnRaces: [Number],
+            bonusOnRoles: [Number],
+            modificationBonus: Number,
             text: String
         }],
         cardsOnHand: {type: Number, default: 0}
@@ -110,6 +119,9 @@ let GameSchema = new Schema({
             treasureReward: {type: Number, default: 0},
             levelReward: {type: Number, default: 1},
             powerBonus: {type: Number, default: 0},
+            bonusOnRaces: [Number],
+            bonusOnRoles: [Number],
+            modificationBonus: Number,
             text: String
         }],
         player: {

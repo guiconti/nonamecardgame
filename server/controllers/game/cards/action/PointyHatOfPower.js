@@ -3,18 +3,18 @@ const messagesType = require('../../../communication/messagesType');
 const rolesList = require('../../../player/rolesList');
 const updateCombatPower = require('../../../utils/updateCombatPower');
 
-const cardName = 'Pointy Hat Of Power';
+const CARD_NAME = 'Pointy Hat Of Power';
 const EQUIPMENT_BONUS = 3;
-const successMessage = {
+let successMessage = {
     type: messagesType.INFO,
-    text: ' equipped ' + cardName + ' and his/her combat power goes up to .'
+    text: ' equipped ' + CARD_NAME + ' and his/her combat power goes up to .'
 };
 
-const unableToPlayMessage = {
+let unableToPlayMessage = {
     title: 'You can`t play this card'
 };
 
-const errorMessage = {
+let errorMessage = {
     title: 'Unexpect error',
     body: 'Something happened and even we don`t know what it is.'
 };

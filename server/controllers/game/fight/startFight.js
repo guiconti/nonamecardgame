@@ -18,6 +18,7 @@ module.exports = (gameTable, playerIndex) => {
     gameTable.chatHistory.unshift(message);
     gameTable.fight.finishedInterferes = [];
     gameTable.fight.player.combatPower = gameTable.players[playerIndex].combatPower;
+    //  TODO: Apply monster action
     calculateFightResult(gameTable);
     if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
         message.text = gameTable.players[playerIndex].name + ' cannot fight it alone. He have to ask for help, use items or run.';
