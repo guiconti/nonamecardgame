@@ -52,6 +52,13 @@ module.exports = function() {
             equipmentType: equipmentsType.HEAD,
             bonus: 3
         },
+        {
+            name: 'Helm Of Courage',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.HEAD,
+            bonus: 1
+        },
         // Old
         {
             name: 'Male Orc',
