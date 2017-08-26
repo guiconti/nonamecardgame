@@ -45,6 +45,13 @@ module.exports = function() {
             cardType: treasuresType.CONSUMABLE,
             text: 'Go Up A Level'
         },
+        {
+            name: 'Bad-Ass Bandanna',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.HEAD,
+            bonus: 3
+        },
         // Old
         {
             name: 'Male Orc',
