@@ -2,14 +2,16 @@
 <html>
     <head>
         <title>No Name Card Game</title>
-        <link href="/assets/css/fonts-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/line-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/components.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/fonts-awesome.min.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div class="page-wrapper">
             <div class="page-content">
-                <div class="container {{boardDisplay}}" id="gameInfo">
+                <div class="container {{boardDisplay}}" style="float: left;" id="gameInfo">
                     <div class="row" id="playerBoards">
                         {{#each players}}
                         <div class="col-md-3">
@@ -30,6 +32,9 @@
                                                     {{#each hand}}
                                                 <tr>
                                                     <td> {{name}}
+                                                        <a class="btn btn-circle btn-outline purple-plum btn-icon-only btn-default" title="{{name}}" deck="{{deck}}" type="{{cardType}}" bonus="{{bonus}}" name="cardInfo" data-toggle="modal" href="#cardInfoModal" style="float:right;padding:6px">
+                                                            <i class="icon-eye"></i>
+                                                        </a>
                                                         {{#eq deck 1}}
                                                             {{#eq cardType 1}}
                                                         <a id="{{id}}" name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue {{../isUseItemEnable}}" style="float:right"> Use </a>
@@ -39,6 +44,7 @@
                                                             {{/eq}}
                                                         {{/eq}}
                                                         <a id="{{id}}" name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>
+                                                        
                                                     </td>
                                                 </tr>
                                                     {{/each}}
@@ -99,6 +105,30 @@
                     {{/if}}
                 {{/if}}
                 {{> chat}}
+                <!-- Modal for cards -->
+                <div id="cardInfoModal" class="modal fade bs-modal-sm" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="cardInfoModalTitle"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p id="cardInfoModalDeck"></p><br/>
+                                            <p id="cardInfoModalType"></p><br/>
+                                            <p id="cardInfoModalBonus"></p><br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn green">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Modal for questions -->
                 <div id="questionModal" class="modal fade bs-modal-sm modal-question" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
@@ -475,6 +505,12 @@
                             $('#' + this.id).removeClass('disabled');
                         }
                     });
+                });
+                $('thead').on('click', 'a[name=cardInfo]', function(){
+                    $('#cardInfoModalTitle').html($(this).attr("title"));
+                    $('#cardInfoModalDeck').html($(this).attr("deck"));
+                    $('#cardInfoModalType').html($(this).attr("type"));
+                    $('#cardInfoModalBonus').html($(this).attr("bonus"));
                 });
                 socket.on('chatMessage', function(msg){
                     var labelClass = labelClass = '<div class="label label-sm label-info"><i class="fa fa-bullhorn"></i></div>';
