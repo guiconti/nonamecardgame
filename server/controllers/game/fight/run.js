@@ -35,8 +35,7 @@ module.exports = (req, res) => {
             let fightersIndexes = [playerIndex];
             if (helperIndex != -1){
                 fightersIndexes.push(helperIndex);
-            }
-            
+            }    
 
             let message = {
                 type: messagesType.MONSTER,

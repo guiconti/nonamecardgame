@@ -4,6 +4,7 @@ const getPlayerIndex = require('../../utils/getPlayerIndex');
 const addCardToHand = require('../../player/addCardToHand');
 const getTreasure = require('../treasure/getTreasure');
 const discardDungeon = require('../dungeon/discardDungeon');
+const resetFight = require('./resetFight');
 const turnPhases = require('../turnPhases');
 
 module.exports = (gameTable) => {
@@ -41,8 +42,6 @@ module.exports = (gameTable) => {
     gameTable.fight.monster.forEach((monster) => {
         discardDungeon(gameTable, monster);
     })
-    gameTable.fight.finishedInterferes = [];
-    gameTable.fight.monster = [];
-    gameTable.fight.player = {};
+    resetFight(gameTable);
     return;
 };

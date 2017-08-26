@@ -8,6 +8,7 @@ module.exports = (gameTable) => {
         gameTable.fight.helper.helperId = '';
         gameTable.fight.helper.helperName = '';
         gameTable.fight.helper.helperTreasures = 0;
+        gameTable.fight.finishedInterferes = [];
         //  Add monster to discard pile
         return;
     } catch (err){

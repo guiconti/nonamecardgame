@@ -32,7 +32,7 @@
                                                     {{#each hand}}
                                                 <tr>
                                                     <td> {{name}}
-                                                        <a class="btn btn-circle btn-outline purple-plum btn-icon-only btn-default" title="{{name}}" deck="{{deck}}" type="{{cardType}}" bonus="{{bonus}}" name="cardInfo" data-toggle="modal" href="#cardInfoModal" style="float:right;padding:6px">
+                                                        <a class="btn btn-circle btn-outline purple-plum btn-icon-only btn-default" title="{{name}}" body="{{text}}" name="cardInfo" data-toggle="modal" href="#cardInfoModal" style="float:right;padding:6px">
                                                             <i class="icon-eye"></i>
                                                         </a>
                                                         {{#eq deck 1}}
@@ -116,9 +116,7 @@
                                 <div class="scroller" style="height:100px" data-always-visible="1" data-rail-visible1="1">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p id="cardInfoModalDeck"></p><br/>
-                                            <p id="cardInfoModalType"></p><br/>
-                                            <p id="cardInfoModalBonus"></p><br/>
+                                            <p id="cardInfoModalBody"></p><br/>
                                         </div>
                                     </div>
                                 </div>
@@ -259,6 +257,14 @@
                 FIGHT_MONSTER_HELP_ANSWER: 6,
                 FIGHT_MONSTER_INTERFERE: 7,
                 DISCARD_CARDS: 8
+            };
+            const DECK_LIST = {
+                0: 'Dungeon',
+                1: 'Treasure'
+            };
+            const TREASURE_LIST = {
+                0: 'Equipment',
+                1: 'Consumable'
             };
             const RACES_LIST = {
                 0: 'Human',
@@ -508,9 +514,7 @@
                 });
                 $('thead').on('click', 'a[name=cardInfo]', function(){
                     $('#cardInfoModalTitle').html($(this).attr("title"));
-                    $('#cardInfoModalDeck').html($(this).attr("deck"));
-                    $('#cardInfoModalType').html($(this).attr("type"));
-                    $('#cardInfoModalBonus').html($(this).attr("bonus"));
+                    $('#cardInfoModalBody').html($(this).attr("body"));
                 });
                 socket.on('chatMessage', function(msg){
                     var labelClass = labelClass = '<div class="label label-sm label-info"><i class="fa fa-bullhorn"></i></div>';
@@ -581,12 +585,12 @@
                         var handCardButton = '';
                         //  Fill hand
                         for (var i = 0; i < playerInfo.hand.length; i++){
-                            handCardButton = '';
+                            handCardButton = '<a class="btn btn-circle btn-outline purple-plum btn-icon-only btn-default" title="' + playerInfo.hand[i].name + '" body="' + playerInfo.hand[i].text + '" name="cardInfo" data-toggle="modal" href="#cardInfoModal" style="float:right;padding:6px"><i class="icon-eye"></i></a>';
                             if (playerInfo.hand[i].deck == DECK_TYPE.TREASURE){
                                 if (playerInfo.hand[i].cardType == TREASURE_TYPE.EQUIPMENT){
-                                    handCardButton = '<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>';
+                                    handCardButton += '<a id="' + playerInfo.hand[i]._id +'"name="equipItem" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Equip </a>';
                                 } else {
-                                    handCardButton = '<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
+                                    handCardButton += '<a id="' + playerInfo.hand[i]._id + '"name="useConsumable" class="btn btn-outline btn-circle purple-plum btn-sm blue" style="float:right"> Use </a>';
                                 }
                             }
                             handCardButton += '<a id="' + playerInfo.hand[i]._id +'"name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>';
@@ -598,8 +602,9 @@
                     var equipmentCards = '';
                     var equipmentCardButton = '';
                     for (var i = 0; i < playerInfo.equipment.length; i++){
+                        equipmentCardButton = '<a class="btn btn-circle btn-outline purple-plum btn-icon-only btn-default" title="' + playerInfo.hand[i].name + '" body="' + playerInfo.hand[i].text + '" name="cardInfo" data-toggle="modal" href="#cardInfoModal" style="float:right;padding:6px"><i class="icon-eye"></i></a>';
                         if (isMainPlayer){
-                            equipmentCardButton = '<a id="' + playerInfo.equipment[i]._id +'"name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>';
+                            equipmentCardButton += '<a id="' + playerInfo.equipment[i]._id +'"name="discardItem" class="btn btn-outline btn-circle red btn-sm blue" style="float:right"> Discard </a>';
                         }
                         equipmentCards += '<tr id="' + playerInfo.equipment[i]._id + '"><td> ' + playerInfo.equipment[i].name + equipmentCardButton +'</td><tr>';
                     }
