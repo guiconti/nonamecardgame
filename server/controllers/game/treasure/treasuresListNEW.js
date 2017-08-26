@@ -50,14 +50,26 @@ module.exports = function() {
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
             equipmentType: equipmentsType.HEAD,
-            bonus: 3
+            bonus: 3,
+            usableByRaces: [racesList.HUMAN],
+            text: 'Usable By Human Only. +3 Combat power'
         },
         {
             name: 'Helm Of Courage',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
             equipmentType: equipmentsType.HEAD,
-            bonus: 1
+            bonus: 1,
+            text: '+1 Combat power'
+        },
+        {
+            name: 'Pointy Hat Of Power',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.HEAD,
+            bonus: 3,
+            usableByRoles: [rolesList.WIZARD],
+            text: 'Usable by Wizard Only. +3 Combat power'
         },
         // Old
         {

@@ -18,7 +18,10 @@ let GameSchema = new Schema({
         raceType: {type: Number, default: -1},
         roleType: {type: Number, default: -1},
         sexType: {type: Number, default: -1},
-        bonus: {type: Number, default: 0}
+        bonus: {type: Number, default: 0},
+        usableByRaces: [Number],
+        usableByRoles: [Number],
+        text: String
     }],
     discardedTreasures: [{
         name: String,
@@ -28,7 +31,10 @@ let GameSchema = new Schema({
         raceType: {type: Number, default: -1},
         roleType: {type: Number, default: -1},
         sexType: {type: Number, default: -1},
-        bonus: {type: Number, default: 0}
+        bonus: {type: Number, default: 0},
+        usableByRaces: [Number],
+        usableByRoles: [Number],
+        text: String
     }],
     dungeons: [{
         name: String,
@@ -36,7 +42,8 @@ let GameSchema = new Schema({
         cardType: Number,
         combatPower: Number,
         levelReward: Number,
-        treasureReward: Number
+        treasureReward: Number,
+        text: String
     }],
     discardedDungeons: [{
         name: String,
@@ -44,7 +51,8 @@ let GameSchema = new Schema({
         cardType: Number,
         combatPower: Number,
         levelReward: Number,
-        treasureReward: Number
+        treasureReward: Number,
+        text: String
     }],
     turnInfo:  {
         playerId: String,
@@ -73,7 +81,10 @@ let GameSchema = new Schema({
             raceType: {type: Number, default: -1},
             roleType: {type: Number, default: -1},
             sexType: {type: Number, default: -1},
-            bonus: {type: Number, default: 0}
+            bonus: {type: Number, default: 0},
+            usableByRaces: [Number],
+            usableByRoles: [Number],
+            text: String
         }],
         hand: [{
             name: String,
@@ -83,7 +94,10 @@ let GameSchema = new Schema({
             raceType: {type: Number, default: -1},
             roleType: {type: Number, default: -1},
             sexType: {type: Number, default: -1},
-            bonus: {type: Number, default: 0}
+            bonus: {type: Number, default: 0},
+            usableByRaces: [Number],
+            usableByRoles: [Number],
+            text: String
         }],
         cardsOnHand: {type: Number, default: 0}
     }],
@@ -96,6 +110,7 @@ let GameSchema = new Schema({
             treasureReward: {type: Number, default: 0},
             levelReward: {type: Number, default: 1},
             powerBonus: {type: Number, default: 0},
+            text: String
         }],
         player: {
             combatPower: {type: Number, default: 0},
