@@ -6,7 +6,7 @@ module.exports = {
     TWO_HAND: 3,
     PANTS: 4,
     GLOVES: 5,
-    BOOTS: 6,
+    FOOTGEAR: 6,
     RACE: 7,
     ROLE: 8,
     ETC: 9

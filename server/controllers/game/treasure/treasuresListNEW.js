@@ -71,6 +71,14 @@ module.exports = function() {
             usableByRoles: [rolesList.WIZARD],
             text: 'Usable by Wizard Only. +3 Combat power'
         },
+        {
+            name: 'Boots of Butt-Kicking',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.FOOTGEAR,
+            bonus: 2,
+            text: '+2 Combat power'
+        },
         // Old
         {
             name: 'Male Orc',
