@@ -9,7 +9,7 @@ const sendGameToPlayers = require('../sendGameToPlayers');
 
 const getPlayerIndex = require('../../utils/getPlayerIndex');
 const throwDice = require('../../utils/throwDice');
-const removeMonster = require('./removeMonster');
+const resetFight = require('./resetFight');
 const turnPhases = require('../turnPhases');
 const logger = require('../../../../tools/logger');
 
@@ -31,7 +31,12 @@ module.exports = (req, res) => {
                 body: 'You can only run when it`s your turn and you are loosing a fight.'});
 
             let playerIndex = getPlayerIndex(gameTable, req.userInfo.id);
-            let diceResult = throwDice(DICE_SIZES);
+            let helperIndex = getPlayerIndex(gameTable, gameTable.fight.helper.helperId);
+            let fightersIndexes = [playerIndex];
+            if (helperIndex != -1){
+                fightersIndexes.push(helperIndex);
+            }
+            
 
             let message = {
                 type: messagesType.MONSTER,
@@ -39,20 +44,24 @@ module.exports = (req, res) => {
             };
             eventEmitter.sendChatMessage(gameTable._id, message);
             gameTable.chatHistory.unshift(message);
-            if (diceResult >= MIN_TO_RUN){
-                message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
-                    + ' on the dice and manages to run. He manage to run from the monster without consequences.';
-                eventEmitter.sendChatMessage(gameTable._id, message);
-                gameTable.chatHistory.unshift(message);
-            } else {
-                message.text = gameTable.players[playerIndex].name + ' got ' + diceResult
-                    + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.';
-                eventEmitter.sendChatMessage(gameTable._id, message);
-                gameTable.chatHistory.unshift(message);
-            }
+
+            fightersIndexes.forEach((fighterIndex) => {
+                let diceResult = throwDice(DICE_SIZES);
+                if (diceResult >= MIN_TO_RUN){
+                    message.text = gameTable.players[fighterIndex].name + ' got ' + diceResult
+                        + ' on the dice and manages to run. He manage to run from the monster without consequences.';
+                    eventEmitter.sendChatMessage(gameTable._id, message);
+                    gameTable.chatHistory.unshift(message);
+                } else {
+                    message.text = gameTable.players[fighterIndex].name + ' got ' + diceResult
+                        + ' on the dice and it`s not enough to run! He suffers the consequences from loosing to the monster.';
+                    eventEmitter.sendChatMessage(gameTable._id, message);
+                    gameTable.chatHistory.unshift(message);
+                }
+            });
 
             // End fight and change player to next
-            removeMonster(gameTable);
+            resetFight(gameTable);
             nextPlayer(gameTable, playerIndex);
             sendGameToPlayers(gameTable);
 
