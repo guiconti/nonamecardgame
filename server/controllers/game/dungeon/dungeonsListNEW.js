@@ -36,12 +36,13 @@ module.exports = function() {
             text: 'Yucky slime! +4 against Elves. Bad Thing: Discard the footgear you are wearing. Lose 1 level if you have no footgear'
         },
         {
-            name: 'Monster 3',
+            name: 'Potted Plant',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
-            combatPower: 4,
-            treasureReward: 2,
-            levelReward: 1
+            combatPower: 1,
+            treasureReward: 1,
+            levelReward: 1,
+            text: 'Elves draw an extra treasure after defeating it. Bad Thing: None. Escape is automatic.'
         },
         // OLD
         {
