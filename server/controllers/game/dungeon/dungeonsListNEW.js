@@ -27,30 +27,13 @@ module.exports = function() {
             text: 'Fried chicken is delicious. Gain 1 extra level instantly if you defeat it with fire or flame [Not implemented]. Bad thing: Very painful pecking. Lose 1 level'
         },
         {
-            name: 'Monster 1',
+            name: 'Drooling Slime',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
             combatPower: 1,
             treasureReward: 1,
-            levelReward: 1
-        },
-        {
-            name: 'Dungeon 3',
-            deck: deckType.DUNGEON,
-            cardType: dungeonsType.RACE
-        },
-        {
-            name: 'Monster 2',
-            deck: deckType.DUNGEON,
-            cardType: dungeonsType.MONSTER,
-            combatPower: 3,
-            treasureReward: 1,
-            levelReward: 1
-        },
-        {
-            name: 'Dungeon 5',
-            deck: deckType.DUNGEON,
-            cardType: dungeonsType.CURSE
+            levelReward: 1,
+            text: 'Yucky slime! +4 against Elves. Bad Thing: Discard the footgear you are wearing. Lose 1 level if you have no footgear'
         },
         {
             name: 'Monster 3',

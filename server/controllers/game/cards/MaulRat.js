@@ -23,7 +23,7 @@ exports.effect = (gameTable, playerIndex, eventEmitter) => {
     return new Promise((resolve, reject) => {
         try {
             if (gameTable.players[playerIndex].role == rolesList.CLERIC){
-                gameTable.fight.monster[0].powerBonus += 3;
+                gameTable.fight.monster[0].powerBonus += MODIFICATION_BONUS;
                 eventEmitter.sendChatMessage(gameTable._id, effectMessage);
                 gameTable.chatHistory.unshift(effectMessage);
             }

@@ -65,7 +65,6 @@ module.exports = (req, res) => {
                 eventEmitter.sendChatMessage(gameTable.id, message);
                 gameTable.chatHistory.unshift(message);
                 if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_WINNING) {
-                    console.log('é');
                     calculateFightResult(gameTable);
                     if (gameTable.turnInfo.phase == turnPhases.FIGHT_MONSTER_LOOSING) {
                         let playerPower = gameTable.fight.player.combatPower + gameTable.fight.player.powerBonus;
