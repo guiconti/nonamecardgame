@@ -1,9 +1,9 @@
-const logger = require('../../../../../tools/logger');
-const messagesType = require('../../../communication/messagesType');
+const logger = require('../../../../tools/logger');
+const messagesType = require('../../communication/messagesType');
 
-const CARD_NAME = 'Invoke Obscure Rules';
+const CARD_NAME = 'Boin An Anthill';
 const LEVEL_BONUS = 1;
-let successMessage = {
+let effectMessage = {
     type: messagesType.INFO,
     text: ' used ' + CARD_NAME + ' and goes up a level.'
 };
@@ -13,13 +13,13 @@ let errorMessage = {
     body: 'Something happened and even we don`t know what it is.'
 };
 
-module.exports = (gameTable, playerIndex, eventEmitter) => {
+exports.effect = (gameTable, playerIndex, eventEmitter) => {
     return new Promise(function (resolve, reject) {
         try {
             gameTable.players[playerIndex].level += LEVEL_BONUS;
-            successMessage.text = gameTable.players[playerIndex].name + successMessage.text;
-            eventEmitter.sendChatMessage(gameTable._id, successMessage);
-            gameTable.chatHistory.unshift(successMessage);
+            effectMessage.text = gameTable.players[playerIndex].name + effectMessage.text;
+            eventEmitter.sendChatMessage(gameTable._id, effectMessage);
+            gameTable.chatHistory.unshift(effectMessage);
             resolve(sucessMessage);
         } catch (err) {
             logger.logError(err);

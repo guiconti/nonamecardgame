@@ -1,10 +1,10 @@
-const logger = require('../../../../../tools/logger');
-const messagesType = require('../../../communication/messagesType');
-const isHighestLevel = require('../../../utils/isHighestLevel');
+const logger = require('../../../../tools/logger');
+const messagesType = require('../../communication/messagesType');
+const isHighestLevel = require('../../utils/isHighestLevel');
 
 const CARD_NAME = 'Whine At The GM';
 const LEVEL_BONUS = 1;
-let successMessage = {
+let effectMessage = {
     type: messagesType.INFO,
     text: ' used ' + CARD_NAME + ' and goes up a level.'
 };
@@ -18,7 +18,7 @@ let errorMessage = {
     body: 'Something happened and even we don`t know what it is.'
 };
 
-module.exports = (gameTable, playerIndex, eventEmitter) => {
+exports.effect = (gameTable, playerIndex, eventEmitter) => {
     return new Promise(function (resolve, reject) {
         try {
             if (isHighestLevel(gameTable, playerIndex)) {
@@ -26,9 +26,9 @@ module.exports = (gameTable, playerIndex, eventEmitter) => {
                 reject(unablePlayMessage);
             }
             gameTable.players[playerIndex].level += LEVEL_BONUS;
-            successMessage.text = gameTable.players[playerIndex].name + successMessage.text;
-            eventEmitter.sendChatMessage(gameTable._id, successMessage);
-            gameTable.chatHistory.unshift(successMessage);
+            effectMessage.text = gameTable.players[playerIndex].name + effectMessage.text;
+            eventEmitter.sendChatMessage(gameTable._id, effectMessage);
+            gameTable.chatHistory.unshift(effectMessage);
             resolve(sucessMessage);
         } catch (err) {
             logger.logError(err);

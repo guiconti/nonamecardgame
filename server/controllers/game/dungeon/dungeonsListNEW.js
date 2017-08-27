@@ -15,7 +15,16 @@ module.exports = function() {
             levelReward: 1,
             bonusOnRoles: [rolesList.CLERIC],
             modificationBonus: 3,
-            text: 'A creature from Hell +3 against clerics. Bad thin: She whacks you. Lose 1 level'
+            text: 'A creature from Hell +3 against clerics. Bad thing: She whacks you. Lose 1 level'
+        },
+        {
+            name: 'Large Angry Chicken',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 2,
+            treasureReward: 1,
+            levelReward: 1,
+            text: 'Fried chicken is delicious. Gain 1 extra level instantly if you defeat it with fire or flame [Not implemented]. Bad thing: Very painful pecking. Lose 1 level'
         },
         {
             name: 'Monster 1',

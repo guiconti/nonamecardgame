@@ -1,11 +1,11 @@
-const logger = require('../../../../../tools/logger');
-const messagesType = require('../../../communication/messagesType');
-const racesList = require('../../../player/racesList');
-const updateCombatPower = require('../../../utils/updateCombatPower');
+const logger = require('../../../../tools/logger');
+const messagesType = require('../../communication/messagesType');
+const racesList = require('../../player/racesList');
+const updateCombatPower = require('../../utils/updateCombatPower');
 
 const CARD_NAME = 'Bad-Ass Bandanna';
 const EQUIPMENT_BONUS = 3;
-let successMessage = {
+let effectMessage = {
     type: messagesType.INFO,
     text: ' equipped ' + CARD_NAME + ' and his/her combat power goes up to .'
 };
@@ -19,7 +19,7 @@ let errorMessage = {
     body: 'Something happened and even we don`t know what it is.'
 };
 
-module.exports = (gameTable, playerIndex, eventEmitter) => {
+exports.effect = (gameTable, playerIndex, eventEmitter) => {
     return new Promise(function (resolve, reject) {
         try {
             if (gameTable.players[playerIndex].race != racesList.HUMAN) {
@@ -28,9 +28,9 @@ module.exports = (gameTable, playerIndex, eventEmitter) => {
             }
             gameTable.players[playerIndex].equipmentBonus += EQUIPMENT_BONUS;
             updateCombatPower(gameTable, playerIndex);
-            successMessage.text = gameTable.players[playerIndex].name + successMessage.text + EQUIPMENT_BONUS;
-            eventEmitter.sendChatMessage(gameTable._id, successMessage);
-            gameTable.chatHistory.unshift(successMessage);
+            effectMessage.text = gameTable.players[playerIndex].name + effectMessage.text + EQUIPMENT_BONUS;
+            eventEmitter.sendChatMessage(gameTable._id, effectMessage);
+            gameTable.chatHistory.unshift(effectMessage);
             resolve(sucessMessage);
         } catch (err) {
             logger.logError(err);
