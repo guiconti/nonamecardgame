@@ -1,14 +1,13 @@
 const logger = require('../../../../tools/logger');
 const messagesType = require('../../communication/messagesType');
-const rolesList = require('../../player/rolesList');
 const updateCombatPower = require('../../utils/updateCombatPower');
 
-const CARD_NAME = 'Maul Rat';
-const MODIFICATION_BONUS = 3;
-const LEVELS_LOST = 1;
-let effectMessage = {
+const CARD_NAME = 'Mr. Bones';
+const RUN_PENALIZATION = 1;
+const LEVELS_LOST = 2;
+let runMessage = {
     type: messagesType.MONSTER,
-    text: ' is a Cleric so ' + CARD_NAME + ' has ' + MODIFICATION_BONUS + ' more combat power.'
+    text: 'Even when you run Mr. Bones punishes you. '
 };
 
 let badThingMessage = {
@@ -20,14 +19,14 @@ let errorMessage = {
     body: 'Something happened and even we don`t know what it is.'
 };
 
-exports.effect = (gameTable, playerIndex, eventEmitter) => {
+exports.successRun = (gameTable, playerIndex, eventEmitter) => {
     return new Promise((resolve, reject) => {
         try {
-            if (gameTable.players[playerIndex].role == rolesList.CLERIC){
-                gameTable.fight.monster[0].powerBonus += MODIFICATION_BONUS;
-                eventEmitter.sendChatMessage(gameTable._id, effectMessage);
-                gameTable.chatHistory.unshift(effectMessage);
-            }
+            gameTable.players[playerIndex].level -= RUN_PENALIZATION;
+            runMessage.text = gameTable.players[playerIndex].name + ' lost ' + RUN_PENALIZATION + ' level(s).';
+            updateCombatPower(gameTable, playerIndex);
+            eventEmitter.sendChatMessage(gameTable._id, runMessage);
+            gameTable.chatHistory.unshift(runMessage);
             return resolve();
         } catch (err) {
             logger.logError(err);

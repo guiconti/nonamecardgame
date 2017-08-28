@@ -4,6 +4,7 @@ const racesList = require('../../player/racesList');
 const equipmentsType = require('../treasure/equipmentsType');
 const updatePlayerInfo = require('../../player/updatePlayerInfo');
 const discardTreasure = require('../treasure/discardTreasure');
+const updateCombatPower = require('../../utils/updateCombatPower');
 
 const CARD_NAME = 'Drooling Slime';
 const MODIFICATION_BONUS = 4;
@@ -54,7 +55,8 @@ exports.badThing = (gameTable, playerIndex, eventEmitter) => {
             }
             gameTable.players[playerIndex].level -= LEVELS_LOST;
             badThingMessage.text = CARD_NAME + ' caught ' + gameTable.players[playerIndex].name;
-            badThingMessage.text += ' and makes he/she loses ' + LEVELS_LOST + ' level(s).'; 
+            badThingMessage.text += ' and makes he/she loses ' + LEVELS_LOST + ' level(s).';
+            updateCombatPower(gameTable, playerIndex);
             eventEmitter.sendChatMessage(gameTable._id, badThingMessage);
             gameTable.chatHistory.unshift(badThingMessage);
             return resolve();

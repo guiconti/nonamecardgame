@@ -1,9 +1,6 @@
 const logger = require('../../../../tools/logger');
 const messagesType = require('../../communication/messagesType');
 const racesList = require('../../player/racesList');
-const equipmentsType = require('../treasure/equipmentsType');
-const updatePlayerInfo = require('../../player/updatePlayerInfo');
-const discardTreasure = require('../treasure/discardTreasure');
 
 const CARD_NAME = 'Potted Plant';
 const BONUS_WON = 1;

@@ -44,6 +44,15 @@ module.exports = function() {
             levelReward: 1,
             text: 'Elves draw an extra treasure after defeating it. Bad Thing: None. Escape is automatic.'
         },
+        {
+            name: 'Mr. Bones',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 2,
+            treasureReward: 1,
+            levelReward: 1,
+            text: 'If you must flee, you lose 1 level even if you escape. Bad Thing: He bony touch costs you 2 Levels.'
+        },
         // OLD
         {
             name: 'Dungeon 1',

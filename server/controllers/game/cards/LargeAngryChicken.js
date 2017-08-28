@@ -1,5 +1,6 @@
 const logger = require('../../../../tools/logger');
 const messagesType = require('../../communication/messagesType');
+const updateCombatPower = require('../../utils/updateCombatPower');
 
 const CARD_NAME = 'Large Angry Chicken';
 const LEVELS_LOST = 1;
@@ -18,7 +19,8 @@ exports.badThing = (gameTable, playerIndex, eventEmitter) => {
         try {
             gameTable.players[playerIndex].level -= LEVELS_LOST;
             badThingMessage.text = CARD_NAME + ' caught ' + gameTable.players[playerIndex].name;
-            badThingMessage.text += ' and makes he/she loses ' + LEVELS_LOST + ' level(s).'; 
+            badThingMessage.text += ' and makes he/she loses ' + LEVELS_LOST + ' level(s).';
+            updateCombatPower(gameTable, playerIndex);
             eventEmitter.sendChatMessage(gameTable._id, badThingMessage);
             gameTable.chatHistory.unshift(badThingMessage);
             resolve();
