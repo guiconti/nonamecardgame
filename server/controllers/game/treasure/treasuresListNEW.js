@@ -9,6 +9,90 @@ const sexList = require('../../player/sexList');
 module.exports = function() {
     return([
         {
+            name: 'Cleric',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.CLERIC
+        },
+        {
+            name: 'Cleric',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.CLERIC
+        },
+        {
+            name: 'Cleric',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.CLERIC
+        },
+        {
+            name: 'Thief',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.THIEF
+        },
+        {
+            name: 'Thief',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.THIEF
+        },
+        {
+            name: 'Thief',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.THIEF
+        },
+        {
+            name: 'Warrior',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WARRIOR
+        },
+        {
+            name: 'Warrior',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WARRIOR
+        },
+        {
+            name: 'Warrior',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WARRIOR
+        },
+        {
+            name: 'Wizard',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WIZARD
+        },
+        {
+            name: 'Wizard',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WIZARD
+        },
+        {
+            name: 'Wizard',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.ROLE,
+            roleType: rolesList.WIZARD
+        },
+        {
             name: 'Invoke Obscure Rules',
             deck: deckType.TREASURE,
             cardType: treasuresType.CONSUMABLE,
