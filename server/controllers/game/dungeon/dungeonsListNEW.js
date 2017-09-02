@@ -27,6 +27,16 @@ module.exports = function() {
             text: 'Fried chicken is delicious. Gain 1 extra level instantly if you defeat it with fire or flame [Not implemented]. Bad thing: Very painful pecking. Lose 1 level'
         },
         {
+            name: 'Gelatinous Octahedron',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 2,
+            treasureReward: 1,
+            levelReward: 1,
+            runAwayBonus: 1,
+            text: '+1 to run away. Bad thing: If you fail to run away, you must drop all your big items.'
+        },
+        {
             name: 'Drooling Slime',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,

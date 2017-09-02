@@ -46,6 +46,7 @@ let GameSchema = new Schema({
         bonusOnRaces: [Number],
         bonusOnRoles: [Number],
         modificationBonus: Number,
+        runAwayBonus: {type: Number, default: 0},
         text: String
     }],
     discardedDungeons: [{
@@ -58,6 +59,7 @@ let GameSchema = new Schema({
         bonusOnRaces: [Number],
         bonusOnRoles: [Number],
         modificationBonus: Number,
+        runAwayBonus: {type: Number, default: 0},
         text: String
     }],
     turnInfo:  {
@@ -106,6 +108,7 @@ let GameSchema = new Schema({
             bonusOnRaces: [Number],
             bonusOnRoles: [Number],
             modificationBonus: Number,
+            runAwayBonus: {type: Number, default: 0},
             text: String
         }],
         cardsOnHand: {type: Number, default: 0}
@@ -122,6 +125,7 @@ let GameSchema = new Schema({
             bonusOnRaces: [Number],
             bonusOnRoles: [Number],
             modificationBonus: Number,
+            runAwayBonus: {type: Number, default: 0},
             text: String
         }],
         player: {
