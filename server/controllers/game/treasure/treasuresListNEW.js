@@ -9,6 +9,18 @@ const sexList = require('../../player/sexList');
 module.exports = function() {
     return([
         {
+            name: 'Potion of Idiotic Bravery',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 2
+        },
+        {
+            name: 'Potion of Halitosis',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 2
+        },
+        {
             name: 'Cleric',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
