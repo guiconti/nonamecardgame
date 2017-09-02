@@ -21,6 +21,7 @@ let GameSchema = new Schema({
         bonus: {type: Number, default: 0},
         usableByRaces: [Number],
         usableByRoles: [Number],
+        gold: {type: Number, default: 0},
         text: String
     }],
     discardedTreasures: [{
@@ -34,6 +35,7 @@ let GameSchema = new Schema({
         bonus: {type: Number, default: 0},
         usableByRaces: [Number],
         usableByRoles: [Number],
+        gold: {type: Number, default: 0},
         text: String
     }],
     dungeons: [{
@@ -92,6 +94,7 @@ let GameSchema = new Schema({
             bonus: {type: Number, default: 0},
             usableByRaces: [Number],
             usableByRoles: [Number],
+            gold: {type: Number, default: 0},
             text: String
         }],
         hand: [{
@@ -109,6 +112,7 @@ let GameSchema = new Schema({
             bonusOnRoles: [Number],
             modificationBonus: Number,
             runAwayBonus: {type: Number, default: 0},
+            gold: {type: Number, default: 0},
             text: String
         }],
         cardsOnHand: {type: Number, default: 0}
