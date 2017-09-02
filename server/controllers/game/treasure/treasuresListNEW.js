@@ -21,6 +21,12 @@ module.exports = function() {
             bonus: 2
         },
         {
+            name: 'Nasty-Tasting Sport Drink',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 2
+        },
+        {
             name: 'Cleric',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
