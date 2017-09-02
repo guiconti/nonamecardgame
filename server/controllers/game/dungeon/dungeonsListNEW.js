@@ -112,6 +112,13 @@ module.exports = function() {
             modificationBonus: 5,
             text: '+5 to level of Monster. Play during combat. If the monster is defeated, draw 1 extra treasure.'
         },
+        {
+            name: 'Humongous',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.USABLE,
+            modificationBonus: 5,
+            text: '+10 to level of Monster. Play during combat. If the monster is defeated, draw 2 extra treasure.'
+        },
         // OLD
         {
             name: 'Dungeon 1',

@@ -1,9 +1,9 @@
 const logger = require('../../../../tools/logger');
 const messagesType = require('../../communication/messagesType');
 
-const CARD_NAME = 'Intelligent';
-const MODIFICATION_BONUS = 5;
-const REWARD_BONUS = 1;
+const CARD_NAME = 'Humongous';
+const MODIFICATION_BONUS = 10;
+const REWARD_BONUS = 2;
 let effectMessage = {
     type: messagesType.MONSTER,
     text: ' got ' + MODIFICATION_BONUS +  ' more combat power'
