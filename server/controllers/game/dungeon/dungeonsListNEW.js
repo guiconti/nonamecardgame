@@ -77,6 +77,17 @@ module.exports = function() {
             text: '-1 to run away. Bad Thing: They bite! Lose 2 levels.'
         },
         {
+            name: 'Harpies',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 4,
+            treasureReward: 2,
+            levelReward: 1,
+            bonusOnRoles: [rolesList.WIZARD],
+            modificationBonus: 5,
+            text: 'They resist magic +5 against Wizards. Bad thing: Their music is really, really bad. Lose 2 Levels.'
+        },
+        {
             name: 'Potted Plant',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
