@@ -93,6 +93,78 @@ module.exports = function() {
             roleType: rolesList.WIZARD
         },
         {
+            name: 'Male Dwarf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.DWARF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Male Dwarf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.DWARF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Female Dwarf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.Dwarf,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Male Halfling',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.HALFLING,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Male Halfling',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.HALFLING,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Female Halfling',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.HALFLING,
+            sexType: sexList.FEMALE
+        },
+        {
+            name: 'Male Elf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ELF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Male Elf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ELF,
+            sexType: sexList.MALE
+        },
+        {
+            name: 'Female Elf',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.EQUIPMENT,
+            equipmentType: equipmentsType.RACE,
+            raceType: racesList.ELF,
+            sexType: sexList.FEMALE
+        },
+        {
             name: 'Invoke Obscure Rules',
             deck: deckType.TREASURE,
             cardType: treasuresType.CONSUMABLE,
