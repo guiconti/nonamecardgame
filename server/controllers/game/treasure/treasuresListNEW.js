@@ -39,6 +39,12 @@ module.exports = function() {
             bonus: 5
         },
         {
+            name: 'Sleep Potion',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 2
+        },
+        {
             name: 'Cleric',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
