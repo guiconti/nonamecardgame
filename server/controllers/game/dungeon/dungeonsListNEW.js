@@ -37,6 +37,17 @@ module.exports = function() {
             text: '+1 to run away. Bad thing: If you fail to run away, you must drop all your big items.'
         },
         {
+            name: 'Undead Horse',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 4,
+            treasureReward: 2,
+            levelReward: 1,
+            bonusOnRaces: [racestList.DWARF],
+            modificationBonus: 5,
+            text: '+5 against Dwarves. Bad thing: Kicks, bites, and smells awful. Lose 2 levels'
+        },
+        {
             name: 'Drooling Slime',
             deck: deckType.DUNGEON,
             cardType: dungeonsType.MONSTER,
