@@ -52,7 +52,18 @@ module.exports = function() {
             combatPower: 1,
             treasureReward: 1,
             levelReward: 1,
+            runAwayBonus: 1,
             text: '+1 to run away. Bad Thing: He whacks you eith his crutch. Lose 1 Level.'
+        },
+        {
+            name: 'Flying Frogs',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.MONSTER,
+            combatPower: 2,
+            treasureReward: 1,
+            levelReward: 1,
+            runAwayBonus: -1,
+            text: '-1 to run away. Bad Thing: They bite! Lose 2 levels.'
         },
         {
             name: 'Potted Plant',
