@@ -105,6 +105,13 @@ module.exports = function() {
             levelReward: 1,
             text: 'If you must flee, you lose 1 level even if you escape. Bad Thing: He bony touch costs you 2 Levels.'
         },
+        {
+            name: 'Intelligent',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.USABLE,
+            modificationBonus: 5,
+            text: '+5 to level of Monster. Play during combat. If the monster is defeated, draw 1 extra treasure.'
+        },
         // OLD
         {
             name: 'Dungeon 1',
