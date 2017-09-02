@@ -57,6 +57,12 @@ module.exports = function() {
             bonus: 3
         },
         {
+            name: 'Magic Missile',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 5
+        },
+        {
             name: 'Cleric',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
