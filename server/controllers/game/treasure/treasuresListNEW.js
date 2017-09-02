@@ -51,6 +51,12 @@ module.exports = function() {
             bonus: 3
         },
         {
+            name: 'Flaming Poison Potion',
+            deck: deckType.TREASURE,
+            cardType: treasuresType.CONSUMABLE,
+            bonus: 3
+        },
+        {
             name: 'Cleric',
             deck: deckType.TREASURE,
             cardType: treasuresType.EQUIPMENT,
