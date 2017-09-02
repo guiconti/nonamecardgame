@@ -140,6 +140,18 @@ module.exports = function() {
             modificationBonus: 5,
             text: '-5 to level of Monster. Play during combat. If the monster is defeated, draw 1 less treasure.'
         },
+        {
+            name: 'Lose 1 Level',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.CURSE,
+            text: 'Lose 1 Level.'
+        },
+        {
+            name: 'Lose 1 Level',
+            deck: deckType.DUNGEON,
+            cardType: dungeonsType.CURSE,
+            text: 'Lose 1 Level.'
+        },
         // OLD
         {
             name: 'Dungeon 1',
